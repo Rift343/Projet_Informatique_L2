@@ -1,0 +1,67 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{libertine}
+\usepackage{setspace}
+\usepackage[pdftex]{graphicx}
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[R]{Conrath Matthieu}
+\onehalfspacing
+\begin{document}
+\begin{titlepage}
+  \begin{sffamily}
+  \begin{center}
+  
+
+%ici on ajoute les images sur la même ligne (j'ai mis des images mais je pense que ça ne fonctionnera pas de votre côté pour l'instant)
+\begin{minipage}[c]{.46\linewidth}
+     \begin{center}
+             \includegraphics[width=4cm]{logo-fds.png}
+         \end{center}
+   \end{minipage} \hfill
+   \begin{minipage}[c]{.46\linewidth}
+    \begin{center}
+            \includegraphics[width=4cm]{fsd.png}
+        \end{center}   
+ \end{minipage}
+ \newline\newline
+ 
+\textsc{\LARGE Faculté Des Sciences - Montpellier}\\[2cm]
+\textsc{\Large Rapport projet N°1}\\[2cm]
+
+  \begin{minipage}{0.4\textwidth}
+      \begin{flushleft} \large
+       Conrath Matthieu\\
+        Chevalier Clément\\
+      \end{flushleft}
+    \end{minipage}
+    \begin{minipage}{0.4\textwidth}
+      \begin{flushright} \large
+        Pavie-Routaboul Clément\\
+        Rebagliato Lucas\\
+      \end{flushright}
+    \end{minipage}
+
+   
+    \vfill
+    {\large 11 Janvier 2023}
+\newline
+{\url{https://github.com/CPavieR/projet-jeux}}
+
+  \end{center}
+  \end{sffamily}
+\end{titlepage}
+
+
+\renewcommand\contentsname{Sommaire}
+\tableofcontents
+\newpage
+
+
+\end{document}
