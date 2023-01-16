@@ -5,15 +5,46 @@
   <link rel="stylesheet" href="../css/main.css">
   <script></script>
   <title>Commande</title>
-  <script></script>
+  <script>
+  function filtrage_par_eti(etiquette_filtre){
+  //changer onclick button
+  var elements = document.getElementsByClassName("eti");
+    for(var i = 0; i < elements.length; i++) {
+        li_eti = elements[i].innerHTML.split(";");
+        if(! (li_eti.includes(etiquette_filtre))){
+        elements[i].parentElement.setAttribute("hidden", true);
+        }
+    }
+    }
+  function deactiver_filtrage(etiquette_filtre){
+  }
+  function bouton_filtrage(){//on fait la liste de toutes les etiquettes existantes et on fait les boutons de filtrage
+  li_eti_total = [];
+    var elements = document.getElementsByClassName("eti");
+    for(var i = 0; i < elements.length; i++) {
+      li_eti = elements[i].innerHTML.split(";");
+      for(var j=0; j<li_eti.length; j++){
+      if(!(li_eti_total.includes(li_eti[j]))){
+      li_eti_total.push(li_eti[j]);
+      }
+      }
+  }
+  for ( var i = 0; i<li_eti_total.length;i++){
+    document.getElementById("boutons_de_filtrage").innerHTML = document.getElementById("boutons_de_filtrage").innerHTML +
+    '<button id='+li_eti_total[i]+'-'+bouton+' onclick=filtrage_par_eti('+li_eti_total[i]+')';
+  }
+}
+    </script>
 </head>
 <body>
 <div id="top">Createur de question en ligne</div>
 <div id="mid">
+<div id="boutons_de_filtrage"></div>
+    <table>
     {% for dico in li_dictionnaire: %}
-    <tr><td>{{ele[0]}}</td><td>{{ele[1]}}</td><td>{{ele[2]}}</td><td>{{ele[3]}}</td></tr>
+    <tr><td>{{dico["ID"]}}</td><td>{{dico["ID"]}}</td><td class = "eti">{% for eti in dico["ET"]: %}{{eti+","}}{%endfor%}</td><td>{{dico["ID"]}}</td></tr>
 {% endfor %}
-
+</table>
 
 </div>
 <div id="bot">
