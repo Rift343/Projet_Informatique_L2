@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="static/main.css">
-  <link rel="stylesheet" href="static/creationQuestion.css">
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../css/creationQuestion.css">
   <script></script>
   <title>Commande</title>
   <script type="text/javascript">
@@ -43,9 +43,10 @@
 <div id="top">Createur de question en ligne</div>
 <div id="mid"><br><form action="" method="post">
     <div class="entree">
-        <label for="name">Entrer le nom de votre question : </label>
-        <input type="text" name="nom" id="nom" required>
+        <label for="enonce">Entrer le nom de votre question : </label>
+        <input type="text" name="enonce" id="enonce" required>
     </div>
+    
     <div class="entree">
         <label for="etiquettes">Entrer la/les etiquettes de votre question (séparé par des ";") : </label>
         <input type="text" name="etiquettes" id="etiquettes">
@@ -65,11 +66,11 @@
 </form><br><br></div>
 <div id="bot">
 <a href="./">Acceuil</a>
-<a href="/register">S'enregistrer</a>
-<a href="/login">Se connecter</a>
-<a href="/creationQuestion">Créer une question</a>
-<a href="/BDD">Liste de vos questions</a>
-<a href="/creerfeuille">Créer une feuille d'exercices</a>
+<a href="./register">S'enregistrer</a>
+<a href="./login">Se connecter</a>
+<a href="./creationQuestion">Creer une question</a>
+<a href="./BDD">Liste de vos questions</a>
+<a href="./creerfeuille">Creer une feuille d'exercice</a>
 </div>
 </body>
 
