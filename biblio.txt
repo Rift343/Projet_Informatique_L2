@@ -7,4 +7,4 @@ https://plastex.github.io/plastex/
 Documentation:
 https://docs.python.org/3/
 
-https://www.math.union.edu/~dpvc/jsMath/authors/tex2math.html
+AJOUTER REF LATEX
