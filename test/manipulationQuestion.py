@@ -86,12 +86,16 @@ def dans_csv(ID_User,Dico_csv):
     ListeCSV=list()
     PATH= os.getcwd()
     PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
+    #os.path.isfile() permet de savoir si le fichier correspondant au PATH existe
+    #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
         id=1
         while (estDansCSV(ID_User,str(id))==False):
             id = id + 1
             print(id)
         ListeCSV.append(id)
+        #On regarde si on n'écrit pas un question en double. 
+        #Si on écrit un question en double alors on return False
         if doublon(ID_User,Dico_csv['Question'],Dico_csv['REP']):
             return False
           
@@ -110,10 +114,13 @@ def dans_csv(ID_User,Dico_csv):
         ListeCSV.append(BonneReponse)
 
     print(ListeCSV)
+    #Les lignes en dessous permettent une nouvelle ligne dans un csv
+    #Si le csv n'existe pas alors il est automatiquement crée
     with open(PATH,'a',newline='') as FILE:
         Ecriture=csv.writer(FILE,delimiter=';')   
         Ecriture.writerow(ListeCSV)
         FILE.close() 
+    return True
 
 dans_csv(1,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
 
