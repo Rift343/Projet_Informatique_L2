@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../css/main.css">
+  <script></script>
+  <title>Commande</title>
+  <script>
+  var rep ="";
+  function ajout_rep(){
+    txt =getElementById(nrep);
+
+    if(rep == ""){
+    rep = txt;}
+    else{rep = rep + ";" + txt
+    }
+  }
+  </script>
+</head>
+<body>
+<div id="top">Createur de question en ligne</div>
+<div id="mid"><br><form action="" method="post">
+    <div class="entree">
+        <label for="name">Entrer le nom de votre question : </label>
+        <input type="text" name="nom" id="nom" required>
+    </div>
+    <div class="entree">
+        <label for="etiquettes">Entrer la/les etiquettes de votre question (séparé par des ";") : </label>
+        <input type="text" name="etiquettes" id="etiquettes">
+    </div>
+    <div class="entree">
+        <label for="question">Entrer la/les etiquettes de votre question (séparé par des ";") : </label>
+        <input type="text" name="question" id="question">
+    </div>
+    
+    <div class="entree">
+        <label for="nouvelle_rep">Entrer une reponse et cliquez sur ajouter : </label>
+        <input type="text" name="nrep" id="nrep">
+    </div>
+    
+    <input type="checkbox" id="scales" name="scales" checked>
+</form><br><br></div>
+<div id="bot">
+<a href="./">Acceuil</a>
+<a href="register">S'enregistrer</a>
+<a href="register">Se connecter</a>
+<a href="login">Se connecter</a>
+<a href="creationQuestion">Creer une question</a>
+<a href="BDD">Liste de vos questions</a>
+<a href="register">Se connecter</a>
+<a href="creerfeuille">Creer une feuille d'exercice</a>
+</div>
+</body>
+
+</html>
