@@ -33,7 +33,7 @@ def depuis_csv(ID_User):
             ListeBREP=[]
             IDQuestion=ligne[0]
             compteur =1
-            print(ligne)
+            #print(ligne)
             while (ligne[compteur]!='FINET'):
                 listeET.append(ligne[compteur])
                 compteur=compteur+1
@@ -92,7 +92,7 @@ def dans_csv(ID_User,Dico_csv):
         id=1
         while (estDansCSV(ID_User,str(id))==False):
             id = id + 1
-            print(id)
+            #print(id)
         ListeCSV.append(id)
         #On regarde si on n'écrit pas un question en double. 
         #Si on écrit un question en double alors on return False
@@ -113,7 +113,7 @@ def dans_csv(ID_User,Dico_csv):
     for BonneReponse in Dico_csv['BREP']:
         ListeCSV.append(BonneReponse)
 
-    print(ListeCSV)
+    #print(ListeCSV)
     #Les lignes en dessous permettent une nouvelle ligne dans un csv
     #Si le csv n'existe pas alors il est automatiquement crée
     with open(PATH,'a',newline='') as FILE:
@@ -122,6 +122,6 @@ def dans_csv(ID_User,Dico_csv):
         FILE.close() 
     return True
 
-dans_csv(1,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
+dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
 
 
