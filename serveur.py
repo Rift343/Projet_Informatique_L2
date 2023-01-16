@@ -13,9 +13,9 @@ def reg():
 
 @app.route("/register",methods = ['POST']) #Code d'enregistrement d'un utilisateur
 def ajoutQuestion():
-    nom_utilisateur = request.form['idUSer']
-    email = request.form['email']
-    mot_de_passe = request.form['password']
+    nom_utilisateur = request.form['idUSer'] #On récupère son id
+    email = request.form['email'] #Son mail
+    mot_de_passe = request.form['password'] #Son mot de passe
     #ouverture du csv des utilisateurs, verification que le nom d'utilisateur n'est pas déjà utilisé ni le mail, si ce n'est pas le cas, on écrit dans le csv
 
 
@@ -23,10 +23,10 @@ def ajoutQuestion():
 def log():
     return render_template("login.html")
 
-@app.route("/login",methods = ['POST']) #Code d'enregistrement d'un utilisateur
+@app.route("/login",methods = ['POST']) #Code de connexion d'un utilisateur
 def ajoutQuestion():
-    nom_utilisateur = request.form['idUSer']
-    mot_de_passe = request.form['password']
+    nom_utilisateur = request.form['idUSer'] #On récupère son id
+    mot_de_passe = request.form['password'] #Son mot de passe
     #ouverture du csv des utilisateurs, verification que le mot de passe saisi est le même que celui du csv et si c'est le cas on le connecte
 
 
