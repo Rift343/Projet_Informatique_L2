@@ -24,7 +24,7 @@
         ' <span id = "rep_en_cours"> <input type="checkbox" id="'+num +'" name="'+num +'">'+rep_li[element]+'<input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>';
         num=num+1;
     }
-    document.getElementById('li_rep_possibles').value=num;
+    document.getElementById('nb_rep_possibles').value=num;
   }
   function supp_rep(n){
       rep_li.splice(n,1);
@@ -35,7 +35,7 @@
         ' <span id = "rep_en_cours"> <input type="checkbox" id="'+num +'" name="'+num +'">'+rep_li[element]+'<input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>';
         num=num+1;
     }
-    document.getElementById('li_rep_possibles').value=num;
+    document.getElementById('nb_rep_possibles').value=num;
   }
   </script>
 </head>
@@ -44,7 +44,7 @@
 <div id="mid"><br><form action="" method="post">
     <div class="entree">
         <label for="enonce">Entrer l'enonce de votre question : </label>
-        <input type="text" name="enonce" id="enonce" required>
+        <textarea name="enonce" id="enonce" required></textarea>
     </div>
     
     <div class="entree">
