@@ -60,6 +60,7 @@ def creationFeuille():
 
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
 def feuille():
+    #récupération de la liste d'id des exos de la feuille et renvoie à feuille.html
     return render_template("html/feuille.html")
 
 #@app.route("/feuille")
@@ -67,6 +68,6 @@ def feuille():
 #    return render_template("feuille.html")
 
 
-@app.route("/css/<nomcss>")
+@app.route("/css/<nomcss>") #Renvoie de la feuille de style css selon la requête de la page html
 def recuperationCSS(nomcss):
     return render_template("css/"+nomcss+".css")
