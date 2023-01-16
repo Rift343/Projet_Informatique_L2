@@ -1,3 +1,4 @@
 https://python-markdown.github.io/reference/
 https://mermaid.js.org/#/
 https://pypi.org/project/md-mermaid/
+https://plastex.github.io/plastex/
