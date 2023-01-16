@@ -122,6 +122,43 @@ def dans_csv(ID_User,Dico_csv):
         FILE.close() 
     return True
 
-dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
+#dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
 
 
+def modif_csv(ID_User,Dico_csv):
+    PATH= os.getcwd()
+    PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"
+    if (os.path.isfile(PATH)):
+        lecture = depuis_csv(ID_User)
+        for ligne in lecture:
+            
+            if (ligne['ID']==Dico_csv['ID']):
+                ligne['Question']=Dico_csv['Question']
+                ligne['ET']=Dico_csv['ET']
+                ligne['REP']=Dico_csv['REP']
+                ligne['BREP']=Dico_csv['BREP']
+        
+            
+        ListeCSV=[];
+        for dico in lecture:
+            ListeCSV.append([])
+            ListeCSV[-1].append(dico['ID'])
+            for i in dico['ET']:
+                ListeCSV[-1].append(i)
+            ListeCSV[-1].append('FINET') 
+            ListeCSV[-1].append(dico['Question']) 
+            for i in dico['REP']:
+                ListeCSV[-1].append(i)
+            ListeCSV[-1].append('FINREP')
+            for i in dico['BREP']:
+                ListeCSV[-1].append(i)
+        with open(PATH,'w',newline='') as FILE:
+            Ecriture=csv.writer(FILE,delimiter=';')  
+            print(ListeCSV)      
+            Ecriture.writerows(ListeCSV)
+        FILE.close()
+        return True
+    else:
+        return False
+
+modif_csv(1,{'ID':'3','Question': 'machin', 'ET': ['Info'], 'REP': ['truc', 'bidule', '4','5'], 'BREP': ['4']})
