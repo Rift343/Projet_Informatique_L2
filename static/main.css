@@ -3,7 +3,7 @@
     top: 0;
     width: 100%;
     text-align: center;
-    background-color: rgb(88, 25, 25);color : white;
+    background-color: rgb(137, 226, 182);color : rgb(2, 2, 128);
 }
 
 #mid {
@@ -16,5 +16,5 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    background-color: rgb(73, 20, 20);
+    background-color: rgb(137, 226, 182);
 }
