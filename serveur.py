@@ -66,3 +66,6 @@ def feuille():
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("templates/feuille.html")
+
+if __name__ == '__main__':
+    app.run(debug = True)
