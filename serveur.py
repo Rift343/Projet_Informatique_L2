@@ -12,8 +12,8 @@ def reg():
     return render_template("register.html")
 
 @app.route("/register",methods = ['POST']) #Code d'enregistrement d'un utilisateur
-def ajoutQuestion():
-    nom_utilisateur = request.form['idUSer'] #On récupère son id
+def enregistrement():
+    nom_utilisateur = request.form['idUser'] #On récupère son id
     email = request.form['email'] #Son mail
     mot_de_passe = request.form['password'] #Son mot de passe
     #ouverture du csv des utilisateurs, verification que le nom d'utilisateur n'est pas déjà utilisé ni le mail, si ce n'est pas le cas, on écrit dans le csv
@@ -24,8 +24,8 @@ def log():
     return render_template("login.html")
 
 @app.route("/login",methods = ['POST']) #Code de connexion d'un utilisateur
-def ajoutQuestion():
-    nom_utilisateur = request.form['idUSer'] #On récupère son id
+def connexion():
+    nom_utilisateur = request.form['idUser'] #On récupère son id
     mot_de_passe = request.form['password'] #Son mot de passe
     #ouverture du csv des utilisateurs, verification que le mot de passe saisi est le même que celui du csv et si c'est le cas on le connecte
 
@@ -46,14 +46,18 @@ def ajoutQuestion():
     #idQuestion #= #il faudrait rajouter ici un identifiant de question pas encore utilisé
     etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
     enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
-    reponses = request.form['li_rep_possible'] #Ses réponses
-    nb_reponses = request.form['nb_rep_possible'] #Son nombre de bonnes réponses
+    reponses = request.form['li_rep_possibles'] #Ses réponses
+    nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
     li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
-    for i in range(0,nb_reponses):
-        reponse = request.form[''+i+'']
-        if reponse == NULL:
+    #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
+    for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
+        if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
             li_bonnes_reponses.append(i) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-            
+    #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+    li_etiquettes = etiquettes.split(';') 
+    li_rep = reponses.split(';')
+    dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
+
 
     #file1 = open("question.csv","a") #On ouvre le fichier csv où la question doit être enregistrée
     #string = name+'///'+enonce+'///'+str(reponses)+'///'+str(correction)+'///'+str(etiquettes)+'\n' #On créée la ligne qui sera enregistrée en append avec '///' comme séparateur (temporaire)
