@@ -25,12 +25,10 @@ def creationQuestion():
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
     #idQuestion #= #il faudrait rajouter ici un identifiant de question pas encore utilisé
-    name = request.form['name'] #On récupère le nom de la question
-    enonce = request.form['enonce'] #Son énoncé
+    etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+    question = request.form['question'] #Son énoncé
     reponses = request.form['reponses'] #Ses réponses
-    correction = request.form['correction'] #Sa correction
-    etiquettes = request.form['etiquettes'] #Ses étiquettes
-    idUser = request.form['idUser'] #L'id de l'utilisateur qui ajoute la question // je pense pas qu'on le récupère dans le form
+    correction = request.form['correction'] #Sa correction (bonnes réponses)
     #file1 = open("question.csv","a") #On ouvre le fichier csv où la question doit être enregistrée
     #string = name+'///'+enonce+'///'+str(reponses)+'///'+str(correction)+'///'+str(etiquettes)+'\n' #On créée la ligne qui sera enregistrée en append avec '///' comme séparateur (temporaire)
     #file1.write(string) #On écrit la ligne dans le fichier
@@ -46,12 +44,10 @@ def modifierQuestion(idQuestion):
 
 @app.route("/modificationQuestion/<idQuestion>",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une modif
 def modificationQuestion(idQuestion):
-    name = request.form['name'] #On récupère le nom de la question
-    enonce = request.form['enonce'] #Son énoncé
+    etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+    question = request.form['question'] #Son énoncé
     reponses = request.form['reponses'] #Ses réponses
-    correction = request.form['correction'] #Sa correction
-    etiquettes = request.form['etiquettes'] #Ses étiquettes
-    idUser = request.form['idUser'] #L'id de l'utilisateur qui ajoute la question // je pense pas qu'on le récupère dans le form
+    correction = request.form['correction'] #Sa correction (bonnes réponses)
     #file1 = open("question.csv","a") #On ouvre le fichier csv où la question doit être enregistrée
     #string = name+'///'+enonce+'///'+str(reponses)+'///'+str(correction)+'///'+str(etiquettes)+'\n' #On créée la ligne qui sera enregistrée en append avec '///' comme séparateur (temporaire)
     #Ici on peut pas juste écrire dans le fichier, il faut soit réecrire sur la question existante soit supprimer la question existante et écrire la nouvelle (ou atre méthode ?)
