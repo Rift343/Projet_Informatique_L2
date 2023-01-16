@@ -126,12 +126,26 @@ def dans_csv(ID_User,Dico_csv):
 
 
 def modif_csv(ID_User,Dico_csv):
+    """
+    Entrée: ID_User => id de l'utilisateur
+            Dico_csv => dictionnaire au même format que la sortie de depuis_csv:
+                ID=>id de la question (String)
+                Question=> Enoncé de la question (String)
+                ET => liste des étiquettes(liste de String)
+                REP => liste de réponses possible (liste de String)
+                BREP => liste des bonne réponse (liste de String)
+    Sortie: True ou False si l'élément à modifier n'existe pas
+    Exécution: On va regarde dans le fichier des questions de l'utilisateur 
+    afin de vérifier si il possède bien la question que l'on veut modifier
+    Ensuite on modifie tout les champs à l'éxeption de l'id et l'on doit réecrire toute
+    les questions dans le fichiers
+    """
     PATH= os.getcwd()
     PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"
     if (os.path.isfile(PATH)):
         lecture = depuis_csv(ID_User)
         for ligne in lecture:
-            
+            #On modifier seulement la question possèdant la même id.
             if (ligne['ID']==Dico_csv['ID']):
                 ligne['Question']=Dico_csv['Question']
                 ligne['ET']=Dico_csv['ET']
