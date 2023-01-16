@@ -57,7 +57,7 @@ def ajoutQuestion():
     li_etiquettes = etiquettes.split(';') 
     li_rep = reponses.split(';')
     dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
-
+    dans_csv(IdUser, dictionnaire) #Ajout du dictionnaire d'une question dans le csv des questions
 
     #file1 = open("question.csv","a") #On ouvre le fichier csv où la question doit être enregistrée
     #string = name+'///'+enonce+'///'+str(reponses)+'///'+str(correction)+'///'+str(etiquettes)+'\n' #On créée la ligne qui sera enregistrée en append avec '///' comme séparateur (temporaire)
