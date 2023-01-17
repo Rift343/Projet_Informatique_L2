@@ -122,11 +122,11 @@
 				{% for dico in li_dictionnaire: %}
 				<tr>
 					<td>{{dico["ID"]}}</td>
-					<td>{{dico["ID"]}}</td>
+					
 					<td class="eti">
 						{% for eti in dico["ET"]: %}{{eti+";"}}{%endfor%}
-					</td>
-					<td>{{dico["ID"]}}</td>
+					</td><td>{{dico["Question"]}}</td><td>{% for rep in dico["REP"]: %}{{rep+";"}}{%endfor%}</td>
+					<td>{% for rep in dico["BREP"]: %}{{rep+";"}}{%endfor%}</td>
 				</tr>
 				{% endfor %}
 			</table>
