@@ -36,7 +36,7 @@ def ajouterUser(Nom,password,email):
     listeid=[]
     for user in listeUSER:
         listeid.append(user[0])
-        if (password==user[3] or email==user[2] ):
+        if (password==user[3] or email==user[2] or Nom==user[1] ):
             return False
     
     with open(PATH,'a',newline='') as FILE:
