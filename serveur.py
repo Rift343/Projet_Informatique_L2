@@ -25,9 +25,9 @@ def enregistrement():
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
-        csv = lireCSV()
-        for User in csv:
-            if User[1]==nom_utilisateur:
+        csv = lireCSV()#inutile
+        for User in csv:#inutile
+            if User[1]==nom_utilisateur:#inutile
                 IdUser = User[0]
                 session['UserId'] = IdUser
         return render_template("acceuil.html")
