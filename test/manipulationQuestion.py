@@ -223,4 +223,4 @@ def getQuestion(ID_User,IDquestion):
     for dico in liste:
         if (dico['ID']==str(IDquestion)):
             return dico
-print(getQuestion(1,1))
+#print(getQuestion(1,1))
