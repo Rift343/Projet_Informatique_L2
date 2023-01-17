@@ -22,11 +22,7 @@ def enregistrement():
         return 0 #le nom d'utilisateur ou le mail est déjà lié à un compte
     else:
         print("compte créée")
-        csv = lireCSV()
-        for element in csv:
-            if element[1] == nom_utilisateur:
-                UserId = element[0]
-        session['Username'] = UserId
+        session['Username'] = nom_utilisateur
         return render_template("acceuil.html")
 
 
@@ -42,7 +38,7 @@ def connexion():
     for sous_liste in listeUser:
         if sous_liste[1] == nom_utilisateur and sous_liste[3] == mot_de_passe:
             print("connexion")
-            session['Username'] = UserId
+            session['Username'] = nom_utilisateur
             return render_template("acceuil.html")
         else:
             if sous_liste[1] == nom_utilisateur and sous_liste[3] != mot_de_passe:
