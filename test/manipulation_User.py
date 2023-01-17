@@ -35,7 +35,7 @@ def ajouterUser(Nom,password,email):
         
     return True
 
-print(ajouterUser("Jaque","PassWord","Jaque@yahoo.com"))
+print(ajouterUser("Jaque","MDP","Jaque@gmail.com"))
 
 
     

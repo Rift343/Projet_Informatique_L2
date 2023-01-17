@@ -83,13 +83,14 @@ def dans_csv(ID_User,Dico_csv):
 
     Ecrit la question de Dico_csv dans le fichier contenant les questions de ID_User
     """
+    id =1
     ListeCSV=list()
     PATH= os.getcwd()
     PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
     #os.path.isfile() permet de savoir si le fichier correspondant au PATH existe
     #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
-        id=1
+        #id=1
         while (estDansCSV(ID_User,str(id))==False):
             id = id + 1
             #print(id)
@@ -100,7 +101,7 @@ def dans_csv(ID_User,Dico_csv):
             return False
           
     else:
-        id=1
+        #id=1
         ListeCSV.append(id)
 
     for etiquette in Dico_csv['ET']:
@@ -120,9 +121,9 @@ def dans_csv(ID_User,Dico_csv):
         Ecriture=csv.writer(FILE,delimiter=';')   
         Ecriture.writerow(ListeCSV)
         FILE.close() 
-    return True
+    return id
 
-#dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']})     
+print(dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']}) )    
 
 
 def modif_csv(ID_User,Dico_csv):
@@ -175,4 +176,4 @@ def modif_csv(ID_User,Dico_csv):
     else:
         return False
 
-modif_csv(1,{'ID':'3','Question': 'machin', 'ET': ['Info'], 'REP': ['truc', 'bidule', '4','5'], 'BREP': ['4']})
+#modif_csv(1,{'ID':'3','Question': 'machin', 'ET': ['Info'], 'REP': ['truc', 'bidule', '4','5'], 'BREP': ['4']})
