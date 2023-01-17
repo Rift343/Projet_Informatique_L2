@@ -28,14 +28,17 @@ def ajouterUser(Nom,password,email):
     
     with open(PATH,'a',newline='') as FILE:
         id = 1
-        while (id in listeid):
+        print (id)
+        print (listeid)
+        print(id in listeid)
+        while (str(id) in listeid):
             id = id +1
         Ecriture=csv.writer(FILE,delimiter=';')   
         Ecriture.writerow([id,Nom,email,password])      
         
     return True
 
-print(ajouterUser("Jaque","MDP","Jaque@gmail.com"))
+print(ajouterUser("Jaque","JE","vneiu@gmail.com"))
 
 
     
