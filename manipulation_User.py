@@ -31,7 +31,7 @@ def ajouterUser(Nom,password,email):
     Enfin on écrit notre nouvel utilisateur dans le fichier des utilisateur
     """
     PATH = os.getcwd()
-    PATH = PATH+littlePATH+"\\testUser.csv"
+    PATH = PATH+littlePATH+"\\User.csv"
     listeUSER = lireCSV()
     listeid=[]
     for user in listeUSER:
