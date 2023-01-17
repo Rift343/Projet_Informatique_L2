@@ -4,6 +4,11 @@ import os
 littlePATH = "\\test"
 
 def lireCSV():
+    """
+    Sortie: Liste de liste de string correspondant au l'intégralité des utilisateurs 
+    Principe: On va lire le ficher contenant les utilisateurs puis on va écrire ce fichier
+    dans un liste que l'on renvoie
+    """
     PATH = os.getcwd()
     PATH = PATH+littlePATH+"\\testUser.csv"
     with open(PATH,'r') as FILE:
@@ -14,9 +19,17 @@ def lireCSV():
     return ListeUSER
             
 
-print(lireCSV())
+#print(lireCSV())
 
 def ajouterUser(Nom,password,email):
+    """
+    Entrée: trois string Nom, password,email
+    Sortie un boolean True
+    Principe: L'on récupère la liste des utilisateurs existants puis 
+    on vérifie si le mot de passe et l'email sont unique et on donne
+    le plus petit nombre possible unique pour être l'identifiant.
+    Enfin on écrit notre nouvel utilisateur dans le fichier des utilisateur
+    """
     PATH = os.getcwd()
     PATH = PATH+littlePATH+"\\testUser.csv"
     listeUSER = lireCSV()
@@ -38,7 +51,7 @@ def ajouterUser(Nom,password,email):
         
     return True
 
-print(ajouterUser("Jaque","JE","vneiu@gmail.com"))
+#print(ajouterUser("Jaque","JE","vneiu@gmail.com"))
 
 
     
