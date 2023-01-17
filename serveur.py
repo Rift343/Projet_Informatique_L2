@@ -27,7 +27,7 @@ def enregistrement():
         session['Username'] = nom_utilisateur
         csv = lireCSV()
         for User in csv:
-            if User[1]==Username:
+            if User[1]==nom_utilisateur:
                 IdUser = User[0]
                 session['UserId'] = IdUser
         return render_template("acceuil.html")
@@ -48,7 +48,7 @@ def connexion():
             session['Username'] = nom_utilisateur
             csv = lireCSV()
             for User in csv:
-                if User[1]==Username:
+                if User[1]==nom_utilisateur:
                     IdUser = User[0]
                     session['UserId'] = IdUser
             return render_template("acceuil.html", Username=nom_utilisateur)
