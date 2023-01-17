@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from manipulationQuestion import *
 from manipulation_User import *
+import hashlib
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 
@@ -17,7 +18,8 @@ def enregistrement():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     email = request.form['email'] #Son mail
     mot_de_passe = request.form['password'] #Son mot de passe
-    if ajouterUser(nom_utilisateur,mot_de_passe,email) == False:
+    #mot_de_passe = hashlib.sha256(b)
+    if ajouterUser(nom_utilisateur,hashlib.sha256(mot_de_passe.encode()).hexdigest(),email) == False:
         print("le nom d'utilisateur ou le mail est déjà lié à un compte")
         return 0 #le nom d'utilisateur ou le mail est déjà lié à un compte
     else:
@@ -36,17 +38,12 @@ def connexion():
     mot_de_passe = request.form['password'] #Son mot de passe
     listeUser = lireCSV()
     for sous_liste in listeUser:
-        if sous_liste[1] == nom_utilisateur and sous_liste[3] == mot_de_passe:
+        if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
             print("connexion")
             session['Username'] = nom_utilisateur
             return render_template("acceuil.html")
-        else:
-            if sous_liste[1] == nom_utilisateur and sous_liste[3] != mot_de_passe:
-                print("mot de passe incorrect")
-                return 0#mot de passe incorrect
-            else:
-                print("identifiant incorrect")
-                return 0#identifiant incorrect
+    return render_template("acceuil.html")
+    #le mot de passe ou l'identifiant est incorrect
 
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
