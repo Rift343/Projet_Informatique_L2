@@ -20,7 +20,13 @@
     }
   function deactiver_filtrage(etiquette_filtre){
     document.getElementById(etiquette_filtre+'-bouton').style="background-color : white";
-    document.getElementById(etiquette_filtre+'-bouton').activer="non"
+    document.getElementById(etiquette_filtre+'-bouton').activer="non";
+    var eti_exercices = document.getElementsByClassName("eti");
+                for(var j = 0; j < eti_exercices.length; j++) {
+                    
+                            elements[i].parentElement.setAttribute("hidden", false);
+        
+    }
     var elements = document.getElementsByClassName("bouton");
     for(var i = 0; i < elements.length; i++) {
         if(elements[i].activer=="oui"){

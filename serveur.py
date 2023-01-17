@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, request, render_template
 from manipulationquestions import *
+from manipulation_User import *
 app = Flask(__name__)
 
 
@@ -16,6 +17,12 @@ def enregistrement():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     email = request.form['email'] #Son mail
     mot_de_passe = request.form['password'] #Son mot de passe
+    if ajouterUser(nom_utilisateur,mot_de_passe,email) == False:
+        print("le nom d'utilisateur ou le mail est déjà lié à un compte")
+        return 0#le nom d'utilisateur ou le mail est déjà lié à un compte
+    else:
+        print("compte créée")
+        return 1#compte créée
     #ouverture du csv des utilisateurs, verification que le nom d'utilisateur n'est pas déjà utilisé ni le mail, si ce n'est pas le cas, on écrit dans le csv
 
 
@@ -27,7 +34,18 @@ def log():
 def connexion():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     mot_de_passe = request.form['password'] #Son mot de passe
-    #ouverture du csv des utilisateurs, verification que le mot de passe saisi est le même que celui du csv et si c'est le cas on le connecte
+    listeUser = lireCSV()
+    for sous_liste in listeUser:
+        if sous_liste[1] == nom_utilisateur and sous_liste[3] == mot_de_passe:
+            print("connexion")
+            return 1#connexion
+        else:
+            if sous_liste[1] == nom_utilisateur and sous_liste[3] != mot_de_passe:
+                print("mot de passe incorrect")
+                return 0#mot de passe incorrect
+            else:
+                print("identifiant incorrect")
+                return 0#identifiant incorrect
 
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
@@ -43,7 +61,6 @@ def creationQuestion():
 
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
-    #idQuestion #= #il faudrait rajouter ici un identifiant de question pas encore utilisé
     etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
     enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
     reponses = request.form['li_rep_possibles'] #Ses réponses
@@ -57,9 +74,8 @@ def ajoutQuestion():
     li_etiquettes = etiquettes.split(';') 
     li_rep = reponses.split(';')
     dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
-    dans_csv(IdUser, dictionnaire) #Ajout du dictionnaire d'une question dans le csv des questions
-
-    #return render_template("question/"+idQuestion+".html") #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
+    idQ = str(dans_csv(IdUser, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
+    return redirect(url_for('question',idQuestion = idQ)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
 
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
