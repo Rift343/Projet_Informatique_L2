@@ -6,5 +6,6 @@ https://plastex.github.io/plastex/
 
 Documentation:
 https://docs.python.org/3/
+https://docs.python.org/fr/3/library/hashlib.html
 
 AJOUTER REF LATEX
