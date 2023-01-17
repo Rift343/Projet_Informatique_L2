@@ -212,3 +212,15 @@ def delQuestion(ID_User,IDquestion):
 
 
 #delQuestion(1,4)
+
+def getQuestion(ID_User,IDquestion):
+    """
+    Entrée:ID_User => id de l'utilisateur   
+           IDquestion => id de la question
+    Sortie: dictionnaire de la question d'id IDquestion de l'utilisateur d'id ID_User
+    """
+    liste = depuis_csv(ID_User)
+    for dico in liste:
+        if (dico['ID']==str(IDquestion)):
+            return dico
+print(getQuestion(1,1))
