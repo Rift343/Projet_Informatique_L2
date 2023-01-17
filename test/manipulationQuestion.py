@@ -169,7 +169,7 @@ def modif_csv(ID_User,Dico_csv):
                 ListeCSV[-1].append(i)
         with open(PATH,'w',newline='') as FILE:
             Ecriture=csv.writer(FILE,delimiter=';')  
-            print(ListeCSV)      
+            #print(ListeCSV)      
             Ecriture.writerows(ListeCSV)
         FILE.close()
         return True
@@ -206,7 +206,7 @@ def delQuestion(ID_User,IDquestion):
                         ListeCSV[-1].append(i)
         with open(PATH,'w',newline='') as FILE:
             Ecriture=csv.writer(FILE,delimiter=';')  
-            print(ListeCSV)      
+            #print(ListeCSV)      
             Ecriture.writerows(ListeCSV)
         FILE.close()
 
