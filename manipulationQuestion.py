@@ -1,7 +1,7 @@
 import csv
 import os
 
-littlePATH = "\\test"
+littlePATH = "\\csv"
 
 def depuis_csv(ID_User):
     """
@@ -51,7 +51,7 @@ def depuis_csv(ID_User):
     #print(ListeDicoQuestion)
     return ListeDicoQuestion
     
-#depuis_csv(1)
+#print(depuis_csv(2))
 
 def estDansCSV(ID_User,ID_Question):
     maliste = depuis_csv(ID_User)

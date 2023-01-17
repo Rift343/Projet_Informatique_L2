@@ -1,7 +1,7 @@
 import csv
 import os
 
-littlePATH = "\\test"
+littlePATH = "\\csv"
 
 def lireCSV():
     """
@@ -10,7 +10,7 @@ def lireCSV():
     dans un liste que l'on renvoie
     """
     PATH = os.getcwd()
-    PATH = PATH+littlePATH+"\\testUser.csv"
+    PATH = PATH+littlePATH+"\\User.csv"
     with open(PATH,'r') as FILE:
         lecture = csv.reader(FILE,delimiter=';')
         ListeUSER=[]
