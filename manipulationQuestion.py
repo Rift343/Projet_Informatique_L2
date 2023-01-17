@@ -1,7 +1,7 @@
 import csv
 import os
 
-littlePATH = "\\csv"
+littlePATH = "/csv"
 
 def depuis_csv(ID_User):
     """
@@ -15,7 +15,7 @@ def depuis_csv(ID_User):
     """    
     PATH = os.getcwd()
     #On récupere le PATH jusqu'au répertoire de travails
-    PATH = PATH+littlePATH+"\question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
+    PATH = PATH+littlePATH+"/question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
     #On ajoute au PATH le chemin vers notre fichier 
     with open(PATH,'r') as FILE:#Ouverture du fichier
         lecture=csv.reader(FILE,delimiter=';')
@@ -86,7 +86,7 @@ def dans_csv(ID_User,Dico_csv):
     id =1
     ListeCSV=list()
     PATH= os.getcwd()
-    PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
+    PATH =  PATH+littlePATH+"/question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
     #os.path.isfile() permet de savoir si le fichier correspondant au PATH existe
     #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
@@ -142,7 +142,7 @@ def modif_csv(ID_User,Dico_csv):
     les questions dans le fichiers
     """
     PATH= os.getcwd()
-    PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"
+    PATH =  PATH+littlePATH+"/question_"+str(ID_User)+".csv"
     if (os.path.isfile(PATH)):
         lecture = depuis_csv(ID_User)
         for ligne in lecture:
@@ -187,7 +187,7 @@ def delQuestion(ID_User,IDquestion):
     On doit réécrire en intégralité le fichier
     """
     PATH= os.getcwd()
-    PATH =  PATH+littlePATH+"\question_"+str(ID_User)+".csv"
+    PATH =  PATH+littlePATH+"/question_"+str(ID_User)+".csv"
     if (os.path.isfile(PATH)):
         lecture = depuis_csv(ID_User)
         ListeCSV=[]
