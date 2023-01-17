@@ -18,3 +18,7 @@
     text-align: center;
     background-color: rgb(137, 226, 182);
 }
+
+table, th, td {
+    border: 1px solid;
+  }
