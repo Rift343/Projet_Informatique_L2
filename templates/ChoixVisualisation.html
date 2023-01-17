@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<script></script>
+		<title>Commande</title>
+		<script>
+			function filtrage_par_eti(etiquette_filtre) {
+				//changer onclick button
+				document.getElementById(etiquette_filtre + "-bouton").style =
+					"background-color : blue";
+				document.getElementById(etiquette_filtre + "-bouton").activer =
+					"oui";
+				document
+					.getElementById(etiquette_filtre + "-bouton")
+					.setAttribute(
+						"onclick",
+						'javascript: deactiver_filtrage("' +
+							etiquette_filtre +
+							'");'
+					);
+				var elements = document.getElementsByClassName("eti");
+				for (var i = 0; i < elements.length; i++) {
+					li_eti = elements[i].innerHTML.split(";");
+					if (!li_eti.includes(etiquette_filtre)) {
+						elements[i].parentElement.setAttribute("hidden", true);
+					}
+				}
+			}
+			function deactiver_filtrage(etiquette_filtre) {
+				document.getElementById(etiquette_filtre + "-bouton").style =
+					"background-color : white";
+				document.getElementById(etiquette_filtre + "-bouton").activer =
+					"non";
+				document
+					.getElementById(etiquette_filtre + "-bouton")
+					.setAttribute(
+						"onclick",
+						'javascript: filtrage_par_eti("' +
+							etiquette_filtre +
+							'");'
+					);
+				var eti_exercices = document.getElementsByClassName("eti");
+				for (var j = 0; j < eti_exercices.length; j++) {
+					eti_exercices[j].parentElement.removeAttribute("hidden");
+				}
+				var elements = document.getElementsByClassName("bouton");
+				for (var i = 0; i < elements.length; i++) {
+					//console.log(elements[i].activer)
+					if (elements[i].activer == "oui") {
+						eti = elements[i].id.split("-")[0]; //si bouton activer
+						//console.log("etiquette a filtre :"+eti);
+						var eti_exercices =
+							document.getElementsByClassName("eti");
+						for (var j = 0; j < eti_exercices.length; j++) {
+							li_eti = eti_exercices[j].innerHTML.split(";");
+
+							if (!li_eti.includes(eti)) {
+								eti_exercices[j].parentElement.setAttribute(
+									"hidden",
+									true
+								);
+							}
+						}
+					}
+				}
+			}
+
+			function bouton_filtrage() {
+				//on fait la liste de toutes les etiquettes existantes et on fait les boutons de filtrage
+				li_eti_total = [];
+				var dict = {}; //on creer un objet qui sert de dictionnaire
+
+				var elements = document.getElementsByClassName("eti");
+				console.log(elements);
+				for (var i = 0; i < elements.length; i++) {
+					li_eti = elements[i].innerHTML.split(";");
+					console.log(li_eti);
+					for (var j = 0; j < li_eti.length; j++) {
+						console.log(!li_eti_total.includes(li_eti[j]));
+						if (
+							!li_eti_total.includes(li_eti[j]) &&
+							li_eti[j] != ""
+						) {
+							i;
+
+							li_eti_total.push(li_eti[j]);
+							dict[li_eti[j]] = 1;
+						} else {
+							dict[li_eti[j]] = dict[li_eti[j]] + 1;
+						}
+					}
+				}
+				console.log(li_eti_total);
+				for (var i = 0; i < li_eti_total.length; i++) {
+					document.getElementById("boutons_de_filtrage").innerHTML =
+						document.getElementById("boutons_de_filtrage")
+							.innerHTML +
+						'<button class="bouton" id="' +
+						li_eti_total[i] +
+						'-bouton" activer="non" onclick=filtrage_par_eti("' +
+						li_eti_total[i] +
+						'") value=' +
+						li_eti_total[i] +
+						"(" +
+						dict[li_eti_total[i]] +
+						') style="background-color : white" activer="non" >' +
+						li_eti_total[i] +
+						"(" +
+						dict[li_eti_total[i]] +
+						")</button>";
+				}
+			}
+		</script>
+	</head>
+	<body onload="bouton_filtrage()">
+		<div id="top">Createur de question en ligne</div>
+		<div id="mid">
+			<div id="boutons_de_filtrage"></div>
+			<table>
+				{% for dico in li_dictionnaire: %}
+				<tr>
+					<td>{{dico["ID"]}}</td>
+					
+					<td class="eti">
+						{% for eti in dico["ET"]: %}{{eti+";"}}{%endfor%}
+					</td><td>{{dico["Question"]}}</td><td>{% for rep in dico["REP"]: %}{{rep+";"}}{%endfor%}</td>
+					<td>{% for rep in dico["BREP"]: %}{{rep+";"}}{%endfor%}</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+		<div id="bot">
+			<a href="./">Acceuil</a>
+			<a href="register">S'enregistrer</a>
+			<a href="login">Se connecter</a>
+			<a href="creationQuestion">Creer une question</a>
+			<a href="BDD">Liste de vos questions</a>
+			<a href="creerfeuille">Creer une feuille d'exercice</a>
+		</div>
+	</body>
+</html>
