@@ -1,8 +1,8 @@
-from flask import Flask, redirect, url_for, request, render_template
+from flask import Flask, redirect, url_for, request, render_template, session
 from manipulationQuestion import *
 from manipulation_User import *
 app = Flask(__name__)
-
+app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 
 @app.route("/") #Page principale du site
 def index():
@@ -19,11 +19,15 @@ def enregistrement():
     mot_de_passe = request.form['password'] #Son mot de passe
     if ajouterUser(nom_utilisateur,mot_de_passe,email) == False:
         print("le nom d'utilisateur ou le mail est déjà lié à un compte")
-        return 0#le nom d'utilisateur ou le mail est déjà lié à un compte
+        return 0 #le nom d'utilisateur ou le mail est déjà lié à un compte
     else:
         print("compte créée")
-        return 1#compte créée
-    #ouverture du csv des utilisateurs, verification que le nom d'utilisateur n'est pas déjà utilisé ni le mail, si ce n'est pas le cas, on écrit dans le csv
+        csv = lireCSV()
+        for element in csv:
+            if element[1] == nom_utilisateur:
+                UserId = element[0]
+        session['Username'] = UserId
+        return render_template("acceuil.html")
 
 
 @app.route("/login") #Page de connexion à un compte
@@ -38,7 +42,8 @@ def connexion():
     for sous_liste in listeUser:
         if sous_liste[1] == nom_utilisateur and sous_liste[3] == mot_de_passe:
             print("connexion")
-            return 1#connexion
+            session['Username'] = UserId
+            return render_template("acceuil.html")
         else:
             if sous_liste[1] == nom_utilisateur and sous_liste[3] != mot_de_passe:
                 print("mot de passe incorrect")
@@ -50,7 +55,9 @@ def connexion():
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
-    dico = depuis_csv(IdUser)
+    if 'Username' in session:
+        Username = session['Username']
+    dico = depuis_csv(Username)
     return render_template("BDD.html", li_dictionnaire=dico)
 
 
@@ -61,6 +68,8 @@ def creationQuestion():
 
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
+    if 'Username' in session:
+        Username = session['Username']
     etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
     enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
     reponses = request.form['li_rep_possibles'] #Ses réponses
@@ -74,7 +83,7 @@ def ajoutQuestion():
     li_etiquettes = etiquettes.split(';') 
     li_rep = reponses.split(';')
     dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
-    idQ = str(dans_csv(IdUser, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
+    idQ = str(dans_csv(Username, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
     return redirect(url_for('question',idQuestion = idQ)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
 
 
