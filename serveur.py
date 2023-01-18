@@ -11,7 +11,7 @@ def index():
 
 @app.route("/register") #Page de création d'un compte
 def reg():
-    return render_template("register.html")
+    return render_template("register.html", erreru=False)
 
 @app.route("/register",methods = ['POST']) #Code d'enregistrement d'un utilisateur
 def enregistrement():
@@ -21,16 +21,21 @@ def enregistrement():
     #mot_de_passe = hashlib.sha256(b)
     if ajouterUser(nom_utilisateur,hashlib.sha256(mot_de_passe.encode()).hexdigest(),email) == False:
         print("le nom d'utilisateur ou le mail est déjà lié à un compte")
-        return 0 #le nom d'utilisateur ou le mail est déjà lié à un compte
+        return render_template("login.html", erreur=True)
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
+        csv = lireCSV()#inutile
+        for User in csv:#inutile
+            if User[1]==nom_utilisateur:#inutile
+                IdUser = User[0]
+                session['UserId'] = IdUser
         return render_template("acceuil.html")
 
 
 @app.route("/login") #Page de connexion à un compte
 def log():
-    return render_template("login.html")
+    return render_template("login.html", erreur=False)
 
 @app.route("/login",methods = ['POST']) #Code de connexion d'un utilisateur
 def connexion():
@@ -41,21 +46,22 @@ def connexion():
         if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
             print("connexion")
             session['Username'] = nom_utilisateur
-            return render_template("acceuil_connecte.html", Username=nom_utilisateur)
-    return render_template("acceuil.html")
+            csv = lireCSV()
+            for User in csv:
+                if User[1]==nom_utilisateur:
+                    IdUser = User[0]
+                    session['UserId'] = IdUser
+            return render_template("acceuil.html", Username=nom_utilisateur)
+    return render_template("login.html", erreur = True)
     #le mot de passe ou l'identifiant est incorrect
 
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
-    if 'Username' in session:
-        Username = session['Username']
-        csv = lireCSV()
-        for User in csv:
-            if User[1]==Username:
-                IdUser = User[0]
-                dico = depuis_csv(IdUser)
-                return render_template("BDD.html", li_dictionnaire=dico)
+    if 'UserId' in session:
+        UserId = session['UserId']
+        dico = depuis_csv(UserId)
+        return render_template("BDD.html", li_dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
 
@@ -71,8 +77,8 @@ def creationQuestion():
 
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
-    if 'Username' in session:
-        Username = session['Username']
+    if 'UserId' in session:
+        UserId = session['UserId']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
@@ -86,7 +92,7 @@ def ajoutQuestion():
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')
         dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
-        idQ = str(dans_csv(Username, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
+        idQ = str(dans_csv(UserId, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
         return redirect(url_for('question',idQuestion = idQ)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
     else:
         return render_template("non_connecte.html")

@@ -10,6 +10,9 @@
 <body>
 <div id="top">Createur de question en ligne</div>
 <div id="mid"><br>
+    {% if erreur == True: %}
+    <div style="color: darkred; padding: 20px;">Nom d'utilisateur ou mot de passe incorrect</div>
+    {%endif%}
     <form action = "" method = "post">
         <div class="entree">
             <label for="idUser">Entrez votre nom d'utilisateur : </label>
