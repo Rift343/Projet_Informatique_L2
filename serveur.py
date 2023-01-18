@@ -4,7 +4,7 @@ from manipulation_User import *
 import hashlib
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
-#reessayons
+
 @app.route("/") #Page principale du site
 def index():
     return render_template("acceuil.html")
