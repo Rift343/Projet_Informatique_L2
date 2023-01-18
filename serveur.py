@@ -88,7 +88,7 @@ def ajoutQuestion():
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
-                li_bonnes_reponses.append(i) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+                li_bonnes_reponses.append(reponses[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')

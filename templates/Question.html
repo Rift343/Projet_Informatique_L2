@@ -3,9 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="static/main.css">
-  <script></script>
   <title>Question</title>
-  <script></script>
+  <script>
+    function get_responses(){
+    li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
+    for (element in li_bonne_rep){
+        li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
+    }
+    return li_bonne_rep;
+    }
+
+  </script>
 </head>
 <body>
 <div id="top">Créateur de question en ligne</div>
@@ -15,9 +23,18 @@
       {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
     </td><br>
     <td>{{dictionnaire["Question"]}}</td><br>
-    <td>{% for rep in dictionnaire["REP"]: %}{{rep+" "}}{%endfor%}</td><br>
+
+    <td>{% for rep in dictionnaire["REP"]: %}
+          {%if rep in dictionnaire["BREP"]%}
+            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h3>
+          {% else %}
+            <h4 style="color:rgba(255, 0, 0, 0.664);">{{rep+" "}}</h3>
+          {%endif%}
+        {%endfor%}</td><br>
+
     <td>{% for rep in dictionnaire["BREP"]: %}{{rep+" "}}{%endfor%}</td><br>
   </tr>
+  <span id="numero_load">{{dictionnaire["BREP"]}}</span>
 </div>
 <div id="bot">
 <a href="./">Acceuil</a>
