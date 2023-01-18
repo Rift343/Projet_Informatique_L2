@@ -41,7 +41,7 @@ def connexion():
         if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
             print("connexion")
             session['Username'] = nom_utilisateur
-            return render_template("acceuil.html", Username=nom_utilisateur)
+            return render_template("acceuil_connecte.html", Username=nom_utilisateur)
     return render_template("acceuil.html")
     #le mot de passe ou l'identifiant est incorrect
 
