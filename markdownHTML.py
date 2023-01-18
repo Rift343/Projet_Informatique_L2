@@ -10,9 +10,13 @@ import markdown
 import md_mermaid
 
 
+import markdown
+import md_mermaid
+
+
 def BufferToHtml(text,typeBuff):
     if typeBuff == "mermaid":
-        return "<br>"+markdown.markdown("\n```mermaid\n"+text+"```\n", extensions=['md_mermaid'])+"<br>"
+        return "<br><pre class='mermaid'>"+text+"</pre><br>"
     elif typeBuff == "latex":
         return "<br>$"+text+"$<br><br>"
     else:
@@ -42,4 +46,5 @@ def markdownToHtml(text):
         else:
             html += markdown.markdown(line)
     return html
+
 
