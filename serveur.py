@@ -51,7 +51,7 @@ def connexion():
                 if User[1]==nom_utilisateur:
                     IdUser = User[0]
                     session['UserId'] = IdUser
-            return render_template("acceuil.html", Username=nom_utilisateur)
+            return render_template("acceuil_connecte.html", Username=nom_utilisateur)
     return render_template("login.html", erreur = True)
     #le mot de passe ou l'identifiant est incorrect
 
