@@ -21,14 +21,14 @@
   <tr>
     <td class="eti">
       {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
-    </td><br>
-    <td>{{dictionnaire["Question"]}}</td><br>
+    </td><br><br>
+    <td>{{dictionnaire["Question"]}}</td><br><br><br><br>
 
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h4> <!---Inline CSS sur une balise-->
+            <span style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> <!---Inline CSS sur une balise--> 
           {% else %}
-            <h4 style="color:rgba(255, 0, 0, 0.664);">{{rep+" "}}</h4>
+            <span style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> 
           {%endif%}
         {%endfor%}</td><br>
   </tr>
