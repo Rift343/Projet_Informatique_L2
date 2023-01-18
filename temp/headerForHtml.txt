@@ -1,0 +1,13 @@
+<head>
+  <script src='mermaid.js'></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+  <script src="load-mathjax.js" async></script></head>
+  <script>hljs.initHighlightingOnLoad()
+    window.addEventListnener('load',() =>{
+      let codeBlock=body.getElementsByTagName('code');
+      for(let i in codeBlock)
+      {
+        hljs.highlightBlock(codeBlock[i]);
+      }
+     });
+   </script>
