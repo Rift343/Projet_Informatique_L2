@@ -1,6 +1,8 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from manipulationQuestion import *
 from manipulation_User import *
+from md_mermaid import *
+from markdownHTML import *
 import hashlib
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
@@ -103,7 +105,8 @@ def question(idQuestion):
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        return render_template("Question.html", Question=dico)
+        dico["Question"] = markdownToHtml(dico["Question"])
+        return render_template("Question.html", dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
 
