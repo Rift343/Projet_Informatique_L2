@@ -1,6 +1,6 @@
 import csv
 import os
-
+import markdownHTML
 littlePATH = "/csv"
 
 def depuis_csv(ID_User):
@@ -56,7 +56,23 @@ def depuis_csv(ID_User):
     #print(ListeDicoQuestion)
     return ListeDicoQuestion
     
-print(depuis_csv("math"))
+#print(depuis_csv("math"))
+
+def traductionQuestionToHTML(listeDico):
+    for i in listeDico:
+        print( i['Question'])
+        i['Question']=markdownHTML.markdownToHtml(i['Question'])
+    return listeDico
+
+print(traductionQuestionToHTML(depuis_csv(1)))
+#print(traductionQuestionToHTML(depuis_csv(1)))
+f= """```mermaid
+graph LR
+A --- B
+```
+"""
+print(f+"\n\n")
+print(markdownHTML.markdownToHtml(f))
 
 def estDansCSV(ID_User,ID_Question):
     maliste = depuis_csv(ID_User)
