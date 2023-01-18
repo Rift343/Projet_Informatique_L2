@@ -25,9 +25,9 @@ def enregistrement():
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
-        csv = lireCSV()#inutile
-        for User in csv:#inutile
-            if User[1]==nom_utilisateur:#inutile
+        csv = lireCSV()
+        for User in csv:
+            if User[1]==nom_utilisateur:
                 IdUser = User[0]
                 session['UserId'] = IdUser
         return render_template("acceuil.html")
@@ -46,11 +46,8 @@ def connexion():
         if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
             print("connexion")
             session['Username'] = nom_utilisateur
-            csv = lireCSV()
-            for User in csv:
-                if User[1]==nom_utilisateur:
-                    IdUser = User[0]
-                    session['UserId'] = IdUser
+            IdUser = sous_liste[0]
+            session['UserId'] = IdUser
             return render_template("acceuil_connecte.html", Username=nom_utilisateur)
     return render_template("login.html", erreur = True)
     #le mot de passe ou l'identifiant est incorrect
