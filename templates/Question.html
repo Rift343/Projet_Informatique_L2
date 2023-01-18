@@ -4,12 +4,21 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="static/main.css">
   <script></script>
-  <title>Commande</title>
+  <title>Question</title>
   <script></script>
 </head>
 <body>
 <div id="top">Créateur de question en ligne</div>
-<div id="mid"><br>Bienvenue sur notre site<br>Ce site vous permettra de créer des questions à choix multiples et de générer des feuilles d'exercices à partir de celles-ci<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+<div id="mid">
+  <tr>
+    <td class="eti">
+      {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
+    </td><br>
+    <td>{{dictionnaire["Question"]}}</td><br>
+    <td>{% for rep in dictionnaire["REP"]: %}{{rep+" "}}{%endfor%}</td><br>
+    <td>{% for rep in dictionnaire["BREP"]: %}{{rep+" "}}{%endfor%}</td><br>
+  </tr>
+</div>
 <div id="bot">
 <a href="./">Acceuil</a>
 <a href="register">S'enregistrer</a>
@@ -19,13 +28,5 @@
 <a href="creerfeuille">Créer une feuille d'exercices</a>
 </div>
 </body>
-<tr>
-  <td>{{dictionnaire["ID"]}}</td>
-  
-  <td class="eti">
-    {% for eti in dictionnaire["ET"]: %}{{eti+";"}}{%endfor%}
-  </td><td>{{dictionnaire["Question"]}}</td><td>{% for rep in dictionnaire["REP"]: %}{{rep+";"}}{%endfor%}</td>
-  <td>{% for rep in dictionnaire["BREP"]: %}{{rep+";"}}{%endfor%}</td>
-</tr>
 
 </html>

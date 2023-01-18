@@ -105,7 +105,7 @@ def question(idQuestion):
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        dico["Question"] = markdownToHtml(dico["Question"])
+        #dico["Question"] = markdownToHtml(dico["Question"])
         return render_template("Question.html", dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
