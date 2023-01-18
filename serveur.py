@@ -83,15 +83,13 @@ def ajoutQuestion():
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
-        reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses
-        print(reponses)
+        reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-        print(li_bonnes_reponses)
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')
@@ -130,12 +128,13 @@ def modificationQuestion(idQuestion):
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
+        reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
-                li_bonnes_reponses.append(i) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+                li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')

@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="static/main.css">
+  <link rel="stylesheet" href="../static/main.css">
   <title>Question</title>
   <script>
     function get_responses(){
@@ -26,23 +26,20 @@
 
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h3>
+            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h4>
           {% else %}
-            <h4 style="color:rgba(255, 0, 0, 0.664);">{{rep+" "}}</h3>
+            <h4 style="color:rgba(255, 0, 0, 0.664);">{{rep+" "}}</h4>
           {%endif%}
         {%endfor%}</td><br>
-
-    <td>{% for rep in dictionnaire["BREP"]: %}{{rep+" "}}{%endfor%}</td><br>
   </tr>
-  <span id="numero_load">{{dictionnaire["BREP"]}}</span>
 </div>
 <div id="bot">
-<a href="./">Acceuil</a>
-<a href="register">S'enregistrer</a>
-<a href="login">Se connecter</a>
-<a href="creationQuestion">Créer une question</a>
-<a href="BDD">Liste de vos questions</a>
-<a href="creerfeuille">Créer une feuille d'exercices</a>
+<a href="../">Acceuil</a>
+<a href="../register">S'enregistrer</a>
+<a href="../login">Se connecter</a>
+<a href="../creationQuestion">Créer une question</a>
+<a href="../BDD">Liste de vos questions</a>
+<a href="../creerfeuille">Créer une feuille d'exercices</a>
 </div>
 </body>
 
