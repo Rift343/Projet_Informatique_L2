@@ -138,7 +138,7 @@
 					<td class="eti">
 						{% for eti in dico["ET"]: %}{{eti+";"}}{%endfor%}
 					</td><td>{{dico["Question"]}}</td><td>{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
-					<td>{% for rep in dico["BREP"]: %}{{rep+";"}}{%endfor%}</td>
+					<td>{% for rep in dico["BREP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
 				</tr>
 				{% endfor %}
 			</table>
