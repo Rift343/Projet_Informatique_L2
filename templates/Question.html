@@ -26,7 +26,7 @@
 
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h4>
+            <h4 style="color:rgba(30, 255, 0, 0.651);">{{rep+" "}}</h4> <!---Inline CSS sur une balise-->
           {% else %}
             <h4 style="color:rgba(255, 0, 0, 0.664);">{{rep+" "}}</h4>
           {%endif%}
