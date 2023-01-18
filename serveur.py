@@ -97,13 +97,13 @@ def ajoutQuestion():
         return render_template("non_connecte.html")
 
 
-@app.route("/question/") #Page de visualisation d'une question
-def question():
+@app.route("/question/<idQuestion>") #Page de visualisation d'une question
+def question(idQuestion):
     if 'Username' and 'UserId' in session:
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        return render_template("Question.html", Question=question)
+        return render_template("Question.html", Question=dico)
     else:
         return render_template("non_connecte.html")
 
