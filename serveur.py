@@ -1,6 +1,8 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from manipulationQuestion import *
 from manipulation_User import *
+from md_mermaid import *
+from markdownHTML import *
 import hashlib
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
@@ -27,7 +29,7 @@ def enregistrement():
         session['Username'] = nom_utilisateur
         csv = lireCSV()
         for User in csv:
-            if User[1]==Username:
+            if User[1]==nom_utilisateur:
                 IdUser = User[0]
                 session['UserId'] = IdUser
         return render_template("acceuil.html")
@@ -99,9 +101,12 @@ def ajoutQuestion():
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
 def question(idQuestion):
-    if 'Username' in session:
+    if 'Username' and 'UserId' in session:
         Username = session['Username']
-        return render_template(""+idQuestion+".html")
+        UserId = session['UserId']
+        dico = getQuestion(UserId, idQuestion)
+        #dico["Question"] = markdownToHtml(dico["Question"])
+        return render_template("Question.html", dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
 
