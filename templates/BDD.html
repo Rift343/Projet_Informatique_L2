@@ -22,7 +22,7 @@
 					);
 				var elements = document.getElementsByClassName("eti");
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
 					if (!li_eti.includes(etiquette_filtre)) {
 						elements[i].parentElement.setAttribute("hidden", true);
 					}
@@ -54,7 +54,7 @@
 						var eti_exercices =
 							document.getElementsByClassName("eti");
 						for (var j = 0; j < eti_exercices.length; j++) {
-							li_eti = eti_exercices[j].innerHTML.split(";");
+							li_eti = eti_exercices[j].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
 
 							if (!li_eti.includes(eti)) {
 								eti_exercices[j].parentElement.setAttribute(
@@ -75,7 +75,7 @@
 				var elements = document.getElementsByClassName("eti");
 				console.log(elements);
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
 					console.log(li_eti);
 					for (var j = 0; j < li_eti.length; j++) {
 						console.log(!li_eti_total.includes(li_eti[j]));
@@ -94,6 +94,7 @@
 				}
 				console.log(li_eti_total);
 				for (var i = 0; i < li_eti_total.length; i++) {
+				console.log(li_eti_total[i]);
 					document.getElementById("boutons_de_filtrage").innerHTML =
 						document.getElementById("boutons_de_filtrage")
 							.innerHTML +
