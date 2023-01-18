@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="static/main.css">
-  <link rel="stylesheet" href="static/main.css">
+  <link rel="stylesheet" href="../static/main.css">
   <script></script>
   <title>Commande</title>
   <script type="text/javascript">
@@ -21,7 +20,10 @@
       for (element in li_rep_exit){
           if(typeof li_rep_exit[element].innerHTML !== 'undefined'){
           rep_li.push(li_rep_exit[element].innerHTML);
-          console.log(li_rep_exit[element].innerHTML);console.log(li_rep_exit[element]);nb++;}
+
+          
+          console.log(li_rep_exit[element].innerHTML);
+          console.log(li_rep_exit[element]);console.log(nb);nb++;}
           
       }
       document.getElementById('li_rep_possibles').value=""+rep_li.join(";");
@@ -63,7 +65,7 @@
 <div id="mid"><br><form action="" method="post">
     <div class="entree">
         <label for="enonce">Entrer l'enonce de votre question : </label>
-        <textarea name="enonce" id="enonce" value='{{dictionnaire["Question"]}}' required></textarea>
+        <textarea name="enonce" id="enonce" required>{{dictionnaire["Question"]}}</textarea>
     </div>
     
     <div class="entree">
@@ -79,19 +81,21 @@
         <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les reponses !
     </div>
     <div id = "rep_possibles">{% set num = 0 %}
-    {% for rep in dictionnaire["REP"]: %}<span id = "rep_en_cours"> <input type="checkbox"  id="{{ loop.index-1 }}" name="{{ loop.index-1 }}"><span class="reponses_a_charge">{{rep}}</span><input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>{% set num = num + 1 %}{%endfor%}
+    {% for rep in dictionnaire["REP"]: %}
+    <span id = "rep_en_cours"> <input type="checkbox"  id="{{ loop.index-1 }}" name="{{ loop.index-1 }}" {%if rep in dictionnaire["BREP"]%}{{"checked"}}{%endif%}><span class="reponses_a_charge">{{rep}}
+    </span><input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>{% set num = num + 1 %}{%endfor%}
     </div>        
     <input type="text" name="li_rep_possibles" id="li_rep_possibles" hidden>
         <input type="number" name="nb_rep_possibles" id="nb_rep_possibles" hidden><br>
     <input type="submit" name="submit" id="submit" value ="Ajouter la question !">
-</form><br><br><span id="numero_load">{{dictionnaire["BREP"]}}</span></div>
+</form><br><br><span id="numero_load" hidden>{{dictionnaire["BREP"]}}</span></div>
 <div id="bot">
-<a href="./">Acceuil</a>
-<a href="./register">S'enregistrer</a>
-<a href="./login">Se connecter</a>
-<a href="./creationQuestion">Creer une question</a>
-<a href="./BDD">Liste de vos questions</a>
-<a href="./creerfeuille">Creer une feuille d'exercice</a>
+<a href="../">Acceuil</a>
+<a href="../register">S'enregistrer</a>
+<a href="../login">Se connecter</a>
+<a href="../creationQuestion">Creer une question</a>
+<a href="../BDD">Liste de vos questions</a>
+<a href="../creerfeuille">Creer une feuille d'exercice</a>
 </div>
 </body>
 
