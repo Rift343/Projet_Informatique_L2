@@ -3,12 +3,11 @@
     top: 0;
     width: 100%;
     text-align: center;
-    background-color: rgb(137, 226, 182);color : rgb(2, 2, 128);
+    background-color: rgb(137, 226, 211);color : rgb(0, 0, 0);
 }
 
 #mid {
-    background-color: rgb(2, 2, 128);
-    color : white;
+    background-color: rgb(255, 255, 255);color : rgb(0, 0, 0);
 }
 
 #bot {
@@ -16,12 +15,13 @@
     bottom: 0;
     width: 100%;
     text-align: center;
-    background-color: rgb(137, 226, 182);
+    background-color: rgb(137, 226, 211);
 }
 
 table, th, td {
     border: 1px solid;
-  }
-
-body{background-color: rgb(2, 2, 128);padding-top: 70px;
 }
+
+body{background-color: rgb(255, 255, 255);padding-top: 70px;
+}
+
