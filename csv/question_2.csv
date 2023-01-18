@@ -1,2 +1,4 @@
 1;Info;FINET;Nb Ocet INT;2;3;4;5;FINREP;4
 2;oui;FINET;oui ?;oui;non;FINREP;oui
+3;oui;FINET;oui ?;non;oui;peutetre;FINREP;o
+4;oui;FINET;oui ?;peutetre;oui;non;FINREP;oui
