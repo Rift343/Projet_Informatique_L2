@@ -14,6 +14,19 @@
     }
 
   </script>
+    <script src="../static/mermaid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="../static/load-mathjax.js" async></script>
+    <script>hljs.initHighlightingOnLoad()
+      window.addEventListener('load',() =>{
+        let codeBlock=document.getElementsByTagName('code');
+        for(let i in codeBlock)
+        {
+          hljs.highlightBlock(codeBlock[i]);
+        }
+       });
+     </script>
 </head>
 <body>
 <div id="top">Créateur de question en ligne</div>
@@ -22,8 +35,7 @@
     <td class="eti">
       {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
     </td><br><br>
-    <td>{{dictionnaire["Question"]}}</td><br><br><br><br>
-
+    <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
             <span style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> <!---Inline CSS sur une balise--> 
@@ -31,7 +43,10 @@
             <span style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> 
           {%endif%}
         {%endfor%}</td><br>
+        
+        
   </tr>
+
 </div>
 <div id="bot">
 <a href="../">Acceuil</a>
