@@ -148,8 +148,11 @@ def modificationQuestion(idQuestion):
 
 @app.route("/creationFeuille") #Page de création d'une feuille de questions
 def creationFeuille():
-    if 'Username' in session:
-        Username = session['Username']
+    if 'UserId' in session:
+        UserId = session['UserId']
+        #print(UserId)
+        dico = depuis_csv(UserId)
+        print(dico)
         return render_template("creationFeuille.html")
     else:
         return render_template("non_connecte.html")
