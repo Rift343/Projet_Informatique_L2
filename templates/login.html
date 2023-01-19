@@ -8,8 +8,18 @@
   <script></script>
 </head>
 <body>
+    
     <div class="nom">NomDuSite</div>
-    <div class="menuDeco"> </div>
+    <ul class="menu">
+        <li>
+            Invité
+            <ul class="sousMenu">
+                <li><a href="/">Accueil</a></li>
+                <li><a href="login">Se connecter</a></li>
+                <li><a href="register">S'enregistrer</a></li>
+            </ul>
+        </li>
+    </ul>
 
 <div id="mid"><br>
     {% if erreur == True: %}
