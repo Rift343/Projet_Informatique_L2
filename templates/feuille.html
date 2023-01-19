@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
+		<title>Commande</title>
+		<script>
+			
+			
+		</script>
+	</head>
+	<body>
+		<div id="top">Questionnaire</div>
+		<div id="mid">
+			<table class="tableau_css">
+				<thead>
+					<tr>
+						<th>Etiquettes</th>
+						<th>Enoncé</th>
+						<th>Reponses Possibles</th>
+					</tr>
+				</thead>
+				{% for dico in li_dictionnaire: %}
+				<tr>					
+					<td class="eti">
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau">{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</body>
+</html>
