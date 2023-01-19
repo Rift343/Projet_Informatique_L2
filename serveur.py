@@ -156,7 +156,8 @@ def creationFeuille():
         return render_template("non_connecte.html")
 
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
-def feuille(ListeIDQuestion):
+def feuille():
+    ListeIDQuestion=request.form['idQuestion']
     if 'UserId' in session:
         UserId = session['UserId']
         maListeQuestion= []
