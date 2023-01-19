@@ -1,0 +1,47 @@
+
+
+.tableau_css{
+    border-collapse: collapse;
+    margin: 25px;
+    padding: 25px;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    background-color: rgb(224, 224, 224);
+    border-color: white;
+    border: 1px solid;
+}
+
+.id_tableau{
+width: 6%;
+text-align: center;
+}
+.eti{
+    width: 9%;
+    text-align: center;
+    }
+.enonce_tableau{
+    width: 40%;
+    text-align: center;
+}
+        .rep_tableau{
+            width: 5%;
+            text-align: center;
+            }
+.brep_tableau{
+                width: 5%;
+                text-align: center;
+                }
+                .modif_tableau{
+                    width: 5%;
+                    text-align: center;
+                    }
+                    .supp_tableau{
+                        width: 5%;
+                        text-align: center;
+                        }
+                        .visu_tableau{
+                            width: 5%;
+                            text-align: center;
+                            }

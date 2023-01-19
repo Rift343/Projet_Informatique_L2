@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
 		<script src="../static/mermaid.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
@@ -34,7 +35,7 @@
 					);
 				var elements = document.getElementsByClassName("eti");
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					if (!li_eti.includes(etiquette_filtre)) {
 						elements[i].parentElement.setAttribute("hidden", true);
 					}
@@ -66,8 +67,8 @@
 						var eti_exercices =
 							document.getElementsByClassName("eti");
 						for (var j = 0; j < eti_exercices.length; j++) {
-							li_eti = eti_exercices[j].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
-
+							li_eti = eti_exercices[j].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
+							//console.log(li_eti);
 							if (!li_eti.includes(eti)) {
 								eti_exercices[j].parentElement.setAttribute(
 									"hidden",
@@ -87,7 +88,7 @@
 				var elements = document.getElementsByClassName("eti");
 				console.log(elements);
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					console.log(li_eti);
 					for (var j = 0; j < li_eti.length; j++) {
 						console.log(!li_eti_total.includes(li_eti[j]));
@@ -131,16 +132,27 @@
 		<div id="top">Createur de question en ligne</div>
 		<div id="mid">
 			<div id="boutons_de_filtrage"></div>
-			<table>
+			<table class="tableau_css">
+				<thead>
+					<tr>
+						<th>ID</th><th>Etiquettes</th>
+						<th>Enoncé</th>
+						<th>Reponses Possibles</th>
+						<th>Bonnes reponses</th><th>Visualiser</th><th>Modifier</th><th>Suprimer</th>
+					</tr>
+				</thead>
 				{% for dico in li_dictionnaire: %}
 				<tr>
-					<td>{{dico["ID"]}}</td>
+					<td class="id_tableau">{{dico["ID"]}}</td>
 					
 					<td class="eti">
-						{% for eti in dico["ET"]: %}{{eti+";"}}{%endfor%}
-					</td><td>{{dico["Question"]| safe}}</td><td>{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
-					<td>{% for rep in dico["BREP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
-				</tr>
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau">{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
+					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
+					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
+					</tr>
 				{% endfor %}
 			</table>
 		</div>
