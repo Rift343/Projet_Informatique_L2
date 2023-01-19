@@ -174,7 +174,7 @@ def supprimer(idQuestion):
     delQuestion(UserId,idQuestion)
     listedico=depuis_csv(UserId)
     return render_template("BDD.html",li_dictionnaire=traductionQuestionToHTML(listedico))
-    
+  
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("feuille.html")
