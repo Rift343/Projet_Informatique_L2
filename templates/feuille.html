@@ -23,22 +23,19 @@
 			
 		</script>
 	</head>
-	<body>
+	<body onload="print()">
 		<div id="top">Questionnaire</div>
 		<div id="mid">
 			<table class="tableau_css">
 				<thead>
 					<tr>
-						<th>Etiquettes</th>
 						<th>Enoncé</th>
 						<th>Reponses Possibles</th>
 					</tr>
 				</thead>
 				{% for dico in li_dictionnaire: %}
 				<tr>					
-					<td class="eti">
-						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
-					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau">{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					<td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau" style="text-align : left">{% for rep in dico["REP"]: %}{%if not loop.last%}<input type="checkbox">{{" "+rep}}<br>{%else%}<input type="checkbox">{{rep}}{%endif%}{%endfor%}</td>
 					</tr>
 				{% endfor %}
 			</table>
