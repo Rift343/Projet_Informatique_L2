@@ -157,7 +157,8 @@ def creationFeuille():
 
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
 def feuille():
-    ListeIDQuestion=request.form['idQuestion']
+    ListeIDQuestion=request.form.getlist('idQuestion')
+    print(ListeIDQuestion)
     if 'UserId' in session:
         UserId = session['UserId']
         maListeQuestion= []
@@ -165,7 +166,7 @@ def feuille():
             maListeQuestion.append(getQuestion(UserId,ID))
         
         #récupération de la liste d'id des exos de la feuille et renvoie à feuille.html
-        return render_template("feuille.html", li_dictionnaire=traductionQuestionToHTML(maListeQuestion))
+        return render_template("BDD.html", li_dictionnaire=traductionQuestionToHTML(maListeQuestion))
     else:
         return render_template("non_connecte.html")
 
