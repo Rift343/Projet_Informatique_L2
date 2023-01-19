@@ -1,0 +1,8 @@
+1;test;FINET;"```mermaid
+a---b
+```";vrai;faux;FINREP;vrai
+2;test;essai;FINET;Je suis une question;vrai;faux;peut-être;FINREP;vrai;peut-être
+3;test;FINET;"```mermaid
+a---b
+p---a
+```";vnrei;FINREP;vnrei
