@@ -9,7 +9,11 @@ app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 
 @app.route("/") #Page principale du site
 def index():
-    return render_template("acceuil.html")
+    if 'Username' in session:
+        Username = session['Username']
+        return render_template("acceuil_connecte.html", Username=Username)
+    else:
+        return render_template("acceuil.html")
 
 @app.route("/register") #Page de création d'un compte
 def reg():
@@ -32,7 +36,7 @@ def enregistrement():
             if User[1]==nom_utilisateur:
                 IdUser = User[0]
                 session['UserId'] = IdUser
-        return render_template("acceuil.html")
+        return render_template("acceuil_connecte.html", Username=nom_utilisateur)
 
 
 @app.route("/login") #Page de connexion à un compte
