@@ -3,18 +3,20 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="static/main.css" />
-		<script src='mermaid.js'></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
-  <script src="load-mathjax.js" async></script></head>
-  <script>hljs.initHighlightingOnLoad()
-    window.addEventListnener('load',() =>{
-      let codeBlock=body.getElementsByTagName('code');
-      for(let i in codeBlock)
-      {
-        hljs.highlightBlock(codeBlock[i]);
-      }
-     });
-   </script>
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
 		<title>Commande</title>
 		<script>
 			function filtrage_par_eti(etiquette_filtre) {
@@ -33,7 +35,7 @@
 					);
 				var elements = document.getElementsByClassName("eti");
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					if (!li_eti.includes(etiquette_filtre)) {
 						elements[i].parentElement.setAttribute("hidden", true);
 					}
@@ -65,8 +67,8 @@
 						var eti_exercices =
 							document.getElementsByClassName("eti");
 						for (var j = 0; j < eti_exercices.length; j++) {
-							li_eti = eti_exercices[j].innerHTML.split(";");
-
+							li_eti = eti_exercices[j].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
+							//console.log(li_eti);
 							if (!li_eti.includes(eti)) {
 								eti_exercices[j].parentElement.setAttribute(
 									"hidden",
@@ -86,7 +88,7 @@
 				var elements = document.getElementsByClassName("eti");
 				console.log(elements);
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.split(";");
+					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					console.log(li_eti);
 					for (var j = 0; j < li_eti.length; j++) {
 						console.log(!li_eti_total.includes(li_eti[j]));
@@ -105,6 +107,7 @@
 				}
 				console.log(li_eti_total);
 				for (var i = 0; i < li_eti_total.length; i++) {
+				console.log(li_eti_total[i]);
 					document.getElementById("boutons_de_filtrage").innerHTML =
 						document.getElementById("boutons_de_filtrage")
 							.innerHTML +
@@ -128,19 +131,33 @@
 	<body onload="bouton_filtrage()">
 		<div id="top">Createur de question en ligne</div>
 		<div id="mid">
-			<div id="boutons_de_filtrage"></div>
-			<table>
+			<div id="boutons_de_filtrage"></div><form action="" method="POST"><input type="submit" value="valider" style="    position: fixed;
+				bottom: 50px;
+				right: 30px;
+				width: 6%; height: 5%; "><br>
+			<table class="tableau_css">
+				<thead>
+					<tr><th>Selection</th>
+						<th>ID</th><th>Etiquettes</th>
+						<th>Enoncé</th>
+						<th>Reponses Possibles</th>
+						<th>Bonnes reponses</th><th>Visualiser</th><th>Modifier</th><th>Supprimer</th>
+					</tr>
+				</thead>
 				{% for dico in li_dictionnaire: %}
-				<tr>
-					<td>{{dico["ID"]}}</td>
+				<tr><td class="id_tableau"><input type="checkbox" name="idQuestion" id = "idQuestion" value = "{{dico["ID"]}}" ></td>
+					<td class="id_tableau">{{dico["ID"]}}</td>
 					
 					<td class="eti">
-						{% for eti in dico["ET"]: %}{{eti+";"}}{%endfor%}
-					</td><td>{{dico["Question"]}}</td><td>{% for rep in dico["REP"]: %}{{rep+";"}}{%endfor%}</td>
-					<td>{% for rep in dico["BREP"]: %}{{rep+";"}}{%endfor%}</td>
-				</tr>
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau">{% for rep in dico["REP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{%if not loop.last%}{{rep+"; "}}{%else%}{{rep}}{%endif%}{%endfor%}</td>
+					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
+					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
+					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
+					</tr>
 				{% endfor %}
-			</table>
+			</table></form>
 		</div>
 		<div id="bot">
 			<a href="./">Acceuil</a>
