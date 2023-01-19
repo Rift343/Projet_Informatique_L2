@@ -66,8 +66,6 @@ def BDD():          #les questions qui ont cette étiquette
     else:
         return render_template("non_connecte.html")
 
-
-
 @app.route("/creationQuestion") #Page de création d'une question avec un nom, un énoncé, des réponses, une correction et des étiquettes
 def creationQuestion():
     if 'Username' in session:
@@ -170,6 +168,13 @@ def feuille(ListeIDQuestion):
     else:
         return render_template("non_connecte.html")
 
+@app.route("/supprimer/<idQuestion>")
+def supprimer(idQuestion):
+    UserId = session['UserId']
+    delQuestion(UserId,idQuestion)
+    listedico=depuis_csv(UserId)
+    return render_template("BDD.html",li_dictionnaire=traductionQuestionToHTML(listedico))
+    
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("feuille.html")
