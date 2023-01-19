@@ -1,3 +1,10 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    box-sizing: border-box;
+}
+
 #top {
     position: fixed;
     top: 0;
@@ -60,15 +67,43 @@ body{background-color: rgb(255, 255, 255);padding-top: 70px;
     text-transform: none;
 }
 
-.menuDeco {
-    height: auto;
-    width: 135.8px;
-    float: left;
-    text-align: center;
-    list-style: none;
-    font: normal bold 13px/1em Arial, Verdana, Helvetica;
-    padding: 0;
-    margin: 0;
-    background-color: #444444;
+.menu {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 100px;
+    height: 40px;
 }
-
+.menu > li {
+    float: left;
+    color: #000000;
+    width: 140px;
+    height: 40px;
+    line-height: 40px;
+    background: #afafaf;
+    cursor: pointer;
+    font-size: 17px;
+}
+.sousMenu {
+    transform: scale(0);
+}
+.sousMenu li {
+    font-size: 14px;
+    background: #c7c7c7;
+    padding: 8px 0;
+    color: #000000;
+    border-bottom: 1px solid #353535;
+    transform: scale(0);
+}
+.sousMenu li:last-child {
+    border-bottom: 0;
+}
+.sousMenu li:hover {
+    background: #c7c7c7;
+}
+.menu > li:hover .sousMenu li {
+    transform: scale(1);
+}
+.menu > li:hover .sousMenu {
+    transform: scale(1);
+}
