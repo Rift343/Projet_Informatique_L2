@@ -26,9 +26,9 @@
 
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <span style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> <!---Inline CSS sur une balise--> 
+            <span class='BREP'>{{rep+" "}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
           {% else %}
-            <span style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px">{{rep+" "}}</span> 
+            <span class='MREP'>{{rep+" "}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
           {%endif%}
         {%endfor%}</td><br>
   </tr>

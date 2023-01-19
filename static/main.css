@@ -25,3 +25,20 @@ table, th, td {
 body{background-color: rgb(255, 255, 255);padding-top: 70px;
 }
 
+.BREP {
+    border-radius: 25px; 
+    background: #2cb809; 
+    padding: 20px; 
+    width: 200px; 
+    height: 150px; 
+    margin: 10px;
+}
+
+.MREP {
+    border-radius: 25px; 
+    background: #d80b0b; 
+    padding: 20px; 
+    width: 200px; 
+    height: 150px; 
+    margin: 10px
+}
