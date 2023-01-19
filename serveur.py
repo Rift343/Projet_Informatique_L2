@@ -152,8 +152,8 @@ def creationFeuille():
         UserId = session['UserId']
         #print(UserId)
         dico = depuis_csv(UserId)
-        print(dico)
-        return render_template("creationFeuille.html")
+        
+        return render_template("creationFeuille.html",li_dictionnaire=traductionQuestionToHTML(dico))
     else:
         return render_template("non_connecte.html")
 
