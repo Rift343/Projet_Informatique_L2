@@ -22,7 +22,7 @@ th, td {
     border: 1px solid;
 }
 
-body{background-color: rgb(255, 255, 255);padding-top: 70px;
+body{background-color: rgb(255, 255, 255);padding-top: 70px; background-image: url("/static/back.png");
 }
 
 .BREP {
@@ -43,32 +43,4 @@ body{background-color: rgb(255, 255, 255);padding-top: 70px;
     margin: 10px
 }
 
-.nom {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 100%;
-    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
-    font-size: 40px;
-    letter-spacing: 0.4px;
-    word-spacing: 0.6px;
-    color: #000000;
-    font-weight: 700;
-    text-decoration: none;
-    font-style: normal;
-    font-variant: normal;
-    text-transform: none;
-}
-
-.menuDeco {
-    height: auto;
-    width: 135.8px;
-    float: left;
-    text-align: center;
-    list-style: none;
-    font: normal bold 13px/1em Arial, Verdana, Helvetica;
-    padding: 0;
-    margin: 0;
-    background-color: #444444;
-}
 
