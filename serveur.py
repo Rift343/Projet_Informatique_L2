@@ -62,7 +62,7 @@ def BDD():          #les questions qui ont cette étiquette
         #print(UserId)
         dico = depuis_csv(UserId)
         print(dico)
-        return render_template("BDD.html", li_dictionnaire=dico)
+        return render_template("BDD.html", li_dictionnaire=traductionQuestionToHTML(dico))
     else:
         return render_template("non_connecte.html")
 
