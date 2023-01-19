@@ -66,8 +66,6 @@ def BDD():          #les questions qui ont cette étiquette
     else:
         return render_template("non_connecte.html")
 
-
-
 @app.route("/creationQuestion") #Page de création d'une question avec un nom, un énoncé, des réponses, une correction et des étiquettes
 def creationQuestion():
     if 'Username' in session:
@@ -148,21 +146,35 @@ def modificationQuestion(idQuestion):
 
 @app.route("/creationFeuille") #Page de création d'une feuille de questions
 def creationFeuille():
-    if 'Username' in session:
-        Username = session['Username']
-        return render_template("creationFeuille.html")
+    if 'UserId' in session:
+        UserId = session['UserId']
+        #print(UserId)
+        dico = depuis_csv(UserId)
+        
+        return render_template("creationFeuille.html",li_dictionnaire=traductionQuestionToHTML(dico))
     else:
         return render_template("non_connecte.html")
 
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
-def feuille():
-    if 'Username' in session:
-        Username = session['Username']
+def feuille(ListeIDQuestion):
+    if 'UserId' in session:
+        UserId = session['UserId']
+        maListeQuestion= []
+        for ID in ListeIDQuestion:
+            maListeQuestion.append(getQuestion(UserId,ID))
+        
         #récupération de la liste d'id des exos de la feuille et renvoie à feuille.html
-        return render_template("feuille.html")
+        return render_template("feuille.html", li_dictionnaire=traductionQuestionToHTML(maListeQuestion))
     else:
         return render_template("non_connecte.html")
 
+@app.route("/supprimer/<idQuestion>")
+def supprimer(idQuestion):
+    UserId = session['UserId']
+    delQuestion(UserId,idQuestion)
+    listedico=depuis_csv(UserId)
+    return render_template("BDD.html",li_dictionnaire=traductionQuestionToHTML(listedico))
+    
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("feuille.html")

@@ -59,8 +59,18 @@ def depuis_csv(ID_User):
 #print(depuis_csv("math"))
 
 def traductionQuestionToHTML(listeDico):
+    """
+    Entré:listeDico-> une liste de dictionnaire sous format :
+    ID=>id de la question (String)
+    Question=> Enoncé de la question (String)
+    ET => liste des étiquettes(liste de String)
+    REP => liste de réponses possible (liste de String)
+    BREP => liste des bonne réponse (liste de String)
+
+    Sortie: La même liste mais les questions sont traduites en HTML
+    """
     for i in listeDico:
-        print( i['Question'])
+        #print( i['Question'])
         i['Question']=markdownHTML.markdownToHtml(i['Question'])
     return listeDico
 
