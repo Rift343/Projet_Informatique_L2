@@ -156,7 +156,8 @@ def creationFeuille():
         return render_template("non_connecte.html")
 
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
-def feuille(ListeIDQuestion):
+def feuille():
+    ListeIDQuestion=request.form['idQuestion']
     if 'UserId' in session:
         UserId = session['UserId']
         maListeQuestion= []
@@ -174,7 +175,7 @@ def supprimer(idQuestion):
     delQuestion(UserId,idQuestion)
     listedico=depuis_csv(UserId)
     return render_template("BDD.html",li_dictionnaire=traductionQuestionToHTML(listedico))
-    
+  
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("feuille.html")
