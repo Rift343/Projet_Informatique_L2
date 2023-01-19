@@ -81,7 +81,7 @@
     
     <div class="entree">
         <label for="etiquettes">Entrer la/les etiquettes de votre question (séparé par des ";") : </label>
-        <input type="text" name="etiquettes" id="etiquettes" value='{% for eti in dictionnaire["ET"]: %}{{eti+";"}}{%endfor%}'>
+        <input type="text" name="etiquettes" id="etiquettes" value='{% for eti in dictionnaire["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}'>
     </div>
 
     
@@ -106,7 +106,7 @@
 <a href="../login">Se connecter</a>
 <a href="../creationQuestion">Creer une question</a>
 <a href="../BDD">Liste de vos questions</a>
-<a href="../creerfeuille">Creer une feuille d'exercice</a>
+<a href="../creationFeuille">Creer une feuille d'exercice</a>
 </div>
 </body>
 

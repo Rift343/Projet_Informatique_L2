@@ -29,7 +29,7 @@ th, td {
     border: 1px solid;
 }
 
-body{background-color: rgb(255, 255, 255);padding-top: 70px;
+body{background-color: rgb(255, 255, 255);padding-top: 70px; background-image: url("/static/back.png");
 }
 
 .BREP {
@@ -107,3 +107,4 @@ body{background-color: rgb(255, 255, 255);padding-top: 70px;
 .menu > li:hover .sousMenu {
     transform: scale(1);
 }
+
