@@ -188,7 +188,7 @@ def supprimer(idQuestion):
     UserId = session['UserId']
     delQuestion(UserId,idQuestion)
     listedico=depuis_csv(UserId)
-    return render_template("BDD.html",li_dictionnaire=traductionQuestionToHTML(listedico))
+    return redirect(url_for('BDD'))
   
 #@app.route("/feuille")
 #def feuille():
