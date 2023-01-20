@@ -35,6 +35,18 @@ class Zebra{
 ```latex
 dddeed
 ```";vnrei;FINREP;vnrei
-4;dd;FINET;"<script>alert(""les banques detestent cette astuce"");</script>";d;ddd;FINREP;d
 5;ss;FINET;ss; xx; xxss;FINREP; xxss
 6;ss;FINET;ssgffgfg; xx; xxss;FINREP
+4;buy;FINET;"## titre H2
+### sous titre H3
+**en gras**, *en italique*
+- un item
+- un second item
+
+```python
+def fact(n):
+    if n<2:
+        return ...
+    else:
+        return ...
+```"; jh    ; jh    ;FINREP; jh    ; jh    
