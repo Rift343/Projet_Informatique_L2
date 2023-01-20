@@ -7,7 +7,7 @@ g --- gg
 g --- gd
 d --- dg
 d --- dd
-```";vrai                    ;faux                    ;peut-etre        ;FINREP;peut-etre        
+```";vrai;faux                    ;peut-etre        ;FINREP;peut-etre        
 2;test;essai;FINET;Je suis une question;vrai;faux;peut-etre;FINREP;vrai;peut-etre
 3;test;FINET;"```mermaid
 classDiagram

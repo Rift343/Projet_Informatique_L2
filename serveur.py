@@ -104,7 +104,11 @@ def ajoutQuestion():
 @app.route("/visuIFrame",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def visuIFrame():
     enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
+    print("entree markdown to html")
+    print(enonce)#PROBLEME ICI A REGARDER !!!!!!!!!!!!!!!!
     enonce = markdownToHtml(enonce)
+    print("sortie markdown to html")
+    print(enonce)
     return render_template("visuIFrame.html", enoncerecu=enonce)
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question

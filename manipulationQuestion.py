@@ -72,6 +72,8 @@ def traductionQuestionToHTML(listeDico):
     for i in listeDico:
         #print( i['Question'])
         i['Question']=markdownHTML.markdownToHtml(i['Question'])
+        for r in i['REP']:
+            r=markdownHTML.markdownToHtml(r)
     return listeDico
 
 print(traductionQuestionToHTML(depuis_csv(3)))

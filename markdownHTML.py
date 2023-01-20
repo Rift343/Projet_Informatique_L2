@@ -48,3 +48,7 @@ def markdownToHtml(text):
     return html
 
 
+def liMarkdownToHtml(li):
+    for i in range(len(li)):
+        li[i]= markdownToHtml(li[i]);
+    return li;
