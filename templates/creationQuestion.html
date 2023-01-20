@@ -37,6 +37,17 @@
     }
     document.getElementById('nb_rep_possibles').value=num;
   }
+  
+
+    function visualisation_iframe() {
+    var form = document.getElementById("formulaire");
+    form.target = 'iframe_visu';
+    form.action = './visuIFrame';
+    document.getElementById("iframe_visu").removeAttribute("hidden");
+    form.submit();
+    form.target = "";
+    form.action = "";
+}
   </script>
 </head>
 <body>
@@ -52,7 +63,7 @@
             </ul>
         </li>
     </ul>
-<div id="mid"><br><form action="" method="post">
+<div id="mid"><br><form id="formulaire" action="" method="post">
     <div class="entree">
         <label for="enonce">Entrer l'enonce de votre question : </label>
         <textarea name="enonce" id="enonce" required></textarea>
@@ -73,7 +84,11 @@
     </div>
     <div id = "rep_possibles">
     </div><br>
-    <input type="submit" name="submit" id="submit" value ="Ajouter la question !">
+    <input type="submit" name="btnsubmit" id="btnsubmit" value ="Ajouter la question !">
+    <input type="button" name="visu" id="visu" value ="Visualiser l'enonce de la question !" onclick="visualisation_iframe()">
+    <iframe name="iframe_visu" src="" id="iframe_visu" width="500" height="500" style="position: fixed;
+    top: 100px;
+    right: 50px;" hidden></iframe>
 </form><br><br></div>
 <div id="bot">
 <a href="./">Acceuil</a>

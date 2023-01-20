@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="../static/main.css">
+  <title>Question</title>
+  <script>
+    function get_responses(){
+    li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
+    for (element in li_bonne_rep){
+        li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
+    }
+    return li_bonne_rep;
+    }
+
+  </script>
+    <script src="../static/mermaid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="../static/load-mathjax.js" async></script>
+    <script>hljs.initHighlightingOnLoad()
+      window.addEventListener('load',() =>{
+        let codeBlock=document.getElementsByTagName('code');
+        for(let i in codeBlock)
+        {
+          hljs.highlightBlock(codeBlock[i]);
+        }
+       });
+     </script>
+</head>
+<body>
+<div id="mid">
+  
+{{enoncerecu| safe}}
+
+</div>
+</body>
+
+</html>
