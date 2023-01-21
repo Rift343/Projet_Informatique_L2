@@ -11,7 +11,7 @@ Ceci est le dépot du code d'un projet d'informatique de licence 2 à l'Universi
 # Consignes de lancement:
 
 1 - Dans le code source il y a un fichier nommé serveur.py. Vous devez lancer ce fichier via un terminal (terminal Linux ou VSCode selon votre préférence), nous utilisons Visual Studio Code et VS codium pour nos tests. <br/>
-2 - Ouvrez votre navigateur web et entrez l'addresse localhost:5000 (Google Chorme, Mozilla Firefox, Microsoft EDGE et CCleaner Browser fonctionnent) <br/>
+2 - Ouvrez votre navigateur web et entrez l'adresse localhost:5000 (Google Chorme, Mozilla Firefox, Microsoft EDGE et CCleaner Browser fonctionnent) <br/>
 3 - Vous pouvez alors utiliser le site comme vous le souhaitez. <br/>
 4 - Enfin, pour finir le processus, faites CTRL+C dans le terminal où vous avez lancé le serveur. <br/>
 
