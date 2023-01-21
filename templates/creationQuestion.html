@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="static/main.css">
-  <link rel="stylesheet" href="static/main.css">
+  <link rel="stylesheet" href="static/main.css"><link rel="stylesheet" href="static/creationQuestion.css">
   <script></script>
   <title>Commande</title>
   <script type="text/javascript">
@@ -23,7 +22,7 @@
     document.getElementById('rep_possibles').innerHTML ="";
     for(element in rep_li){
         document.getElementById('rep_possibles').innerHTML = document.getElementById("rep_possibles").innerHTML + 
-        ' <span id = "rep_en_cours"> <input type="checkbox" id="'+num +'" name="'+num +'">'+rep_li[element].replace(/\n/g, "<BR>")+'<input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>';
+        ' <span id = "rep_en_cours" style="border-radius: 25px; background: #d80b0b; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="'+num +'" name="'+num +'" onclick=changerCouleurRep(this)><span id="spanInte">'+rep_li[element].replace(/\n/g, "<BR>")+'</span><input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !" style="display: block; margin-left: auto; margin-right: 0;"> </span>';
         num=num+1;
     }
     document.getElementById('nb_rep_possibles').value=num;
@@ -34,13 +33,13 @@
     document.getElementById('rep_possibles').innerHTML ="";
     for(element in rep_li){
         document.getElementById('rep_possibles').innerHTML = document.getElementById("rep_possibles").innerHTML + 
-        ' <span id = "rep_en_cours"> <input type="checkbox" id="'+num +'" name="'+num +'">'+rep_li[element].replace(/\n/g, "<BR>")+'<input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !"> </span><br>';
+        ' <span id = "rep_en_cours" style="border-radius: 25px; background: #d80b0b; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="'+num +'" name="'+num +'" onclick=changerCouleurRep(this)><span id="spanInte">'+rep_li[element].replace(/\n/g, "<BR>")+'</span><input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !" style="display: block; margin-left: auto; margin-right: 0;"> </span>';
         num=num+1;
     }
     document.getElementById('nb_rep_possibles').value=num;
   }
   
-
+  
     function visualisation_iframe() {
     var form = document.getElementById("formulaire");
     form.target = 'iframe_visu';
@@ -49,6 +48,17 @@
     form.submit();
     form.target = "";
     form.action = "";
+}
+function changerCouleurRep(ele){
+    if(ele.checked == true){
+        ele.parentElement.style="border-radius: 25px; background: #29c003; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+    }
+    else{
+        ele.parentElement.style="border-radius: 25px; background: #d80b0b; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+    }
+
+
+    
 }
   </script>
 </head>
@@ -82,7 +92,7 @@
         <textarea name="nrep" id="nrep"></textarea>
         <textarea name="li_rep_possibles" id="li_rep_possibles" hidden></textarea>
         <input type="number" name="nb_rep_possibles" id="nb_rep_possibles" hidden>
-        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les reponses !
+        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les bonnes reponses !
     </div>
     <div id = "rep_possibles">
     </div><br>
