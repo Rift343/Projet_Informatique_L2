@@ -45,3 +45,7 @@ https://highlightjs.org/download/<br/>
 https://docs.python.org/3/<br/>
 https://docs.python.org/fr/3/library/hashlib.html<br/>
 https://pythonbasics.org/#Flask-Tutorial<br/>
+
+# Attention
+Le fichier mermaid.js et load-mathjax.js du dossier static et temp sont les codes sources des bibliothèques mermaid et mathjax. Nous les avons téléchargés séparements 
+afin d'éviter de devoir installer entièrement la bibliothèque mermaid et mathjax. Ces fichiers ont été mis à la disposition de tous par les créateurs et n'on pas été modifier.
