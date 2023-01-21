@@ -39,6 +39,7 @@ body{background-color: rgb(255, 255, 255);padding-top: 70px;
     width: 200px; 
     height: 150px; 
     margin: 10px;
+    display: inline-block;
 }
 
 .MREP {
@@ -47,7 +48,8 @@ body{background-color: rgb(255, 255, 255);padding-top: 70px;
     padding: 20px; 
     width: 200px; 
     height: 150px; 
-    margin: 10px
+    margin: 10px;
+    display: inline-block;
 }
 
 .nom {

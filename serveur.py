@@ -92,7 +92,7 @@ def ajoutQuestion():
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+        print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')
         dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
@@ -103,13 +103,24 @@ def ajoutQuestion():
 
 @app.route("/visuIFrame",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def visuIFrame():
-    enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
-    print("entree markdown to html")
-    print(enonce)#PROBLEME ICI A REGARDER !!!!!!!!!!!!!!!!
-    enonce = markdownToHtml(enonce)
-    print("sortie markdown to html")
-    print(enonce)
-    return render_template("visuIFrame.html", enoncerecu=enonce)
+        UserId = session['UserId']
+        etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+        enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
+        reponses = request.form['li_rep_possibles'] #Ses réponses
+        reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
+        nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
+        li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
+        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
+        for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
+            if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
+                li_bonnes_reponses.append(reponses_pour_BREP[i].replace("\r","")) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+        li_etiquettes = etiquettes.replace("\r","").split(';') 
+        reponses = reponses.replace("\r","")
+        li_rep = reponses.split(';')
+        dict = {"idQ": 0,"Question": enonce.replace("\r",""), "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
+        print(dict)
+        return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
 def question(idQuestion):
@@ -117,7 +128,9 @@ def question(idQuestion):
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        dico["Question"] = markdownToHtml(dico["Question"])
+        print(dico)
+        dico = traductionUneQuestionToHTML(dico)
+
         return render_template("Question.html", dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
@@ -146,7 +159,7 @@ def modificationQuestion(idQuestion):
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+        print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')
         dictionnaire = {"ID": idQuestion, "Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses

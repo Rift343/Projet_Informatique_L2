@@ -5,13 +5,6 @@
   <link rel="stylesheet" href="../static/main.css">
   <title>Question</title>
   <script>
-    function get_responses(){
-    li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
-    for (element in li_bonne_rep){
-        li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
-    }
-    return li_bonne_rep;
-    }
 
   </script>
     <script src="../static/mermaid.js"></script>
@@ -29,9 +22,23 @@
      </script>
 </head>
 <body>
+  <div class="nom">NomDuSite</div>
 <div id="mid">
-  
-{{enoncerecu| safe}}
+  <tr>
+    <td class="eti">
+      {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
+    </td><br><br>
+    <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
+    <td>{% for rep in dictionnaire["REP"]: %}
+          {%if rep in dictionnaire["BREP"]%}
+            <span class='BREP'>{{rep| safe}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
+          {% else %}
+            <span class='MREP'>{{rep| safe}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
+          {%endif%}
+        {%endfor%}</td><br>
+        
+        
+  </tr>
 
 </div>
 </body>

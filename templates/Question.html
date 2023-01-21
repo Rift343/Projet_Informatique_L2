@@ -34,10 +34,10 @@
     <li>
       Invité
       <ul class="sousMenu">
-        <li><a href="/">Accueil</a></li>
-        <li><a href="BDD">Liste de vos questions</a></li>
-        <li><a href="creationQuestion">Créer une question</a></li>
-        <li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+        <li><a href="../">Accueil</a></li>
+        <li><a href="../BDD">Liste de vos questions</a></li>
+        <li><a href="../creationQuestion">Créer une question</a></li>
+        <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
       </ul>
     </li>
   </ul>
@@ -49,9 +49,9 @@
     <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <span class='BREP'>{{rep+" "}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
+            <span class='BREP'>{{rep| safe}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
           {% else %}
-            <span class='MREP'>{{rep+" "}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
+            <span class='MREP'>{{rep| safe}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
           {%endif%}
         {%endfor%}</td><br>
         

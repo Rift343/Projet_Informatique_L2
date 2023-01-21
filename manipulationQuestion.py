@@ -76,6 +76,24 @@ def traductionQuestionToHTML(listeDico):
             r=markdownHTML.markdownToHtml(r)
     return listeDico
 
+def traductionUneQuestionToHTML(dico):
+    """
+    Entré:listeDico-> une liste de dictionnaire sous format :
+    ID=>id de la question (String)
+    Question=> Enoncé de la question (String)
+    ET => liste des étiquettes(liste de String)
+    REP => liste de réponses possible (liste de String)
+    BREP => liste des bonne réponse (liste de String)
+
+    Sortie: La même liste mais les questions sont traduites en HTML
+    """
+
+    dico['Question']=markdownHTML.markdownToHtml(dico['Question'])
+    for r in range(len(dico['REP'])):
+        dico['REP'][r]=markdownHTML.markdownToHtml(dico['REP'][r])
+    return dico
+
+
 print(traductionQuestionToHTML(depuis_csv(3)))
 #print(traductionQuestionToHTML(depuis_csv(1)))
 f= """```mermaid
