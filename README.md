@@ -29,4 +29,19 @@ Ils respectent le format ci-dessous:<br/>
 ET=étiquette REP=réponse BREP=Bonne réponse<br/>
 Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...<br/>
 
+# Fonctionnalité
 
+Toutes les fonctionnalités demandées sont présentes
+
+# Webographie
+
+## Bibliothèque:
+https://python-markdown.github.io/reference/<br/>
+https://mermaid.js.org/#/<br/>
+https://pypi.org/project/md-mermaid/<br/>
+https://highlightjs.org/download/<br/>
+
+## Documentation:
+https://docs.python.org/3/<br/>
+https://docs.python.org/fr/3/library/hashlib.html<br/>
+https://pythonbasics.org/#Flask-Tutorial<br/>
