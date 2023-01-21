@@ -178,35 +178,7 @@ class Zebra{
 ```
 ```latex
 dddeed
-```";"
-sss";"
-seee
-see";"```mermaid
-classDiagram
-Animal <|-- Duck
-Animal <|-- Fish
-Animal <|-- Zebra
-Animal : +int age
-Animal : +String gender
-Animal: +isMammal()
-Animal: +mate()
-class Duck{
-+String beakColor
-+swim()
-+quack()
-}
-class Fish{
--int sizeInFeet
--canEat()
-}
-class Zebra{
-+bool is_wild
-+run()
-}
-```
-```latex
-dddeed
-```";FINREP
+```";sss    ;seeesee    ;```mermaidclassDiagramAnimal &lt;|-- DuckAnimal &lt;|-- FishAnimal &lt;|-- ZebraAnimal : +int ageAnimal : +String genderAnimal: +isMammal()Animal: +mate()class Duck{+String beakColor+swim()+quack()}class Fish{-int sizeInFeet-canEat()}class Zebra{+bool is_wild+run()}``````latexdddeed```    ;FINREP
 20;;FINET;"```mermaid
 classDiagram
 Animal <|-- Duck
@@ -323,3 +295,4 @@ z
 z
 dd"
 22;test1;FINET;#H1;#1;#2;FINREP;#1
+23;vuyhbui;FINET;vgyu;vhyu;# h1;FINREP
