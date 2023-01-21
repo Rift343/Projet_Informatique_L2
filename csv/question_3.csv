@@ -50,3 +50,13 @@ def fact(n):
     else:
         return ...
 ```"; jh    ; jh    ;FINREP; jh    ; jh    
+7;bu;FINET;"Ce graphe est il juste ?
+```mermaid
+graph TB
+r --- g
+r --- d
+g --- gg
+g --- gd
+d --- dg
+d --- dd
+```";vrai;FINREP;vrai
