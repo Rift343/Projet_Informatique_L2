@@ -72,9 +72,16 @@ def BDD():          #les questions qui ont cette étiquette
 
 @app.route("/creationQuestion") #Page de création d'une question avec un nom, un énoncé, des réponses, une correction et des étiquettes
 def creationQuestion():
-    if 'Username' in session:
+    if 'Username' and 'UserId' in session:
         Username = session['Username']
-        return render_template("creationQuestion.html")
+        UserId = session['UserId']
+        listeET = []
+        listeQuestion = depuis_csv(UserId)
+        for i in range(len(listeQuestion)):
+            for j in range(len(listeQuestion[i]['ET'])):
+                if listeQuestion[i]['ET'][j] not in listeET:
+                    listeET.append(listeQuestion[i]['ET'][j])
+        return render_template("creationQuestion.html", listeEtiquettes=listeET)
     else:
         return render_template("non_connecte.html")
 
@@ -141,7 +148,13 @@ def modifierQuestion(idQuestion):
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        return render_template("modificationQuestion.html", dictionnaire=dico) #pour la modification il faut récupérer les infos existantes de la question et refaire la même chose qu'à la création
+        listeET = []
+        listeQuestion = depuis_csv(UserId)
+        for i in range(len(listeQuestion)):
+            for j in range(len(listeQuestion[i]['ET'])):
+                if listeQuestion[i]['ET'][j] not in listeET:
+                    listeET.append(listeQuestion[i]['ET'][j])
+        return render_template("modificationQuestion.html", dictionnaire=dico, listeEtiquettes=listeET) #pour la modification il faut récupérer les infos existantes de la question et refaire la même chose qu'à la création
     else:
         return render_template("non_connecte.html")
 
@@ -208,4 +221,4 @@ def supprimer(idQuestion):
 #    return render_template("feuille.html")
 
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(host="localhost", port=8000, debug = True)# modifier le port si un autre groupe tourne déjà sur 5000 
