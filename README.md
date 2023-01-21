@@ -22,7 +22,7 @@ Afin de garder les informations entre les différentes utilisations du serveur, 
 ## Le fichier csv contenant les utilisateurs
 
 Ce fichier garde différentes informations sur les utilisateurs dans le format ci-dessous : <br/>
-ID_User;NOM;EMAIL;password
+ID_User;NOM;EMAIL;hash du mot de passe
 
 ## Les fichiers csv contenant les questions des utilisateurs
 
