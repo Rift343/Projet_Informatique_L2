@@ -28,7 +28,7 @@ ID_User;NOM;EMAIL;password
 
 Ces fichiers sont nommés en fonction de l'identifiant (ID) de l'utilisateur. Par exemple le fichier des questions de l'utilisateur 143 se nommera question_143.csv.<br/>
 Ils respectent le format ci-dessous :<br/>
-Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...    (ET=étiquette REP=réponse BREP=Bonne réponse)<br/>
+Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...     (ET=étiquette REP=réponse BREP=Bonne réponse)<br/>
 
 # Fonctionnalités
 
