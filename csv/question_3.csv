@@ -1,4 +1,4 @@
-1;test;essai;FINET;"Ce graphe est il juste ?
+1;test;     essai;FINET;"Ce graphe est il juste ?
 ```mermaid
 graph TB
 r --- g
@@ -7,7 +7,7 @@ g --- gg
 g --- gd
 d --- dg
 d --- dd
-```";vrai;fauxfff;peut-etre        ;FINREP;peut-etre        
+```";vrai                    ;fauxfff                    ;FINREP
 2;test;essai;FINET;Je suis une question;vrai;faux;peut-etre;FINREP;vrai;peut-etre
 3;test;FINET;"```mermaid
 classDiagram
@@ -81,17 +81,7 @@ g --- gd
 d --- dg
 d --- dd
 ```
-$latex$";xdddd<BR>bgvgg<BR>qzd;xdddd<BR>bgvgg<BR>qzd;xdddd<BR>bgvgg<BR>ss;"xdddd<BR>bgvgg<BR>ss<BR>
-```mermaid
-graph TB
-r --- g
-r --- d
-g --- gg
-g --- gd
-d --- dg
-d --- dd
-```
-```mermaid<BR>graph TB<BR>r --- g<BR>r --- d<BR>g --- gg<BR>g --- gd<BR>d --- dg<BR>d --- dd<BR>```";FINREP
+$latex$";a;#a;FINREP
 10;s;FINET;ds;ddzqddddqdq;ddzqddddqdq;ddzqddddqdq;ddzqddddqdq;FINREP;ddzqddddqdq
 11;;FINET;"dddd
 zzz
@@ -105,7 +95,7 @@ zzz";ffffffsss;ffffffsss;FINREP
 14;;FINET;"dqzzz
 zzz";ffffffsss;ffffffsss;ffffffsss;ffffffsss;FINREP
 15;;FINET;"dqzzz
-zzz";ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;fffdddddsss;FINREP
+zzz";ffffffsss    ;ffffffsss    ;ffffffsss    ;ffffffsss    ;ffffffsss    ;FINREP;ffffffsss    
 16;;FINET;"dqzzz
 zzz";ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;FINREP
 17;;FINET;"```mermaid
@@ -332,3 +322,4 @@ z
 z
 z
 dd"
+22;test1;FINET;#H1;#1;#2;FINREP;#1
