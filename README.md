@@ -15,17 +15,17 @@ Ceci est le dépot du code d'un projet d'informatique de licence 2 à l'Universi
 
 # Format des fichers .csv
 
-Afin de garder les informations entre les différentes utilisation du serveurs, nous utilisons des fichiers csv. Vous trouverons au total deux type de fichier csv:
+Afin de garder les informations entre les différentes utilisations du serveur, nous utilisons des fichiers CSV. Vous trouverez au total deux types de fichier CSV:
 
 ## Le fichier csv contenant les utilisateurs
 
-Ce fichier garde différente information sur les utilisateurs sous le formats si dessous: <br/>
+Ce fichier garde différente information sur les utilisateurs sous le format ci-dessous: <br/>
 ID_User;NOM;EMAIL;password
 
 ## Les fichiers csv contenant les questions des utilisateurs
 
-Ces fichiers sont nommé en fonction de l'ID de l'utilisateur. Par exemple le fichier des questions de l'utilisateur 143 se nommera question_143.csv.<br/>
-Ils respectent le format si dessous:<br/>
+Ces fichiers sont nommés en fonction de l'ID de l'utilisateur. Par exemple le fichier des questions de l'utilisateur 143 se nommera question_143.csv.<br/>
+Ils respectent le format ci-dessous:<br/>
 ET=étiquette REP=réponse BREP=Bonne réponse<br/>
 Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...<br/>
 
