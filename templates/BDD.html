@@ -21,6 +21,9 @@
 		<script>
 			function filtrage_par_eti(etiquette_filtre) {
 				//changer onclick button
+				//quand on click sur un bouton de filtrage, on change la couleur et l'attribut onclick du bouton 
+				
+				
 				document.getElementById(etiquette_filtre + "-bouton").style =
 					"background-color : blue";
 				document.getElementById(etiquette_filtre + "-bouton").activer =
@@ -34,14 +37,19 @@
 							'");'
 					);
 				var elements = document.getElementsByClassName("eti");
+				//on recupere la liste des etiquettes de chaque exercice
 				for (var i = 0; i < elements.length; i++) {
 					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					if (!li_eti.includes(etiquette_filtre)) {
 						elements[i].parentElement.setAttribute("hidden", true);
+						//puis on ajoute l'attribut hidden a tout les exercice qui n'ont pas l'etiquette par laquelle
+				//on filtre
 					}
 				}
 			}
 			function deactiver_filtrage(etiquette_filtre) {
+				//quand on desactive le filtrage pour desactiver un filtre, on change la couleur et l'attribut onclick du bouton 
+
 				document.getElementById(etiquette_filtre + "-bouton").style =
 					"background-color : white";
 				document.getElementById(etiquette_filtre + "-bouton").activer =
@@ -54,10 +62,13 @@
 							etiquette_filtre +
 							'");'
 					);
+				//on rend visible tous les exercice
 				var eti_exercices = document.getElementsByClassName("eti");
 				for (var j = 0; j < eti_exercices.length; j++) {
 					eti_exercices[j].parentElement.removeAttribute("hidden");
 				}
+				//on recupere la liste des etiquettes de chaque exercice et la liste des bouton
+				//si un bouton est activer, on rajoute hidden a tous les exercices n'ayant pas cette etiquettes
 				var elements = document.getElementsByClassName("bouton");
 				for (var i = 0; i < elements.length; i++) {
 					//console.log(elements[i].activer)
@@ -83,13 +94,15 @@
 			function bouton_filtrage() {
 				//on fait la liste de toutes les etiquettes existantes et on fait les boutons de filtrage
 				li_eti_total = [];
-				var dict = {}; //on creer un objet qui sert de dictionnaire
+				var dict = {}; //on creer un objet qui sert de dictionnaire afin de compter combien d'elements ont chaque etiquette
 
 				var elements = document.getElementsByClassName("eti");
-				console.log(elements);
+				//console.log(elements);
+				//on recupere la liste des listes d'etiquette des exercices
 				for (var i = 0; i < elements.length; i++) {
 					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
-					console.log(li_eti);
+					//on enleve tout les caractere non alphanumerique sauf le ; puis on tranforme la chaine de caratere en liste en utilisant split avec comme delimmiteur le ;
+					//console.log(li_eti);
 					for (var j = 0; j < li_eti.length; j++) {
 						console.log(!li_eti_total.includes(li_eti[j]));
 						if (
@@ -103,9 +116,9 @@
 						} else {
 							dict[li_eti[j]] = dict[li_eti[j]] + 1;
 						}
-					}
+					}//on fait les liste de toutes les etiquette presente et on compte et enregistre combien de fois apparait chacune
 				}
-				console.log(li_eti_total);
+				//console.log(li_eti_total);
 				for (var i = 0; i < li_eti_total.length; i++) {
 				console.log(li_eti_total[i]);
 					document.getElementById("boutons_de_filtrage").innerHTML =
@@ -124,6 +137,7 @@
 						"(" +
 						dict[li_eti_total[i]] +
 						")</button>";
+						//on creer les bouton de filtrage
 				}
 			}
 		</script>

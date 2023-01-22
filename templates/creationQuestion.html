@@ -9,17 +9,20 @@
   var rep_li = [];
   
   function ajout_rep(){
+    //on ajoute une reponse, pour cela, on recupere la nouvelle reponse et on l'ajoute a la liste de reponse rep_li
     txt =document.getElementById('nrep').value
-    console.log(txt);
+    //console.log(txt);
     document.getElementById("btnsubmit").removeAttribute("hidden");
-
+    
 
     rep_li.push(txt);
     //console.log(rep_li)
     document.getElementById('li_rep_possibles').value=""+rep_li.join(";");
     //console.log(rep_li.join(";"));
+    //on rajoute la nouvelle reponse au champs html qui sera renvoyer au serveur
     num = 0
     document.getElementById('rep_possibles').innerHTML ="";
+    //puis on recreer les span ou sont afficher les reponses
     for(element in rep_li){
         document.getElementById('rep_possibles').innerHTML = document.getElementById("rep_possibles").innerHTML + 
         ' <span id = "rep_en_cours" style="border-radius: 25px; background: #d80b0b; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="'+num +'" name="'+num +'" onclick=changerCouleurRep(this)><span id="spanInte">'+rep_li[element].replace(/\n/g, "<BR>")+'</span><input type="button" name="suprep" id="suprep" onclick="supp_rep('+num+')" value="Supprimer !" style="display: block; margin-left: auto; margin-right: 0;"> </span>';
@@ -28,7 +31,9 @@
     document.getElementById('nb_rep_possibles').value=num;
   }
   function supp_rep(n){
+    //pour supprimer une reponse, on prends en entrer le numero de la reponse que l'on veut supprimer
     rep_li.splice(n,n);
+    //on supprime la reponse dans rep_li puis on recreer les span ou sont affiché les reponses
     num = 0;
     document.getElementById('li_rep_possibles').value=""+rep_li.join(";");
     document.getElementById('rep_possibles').innerHTML ="";
@@ -42,6 +47,9 @@
   
   
     function visualisation_iframe() {
+    //pour visualiser la question que l'on est en train de creer, on change 
+    //la cible et l'action du formulaire, on soumet le formulaire au serveur
+    //puis on remet la cible et l'action d'origine
     var form = document.getElementById("formulaire");
     form.target = 'iframe_visu';
     form.action = './visuIFrame';
@@ -51,10 +59,12 @@
     form.action = "";
 }
 function changerCouleurRep(ele){
+    //changer couleur est appeler quand on click sur la case a cocher qui permet d'indiquer si une reponse ou juste ou non
+    //si la case est coche, la reponse est juste, on l'affiche alors en vert
     if(ele.checked == true){
         ele.parentElement.style="border-radius: 25px; background: #29c003; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
     }
-    else{
+    else{//sinon la reponse est fausse, alors on l'affiche en rouge
         ele.parentElement.style="border-radius: 25px; background: #d80b0b; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
     }
 

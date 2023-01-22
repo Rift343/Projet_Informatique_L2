@@ -111,7 +111,7 @@ def ajoutQuestion():
     else:
         return render_template("non_connecte.html")
 
-@app.route("/visuIFrame",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
+@app.route("/visuIFrame",methods = ['POST']) #Code afin de visualiser une question en cours de creation
 def visuIFrame():
         UserId = session['UserId']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
@@ -130,7 +130,7 @@ def visuIFrame():
         li_rep = reponses.split(';')
         dict = {"idQ": 0,"Question": enonce.replace("\r",""), "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         print(dict)
-        return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
+        return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict)) #on renvoie les donnée de la question sur l'IFrame de la page creation question
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
 def question(idQuestion):

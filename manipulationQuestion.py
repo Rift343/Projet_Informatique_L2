@@ -81,14 +81,14 @@ def traductionQuestionToHTML(listeDico):
 
 def traductionUneQuestionToHTML(dico):
     """
-    Entré:listeDico-> une liste de dictionnaire sous format :
+    Entré:listeDico-> un  dictionnaire sous format :
     ID=>id de la question (String)
     Question=> Enoncé de la question (String)
     ET => liste des étiquettes(liste de String)
     REP => liste de réponses possible (liste de String)
     BREP => liste des bonne réponse (liste de String)
 
-    Sortie: La même liste mais les questions sont traduites en HTML
+    Sortie: la question traduite en HTML
     """
 
     dico['Question']=markdownHTML.markdownToHtml(dico['Question'])
