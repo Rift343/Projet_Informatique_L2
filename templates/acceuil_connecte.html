@@ -4,23 +4,23 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="static/main.css">
   <script></script>
-  <title>Commande</title>
+  <title>QuizTio</title>
   <script></script>
 </head>
 <body>
-  <div class="nom">NomDuSite</div>
+  <div class="nom">QuizTio</div>
   <ul class="menu">
     <li>
-      Invité
+      {{Username}}
       <ul class="sousMenu">
         <li><a href="/">Accueil</a></li>
         <li><a href="BDD">Liste de vos questions</a></li>
         <li><a href="creationQuestion">Créer une question</a></li>
-        <li><a href="CreationFeuille">Créer une feuille d'exercices</a></li>
+        <li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
       </ul>
     </li>
   </ul>
-<div id="mid"><br>Bienvenue {{Username}} !<br></div>
+<div id="mid"><br><span>Bienvenue {{Username}} ! Vous pouvez dès à présent créer vos questions et faire vos propres feuilles d'exercices !</span><br></div>
 <div id="bot">
 <a href="./">Acceuil</a>
 <a href="register">S'enregistrer</a>

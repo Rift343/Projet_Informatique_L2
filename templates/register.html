@@ -4,11 +4,11 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="static/main.css">
   <script></script>
-  <title>Commande</title>
+  <title>QuizTio</title>
   <script></script>
 </head>
 <body>
-    <div class="nom">NomDuSite</div>
+    <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
             Invité
@@ -19,24 +19,26 @@
             </ul>
         </li>
     </ul>
-<div id="mid"><br>
-    <form action = "" method = "post">
-        <div class="entree">
-            <label for="idUser">Entrez votre nom d'utilisateur : </label>
-            <input type="text" name="idUser" minlength="2" placeholder="Nom d'utilisateur" required>
-        </div>
-        <div class="entree">
-            <label for="nom">Entrez votre adresse mail : </label>
-            <input type="email" name="email" placeholder="Adresse Mail" required>
-        </div>
-        <div class="entree">
-            <label for="name">Entrez votre mot de passe : </label>
-            <input type="password" name="password" minlength="2" placeholder="Mot de passe" required>
-        </div>
-        <input type = "submit" value = "Valider" />
-
-
-    </form>
+    <div class="log_reg"><br>
+        <form action = "" method = "post">
+            <h1>Créer un compte</h1>
+            <div class="entree">
+                <label for="idUser">Entrez votre nom d'utilisateur : </label><br>
+                <input type="text" name="idUser" minlength="2" placeholder="Nom d'utilisateur" required>
+            </div>
+            <div class="entree">
+                <label for="nom">Entrez votre adresse mail : </label><br>
+                <input type="email" name="email" placeholder="Adresse Mail" required>
+            </div>
+            <div class="entree">
+                <label for="name">Entrez votre mot de passe : </label><br>
+                <input type="password" name="password" minlength="2" placeholder="Mot de passe" required>
+            </div>
+            <input type = "submit" value = "Valider" />
+            <br>
+            <label>Déjà membre ? Connectez vous <a href="login">ici</a>.</label>
+        </form>
+    </div>
 </div>
 <div id="bot">
 <a href="./">Acceuil</a>
