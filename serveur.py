@@ -229,7 +229,7 @@ def deco():
     if 'UserId' or 'Username' in session:
         session.pop('UserId', None)
         session.pop('Username', None)
-        return render_template("non_connecte.html")
+        return render_template("acceuil.html")
 
 #@app.route("/feuille")
 #def feuille():
