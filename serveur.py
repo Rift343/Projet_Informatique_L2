@@ -65,8 +65,11 @@ def BDD():          #les questions qui ont cette étiquette
         UserId = session['UserId']
         #print(UserId)
         dico = depuis_csv(UserId)
-        print(dico)
-        return render_template("BDD.html", li_dictionnaire=traductionQuestionToHTML(dico))
+        dico=traductionQuestionToHTML(dico)
+        for question in dico:
+            for rep in question['REP']:
+                print(rep)
+        return render_template("BDD.html", li_dictionnaire=dico)
     else:
         return render_template("non_connecte.html")
 

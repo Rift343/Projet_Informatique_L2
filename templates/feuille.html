@@ -34,7 +34,8 @@
 				</thead>
 				{% for dico in li_dictionnaire: %}
 				<tr>					
-					<td class="enonce_tableau">{{dico["Question"]| safe}}</td><td class="rep_tableau" style="text-align : left">{% for rep in dico["REP"]: %}{%if not loop.last%}<input type="checkbox">{{" "+rep}}<br>{%else%}<input type="checkbox">{{rep}}{%endif%}{%endfor%}</td>
+					<td class="enonce_tableau">{{dico["Question"]| safe}}</td>
+					<td class="rep_tableau" style="text-align : left">{% for rep in dico["REP"]: %}<input type="checkbox">{{rep| safe}}{%endfor%}</td>
 					</tr>
 				{% endfor %}
 			</table>

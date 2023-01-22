@@ -72,8 +72,11 @@ def traductionQuestionToHTML(listeDico):
     for i in listeDico:
         #print( i['Question'])
         i['Question']=markdownHTML.markdownToHtml(i['Question'])
-        for r in i['REP']:
-            r=markdownHTML.markdownToHtml(r)
+        for x in range(len(i['REP'])):
+            i['REP'][x] = markdownHTML.markdownToHtml(i['REP'][x])
+        for y in range(len(i['BREP'])):
+             i['BREP'][y] = markdownHTML.markdownToHtml(i['BREP'][y])
+    print(listeDico)    
     return listeDico
 
 def traductionUneQuestionToHTML(dico):
@@ -94,7 +97,7 @@ def traductionUneQuestionToHTML(dico):
     return dico
 
 
-print(traductionQuestionToHTML(depuis_csv(3)))
+#print(traductionQuestionToHTML(depuis_csv(3)))
 #print(traductionQuestionToHTML(depuis_csv(1)))
 f= """```mermaid
 graph LR

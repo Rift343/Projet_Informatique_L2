@@ -96,8 +96,6 @@ zzz";ffffffsss;ffffffsss;FINREP
 zzz";ffffffsss;ffffffsss;ffffffsss;ffffffsss;FINREP
 15;;FINET;"dqzzz
 zzz";ffffffsss    ;ffffffsss    ;ffffffsss    ;ffffffsss    ;ffffffsss    ;FINREP;ffffffsss    
-16;;FINET;"dqzzz
-zzz";ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;ffffffsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;fffdddddsss;FINREP
 17;;FINET;"```mermaid
 classDiagram
 Animal <|-- Duck
@@ -153,146 +151,36 @@ dddeed
 sss";"
 seee
 see";FINREP
-19;;FINET;"```mermaid
-classDiagram
-Animal <|-- Duck
-Animal <|-- Fish
-Animal <|-- Zebra
-Animal : +int age
-Animal : +String gender
-Animal: +isMammal()
-Animal: +mate()
-class Duck{
-+String beakColor
-+swim()
-+quack()
-}
-class Fish{
--int sizeInFeet
--canEat()
-}
-class Zebra{
-+bool is_wild
-+run()
-}
-```
-```latex
-dddeed
-```";sss    ;seeesee    ;```mermaidclassDiagramAnimal &lt;|-- DuckAnimal &lt;|-- FishAnimal &lt;|-- ZebraAnimal : +int ageAnimal : +String genderAnimal: +isMammal()Animal: +mate()class Duck{+String beakColor+swim()+quack()}class Fish{-int sizeInFeet-canEat()}class Zebra{+bool is_wild+run()}``````latexdddeed```    ;FINREP
-20;;FINET;"```mermaid
-classDiagram
-Animal <|-- Duck
-Animal <|-- Fish
-Animal <|-- Zebra
-Animal : +int age
-Animal : +String gender
-Animal: +isMammal()
-Animal: +mate()
-class Duck{
-+String beakColor
-+swim()
-+quack()
-}
-class Fish{
--int sizeInFeet
--canEat()
-}
-class Zebra{
-+bool is_wild
-+run()
-}
-```
-```latex
-dddeed
-```";"```mermaid
-classDiagram
-Animal <|-- Duck
-Animal <|-- Fish
-Animal <|-- Zebra
-Animal : +int age
-Animal : +String gender
-Animal: +isMammal()
-Animal: +mate()
-class Duck{
-+String beakColor
-+swim()
-+quack()
-}
-class Fish{
--int sizeInFeet
--canEat()
-}
-class Zebra{
-+bool is_wild
-+run()
-}
-```
-```latex
-dddeed
-```";FINREP
-21;;FINET;sss;"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";FINREP;"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd";"dffdfd
-dzdqz
-dzzz
-z
-z
-z
-z
-z
-z
-dd"
 22;test1;FINET;#H1;#1;#2;FINREP;#1
 23;vuyhbui;FINET;vgyu;vhyu;# h1;FINREP
+16;RAS;FINET;"```mermaid
+graph TB
+r --- g
+r --- d
+g --- gg
+g --- gd
+d --- dg
+d --- dd
+```";"```mermaid
+graph TB
+r --- g
+r --- d
+g --- gg
+g --- gd
+d --- dg
+d --- dd
+```
+#1
+
+";FINREP;"```mermaid
+graph TB
+r --- g
+r --- d
+g --- gg
+g --- gd
+d --- dg
+d --- dd
+```
+#1
+
+"
