@@ -49,9 +49,9 @@
     <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
     <td>{% for rep in dictionnaire["REP"]: %}
           {%if rep in dictionnaire["BREP"]%}
-            <span class='BREP'>{{rep| safe}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
+            <span class='BREP'>{{rep| safe}}</span>  
           {% else %}
-            <span class='MREP'>{{rep| safe}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
+            <span class='MREP'>{{rep| safe}}</span> 
           {%endif%}
         {%endfor%}</td><br>
         
