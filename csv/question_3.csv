@@ -1,4 +1,4 @@
-1;test;     essai;FINET;"Ce graphe est il juste ?
+1;test;      essai;FINET;"Ce graphe est il juste ?
 ```mermaid
 graph TB
 r --- g
@@ -7,7 +7,18 @@ g --- gg
 g --- gd
 d --- dg
 d --- dd
-```";vrai                    ;fauxfff                    ;FINREP
+```";"vrai                    
+    ";"fauxfff                    
+    ";"Ce graphe est il juste ?
+```mermaid
+graph TB
+r --- g
+r --- d
+g --- gg
+g --- gd
+d --- dg
+d --- dd
+```";FINREP
 2;test;essai;FINET;Je suis une question;vrai;faux;peut-etre;FINREP;vrai;peut-etre
 3;test;FINET;"```mermaid
 classDiagram
@@ -161,26 +172,4 @@ g --- gg
 g --- gd
 d --- dg
 d --- dd
-```";"```mermaid
-graph TB
-r --- g
-r --- d
-g --- gg
-g --- gd
-d --- dg
-d --- dd
-```
-#1
-
-";FINREP;"```mermaid
-graph TB
-r --- g
-r --- d
-g --- gg
-g --- gd
-d --- dg
-d --- dd
-```
-#1
-
-"
+```";```mermaidgraph TBr --- gr --- dg --- ggg --- gdd --- dgd --- dd```#1    ;FINREP;```mermaidgraph TBr --- gr --- dg --- ggg --- gdd --- dgd --- dd```#1    

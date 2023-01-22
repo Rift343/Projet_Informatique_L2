@@ -90,9 +90,10 @@
     
     <div class="entree">
         <label for="nouvelle_rep">Entrer une reponse et cliquez sur ajouter : </label>
-        <input type="text" name="nrep" id="nrep">
-
-        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les reponses !
+        <textarea name="nrep" id="nrep"></textarea>
+        <textarea name="li_rep_possibles" id="li_rep_possibles" hidden></textarea>
+        <input type="number" name="nb_rep_possibles" id="nb_rep_possibles" hidden>
+        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les bonnes reponses !
     </div>
     <div id = "rep_possibles">{% set num = 0 %}
     {% for rep in dictionnaire["REP"]: %}
