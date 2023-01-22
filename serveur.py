@@ -223,7 +223,14 @@ def supprimer(idQuestion):
     delQuestion(UserId,idQuestion)
     listedico=depuis_csv(UserId)
     return redirect(url_for('BDD'))
-  
+
+@app.route("/deco") #Page de création d'une feuille de questions
+def deco():
+    if 'UserId' or 'Username' in session:
+        session.pop('UserId', None)
+        session.pop('Username', None)
+        return render_template("non_connecte.html")
+
 #@app.route("/feuille")
 #def feuille():
 #    return render_template("feuille.html")
