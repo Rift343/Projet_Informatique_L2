@@ -1,6 +1,0 @@
-/images -> ressource d'images
-/templates -> fichier html
-/css -> fichier css
-/js -> fichier js
-/csv -> repertoire d'enregistrement des question
-/biblio -> bibliotheque python 
