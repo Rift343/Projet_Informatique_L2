@@ -1,0 +1,22 @@
+1;test;essai;FINET;"#Je suis du Markdown
+```latex
+\begin{equation*}
+\sqrt{x^2+1}
+\end{equation*}
+```
+";"```mermaid
+graph TB
+a --- b
+b --- c
+c --- a
+```
+
+
+";"
+
+```latex
+\begin{equation*}
+\sqrt{x^2+1}
+\end{equation*}
+```
+";#Je suis du Markdown;FINREP;#Je suis du Markdown
