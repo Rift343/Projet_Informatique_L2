@@ -61,15 +61,16 @@ def connexion():
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
-    if 'UserId' in session:
+    if 'UserId' and 'Username'in session:
         UserId = session['UserId']
+        Username = session['Username']
         #print(UserId)
         dico = depuis_csv(UserId)
         dico=traductionQuestionToHTML(dico)
         for question in dico:
             for rep in question['REP']:
                 print(rep)
-        return render_template("BDD.html", li_dictionnaire=dico)
+        return render_template("BDD.html", li_dictionnaire=dico, Username=Username)
     else:
         return render_template("non_connecte.html")
 
@@ -84,14 +85,15 @@ def creationQuestion():
             for j in range(len(listeQuestion[i]['ET'])):
                 if listeQuestion[i]['ET'][j] not in listeET:
                     listeET.append(listeQuestion[i]['ET'][j])
-        return render_template("creationQuestion.html", listeEtiquettes=listeET)
+        return render_template("creationQuestion.html", listeEtiquettes=listeET, Username=Username)
     else:
         return render_template("non_connecte.html")
 
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
-    if 'UserId' in session:
+    if 'UserId' and 'Username' in session:
         UserId = session['UserId']
+        Username = session['Username']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
@@ -107,7 +109,7 @@ def ajoutQuestion():
         li_rep = reponses.split(';')
         dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         idQ = str(dans_csv(UserId, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
-        return redirect(url_for('question',idQuestion = idQ)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
+        return redirect(url_for('question',idQuestion = idQ, Username=Username)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
     else:
         return render_template("non_connecte.html")
 
@@ -141,7 +143,7 @@ def question(idQuestion):
         print(dico)
         dico = traductionUneQuestionToHTML(dico)
 
-        return render_template("Question.html", dictionnaire=dico)
+        return render_template("Question.html", dictionnaire=dico, Username=Username)
     else:
         return render_template("non_connecte.html")
 
@@ -157,14 +159,15 @@ def modifierQuestion(idQuestion):
             for j in range(len(listeQuestion[i]['ET'])):
                 if listeQuestion[i]['ET'][j] not in listeET:
                     listeET.append(listeQuestion[i]['ET'][j])
-        return render_template("modificationQuestion.html", dictionnaire=dico, listeEtiquettes=listeET) #pour la modification il faut récupérer les infos existantes de la question et refaire la même chose qu'à la création
+        return render_template("modificationQuestion.html", dictionnaire=dico, listeEtiquettes=listeET, Username=Username) #pour la modification il faut récupérer les infos existantes de la question et refaire la même chose qu'à la création
     else:
         return render_template("non_connecte.html")
 
 @app.route("/modificationQuestion/<idQuestion>",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une modif
 def modificationQuestion(idQuestion):
-    if 'UserId' in session:
+    if 'UserId' and 'Username' in session:
         UserId = session['UserId']
+        Username = session['Username']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
@@ -180,7 +183,7 @@ def modificationQuestion(idQuestion):
         li_rep = reponses.split(';')
         dictionnaire = {"ID": idQuestion, "Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         modif_csv(UserId, dictionnaire) #Ajout du dictionnaire d'une question dans le csv des questions
-        return redirect(url_for('question',idQuestion = idQuestion)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
+        return redirect(url_for('question',idQuestion = idQuestion, Username=Username)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
     else:
         return render_template("non_connecte.html")
 
@@ -188,12 +191,13 @@ def modificationQuestion(idQuestion):
 
 @app.route("/creationFeuille") #Page de création d'une feuille de questions
 def creationFeuille():
-    if 'UserId' in session:
+    if 'UserId' and 'Username' in session:
         UserId = session['UserId']
+        Username = session['Username']
         #print(UserId)
         dico = depuis_csv(UserId)
         
-        return render_template("creationFeuille.html",li_dictionnaire=traductionQuestionToHTML(dico))
+        return render_template("creationFeuille.html",li_dictionnaire=traductionQuestionToHTML(dico), Username=Username)
     else:
         return render_template("non_connecte.html")
 
@@ -201,14 +205,15 @@ def creationFeuille():
 def feuille():
     ListeIDQuestion=request.form.getlist('idQuestion')
     print(ListeIDQuestion)
-    if 'UserId' in session:
+    if 'UserId' and 'Username'in session:
         UserId = session['UserId']
+        Username = session['Username']
         maListeQuestion= []
         for ID in ListeIDQuestion:
             maListeQuestion.append(getQuestion(UserId,ID))
         
         #récupération de la liste d'id des exos de la feuille et renvoie à feuille.html
-        return render_template("feuille.html", li_dictionnaire=maListeQuestion)
+        return render_template("feuille.html", li_dictionnaire=maListeQuestion, Username=Username)
     else:
         return render_template("non_connecte.html")
 

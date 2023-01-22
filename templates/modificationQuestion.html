@@ -67,7 +67,7 @@
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
-            Invité
+            {{Username}}
             <ul class="sousMenu">
                 <li><a href="/">Accueil</a></li>
                 <li><a href="BDD">Liste de vos questions</a></li>
@@ -76,24 +76,26 @@
             </ul>
         </li>
     </ul>
-<div id="mid"><br><form action="" method="post">
+<div id="exercice"><br>
+    <form id="formulaire" action="" method="post">
     <div class="entree">
-        <label for="enonce">Entrer l'enonce de votre question : </label>
+        <label for="enonce">Entrez l'énoncé de votre question : (vous pouvez aussi écrire en LaTeX ou en Markdown !) </label><br>
         <textarea name="enonce" id="enonce" required>{{dictionnaire["Question"]}}</textarea>
     </div>
     
     <div class="entree">
-        <label for="etiquettes">Entrer la/les etiquettes de votre question (séparé par des ";") : </label>
+        <label for="etiquettes">Entrez la/les étiquettes de votre question (séparées par des ";" s'il y en a plusieurs) : </label><br>
         <input type="text" name="etiquettes" id="etiquettes" value='{% for eti in dictionnaire["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}'>
     </div>
 
     
     <div class="entree">
-        <label for="nouvelle_rep">Entrer une reponse et cliquez sur ajouter : </label>
+        <label for="nouvelle_rep">Entrez une réponse et cliquez sur ajouter : </label><br>
         <textarea name="nrep" id="nrep"></textarea>
-        <textarea name="li_rep_possibles" id="li_rep_possibles" hidden></textarea>
+        <textarea name="li_rep_possibles" id="li_rep_possibles" hidden></textarea><br>
         <input type="number" name="nb_rep_possibles" id="nb_rep_possibles" hidden>
-        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <BR>Cochez la/les bonnes reponses !
+        <input type="button" name="ajoutrep" id="ajoutrep" onclick="ajout_rep()" value="Ajouter !"> <br>
+        <label>Cochez la/les bonnes reponses !</label>
     </div>
     <div id = "rep_possibles">{% set num = 0 %}
     {% for rep in dictionnaire["REP"]: %}
