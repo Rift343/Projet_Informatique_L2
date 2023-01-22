@@ -47,6 +47,11 @@ https://docs.python.org/3/<br/>
 https://docs.python.org/fr/3/library/hashlib.html<br/>
 https://pythonbasics.org/#Flask-Tutorial<br/>
 
+## Icônes :
+https://www.flaticon.com/fr/icone-gratuite/oeil_158746?term=oeil&page=1&position=1&origin=search&related_id=158746
+https://www.flaticon.com/fr/icone-gratuite/crayon-de-couleur_3642497?term=crayon&page=1&position=1&origin=search&related_id=3642497
+https://www.flaticon.com/fr/icone-gratuite/poubelle_3182109?term=trash&page=1&position=39&origin=search&related_id=3182109
+
 # Attention
 Le fichier mermaid.js et load-mathjax.js du dossier static et temp sont les codes sources des bibliothèques mermaid et mathjax. Nous les avons téléchargés séparément 
 afin d'éviter de devoir installer entièrement la bibliothèque mermaid et mathjax. Ces fichiers ont été mis à la disposition de tous par les créateurs et n'ont pas été modifiés.

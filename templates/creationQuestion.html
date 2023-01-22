@@ -13,7 +13,7 @@
     txt =document.getElementById('nrep').value
     //console.log(txt);
     document.getElementById("btnsubmit").removeAttribute("hidden");
-    
+    document.getElementById("visu").removeAttribute("hidden");
 
     rep_li.push(txt);
     //console.log(rep_li)
@@ -54,9 +54,20 @@
     form.target = 'iframe_visu';
     form.action = './visuIFrame';
     document.getElementById("iframe_visu").removeAttribute("hidden");
+    document.getElementById("btn_cacher_visu").removeAttribute("hidden");
     form.submit();
     form.target = "";
     form.action = "";
+}
+function cacher_visu(){
+    document.getElementById("iframe_visu").setAttribute(
+									"hidden",
+									true
+								);
+    document.getElementById("btn_cacher_visu").setAttribute(
+									"hidden",
+									true
+								);
 }
 function changerCouleurRep(ele){
     //changer couleur est appeler quand on click sur la case a cocher qui permet d'indiquer si une reponse ou juste ou non
@@ -110,10 +121,13 @@ function changerCouleurRep(ele){
     <div id = "rep_possibles">
     </div><br>
     <input type="submit" name="btnsubmit" id="btnsubmit" value ="Ajouter la question !" hidden>
-    <input type="button" name="visu" id="visu" value ="Visualiser l'enonce de la question !" onclick="visualisation_iframe()">
+    <input type="button" name="visu" id="visu" value ="Visualiser l'enonce de la question !" onclick="visualisation_iframe()" hidden>
+
     <iframe name="iframe_visu" src="" id="iframe_visu" width="750" height="600" style="position: fixed;
     top: 100px;
-    right: 150px;" hidden></iframe>
+    right: 150px;" hidden></iframe>    <input type="button" name="btn_cacher_visu" id="btn_cacher_visu" value ="X" onclick="cacher_visu()" style="position: fixed;
+    top: 100px;
+    right: 150px;"hidden>
 </form><br><br></div>
 <div id="bot">
 <a href="./">Acceuil</a>
