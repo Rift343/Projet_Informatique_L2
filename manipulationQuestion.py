@@ -94,6 +94,8 @@ def traductionUneQuestionToHTML(dico):
     dico['Question']=markdownHTML.markdownToHtml(dico['Question'])
     for r in range(len(dico['REP'])):
         dico['REP'][r]=markdownHTML.markdownToHtml(dico['REP'][r])
+    for y in range(len(dico['BREP'])):
+        dico['BREP'][y] = markdownHTML.markdownToHtml(dico['BREP'][y])
     return dico
 
 
