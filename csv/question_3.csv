@@ -1,4 +1,4 @@
-1;test;       essai;FINET;"Ce graphe est il juste ?
+1;test;essai;FINET;"Ce graphe est il juste ?
 ```mermaid
 graph TB
 r --- g
