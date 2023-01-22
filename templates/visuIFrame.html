@@ -24,18 +24,23 @@
 <body>
   <div class="nom">QuizTio</div>
 <div id="mid">
+  <br><br>
   <tr>
-    <td class="eti">
-      {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
+    <td class="visuQuestion">
+      <span>Etiquettes : <br>{% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%} </span>
     </td><br><br>
-    <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
-    <td>{% for rep in dictionnaire["REP"]: %}
-          {%if rep in dictionnaire["BREP"]%}
-            <span class='BREP'>{{rep| safe}}</span> <!---Inline CSS sur une balise style="border-radius: 25px; background: #2cb809; padding: 20px; width: 200px; height: 150px; margin: 10px" --> 
-          {% else %}
-            <span class='MREP'>{{rep| safe}}</span> <!---style="border-radius: 25px; background: #d80b0b; padding: 20px; width: 200px; height: 150px; margin: 10px" -->
-          {%endif%}
-        {%endfor%}</td><br>
+    <td class="visuQuestion">
+      <span> Question : {{dictionnaire["Question"]| safe}}</span>
+    </td><br><br>
+    <td class="visuQuestion">
+      {% for rep in dictionnaire["REP"]: %}
+        {%if rep in dictionnaire["BREP"]%}
+          <span class='BREP'>{{rep| safe}}</span>  
+        {% else %}
+          <span class='MREP'>{{rep| safe}}</span> 
+        {%endif%}
+      {%endfor%}
+    </td><br>
         
         
   </tr>

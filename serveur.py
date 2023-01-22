@@ -208,7 +208,7 @@ def feuille():
             maListeQuestion.append(getQuestion(UserId,ID))
         
         #récupération de la liste d'id des exos de la feuille et renvoie à feuille.html
-        return render_template("feuille.html", li_dictionnaire=traductionQuestionToHTML(maListeQuestion))
+        return render_template("feuille.html", li_dictionnaire=maListeQuestion)
     else:
         return render_template("non_connecte.html")
 
