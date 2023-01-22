@@ -32,6 +32,57 @@
     color: #ce1711;
 }
 
+#mid #boutons_de_filtrage .bouton{
+    margin-left: 20px;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 15px;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+#exercice #formulaire .entree label{
+    margin-left: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#exercice #formulaire .entree #etiquettes{
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+textarea{
+    width: 50%;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #b9b9b9;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+#exercice input[type='button'], input[type='submit']{
+    padding: 10px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
 .log_reg{
     display: flex;
     justify-content:center;
