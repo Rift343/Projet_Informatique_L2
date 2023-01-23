@@ -1,4 +1,4 @@
-1;test;essai;FINET;"#Je suis du Markdown
+1;test; essai;FINET;"#Je suis du Markdown
 ```latex
 \begin{equation*}
 \sqrt{x^2+1}
@@ -12,12 +12,29 @@ c --- a
 ```
 
 
-";"
+
+    ";"
 
 ```latex
 \begin{equation*}
 \sqrt{x^2+1}
 \end{equation*}
 ```
-";#Je suis du Markdown;FINREP;#Je suis du Markdown
-2;Info;FINET;#Je suis une autre question;1;2;#3;FINREP;2
+
+    ";"#Je suis du Markdown
+    ";qzdqzdqzd;FINREP;"
+
+```latex
+\begin{equation*}
+\sqrt{x^2+1}
+\end{equation*}
+```
+
+    ";"#Je suis du Markdown
+    "
+2;info;FINET;je suis une question;oui;non;FINREP;oui
+3;info;FINET;"```python
+def fact(n):
+   if(n==0):
+      return 1
+```";oui;non;FINREP;oui
