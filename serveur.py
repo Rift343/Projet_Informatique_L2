@@ -4,14 +4,24 @@ from manipulation_User import *
 from md_mermaid import *
 from markdownHTML import *
 import hashlib
+from flask_socketio import SocketIO
+
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
+app.config['UPLOAD_FOLDER'] = "upload"
+
+
+
 
 @app.route("/") #Page principale du site
 def index():
     if 'Username' in session:
-        Username = session['Username']
-        return render_template("acceuil_connecte.html", Username=Username)
+        if(session['type'] == "pro"):
+            Username = session['Username']
+            return render_template("acceuil_connecte.html", Username=Username)
+        else:
+            Username = session['Username']
+            return render_template("acceuil_connecte_etu.html", Username=Username)
     else:
         return render_template("acceuil.html")
 
@@ -47,21 +57,34 @@ def log():
 def connexion():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     mot_de_passe = request.form['password'] #Son mot de passe
-    listeUser = lireCSV()
-    for sous_liste in listeUser:
-        if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
-            print("connexion")
-            session['Username'] = nom_utilisateur
-            IdUser = sous_liste[0]
-            session['UserId'] = IdUser
-            return render_template("acceuil_connecte.html", Username=nom_utilisateur)
+    
+    if request.form.get(typecompte, False) == 'on':
+        listeetu = etuCSV()
+        for sous_liste in listeetu:
+            if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
+                print("connexion")
+                session['Username'] = nom_utilisateur
+                IdUser = sous_liste[0]
+                session['UserId'] = IdUser
+                session['type'] = "etu"
+                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur)
+    else:
+        listeUser = lireCSV()
+        for sous_liste in listeUser:
+            if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
+                print("connexion")
+                session['Username'] = nom_utilisateur
+                IdUser = sous_liste[0]
+                session['UserId'] = IdUser
+                session['type'] = "pro"
+                return render_template("acceuil_connecte.html", Username=nom_utilisateur)
     return render_template("login.html", erreur = True)
     #le mot de passe ou l'identifiant est incorrect
 
 
 @app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
-    if 'UserId' and 'Username'in session:
+    if 'UserId' and 'Username'in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
         #print(UserId)
@@ -76,7 +99,7 @@ def BDD():          #les questions qui ont cette étiquette
 
 @app.route("/creationQuestion") #Page de création d'une question avec un nom, un énoncé, des réponses, une correction et des étiquettes
 def creationQuestion():
-    if 'Username' and 'UserId' in session:
+    if 'Username' and 'UserId' in session and session['type'] == "pro":
         Username = session['Username']
         UserId = session['UserId']
         listeET = []
@@ -91,7 +114,7 @@ def creationQuestion():
 
 @app.route("/creationQuestion",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une création
 def ajoutQuestion():
-    if 'UserId' and 'Username' in session:
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
@@ -146,7 +169,7 @@ def visuIFrame():
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
 def question(idQuestion):
-    if 'Username' and 'UserId' in session:
+    if 'Username' and 'UserId' in session and session['type'] == "pro":
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
@@ -159,7 +182,7 @@ def question(idQuestion):
 
 @app.route("/modificationQuestion/<idQuestion>") #Page de modification d'une question
 def modifierQuestion(idQuestion):
-    if 'Username' and 'UserId' in session:
+    if 'Username' and 'UserId' in session and session['type'] == "pro":
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
@@ -175,7 +198,7 @@ def modifierQuestion(idQuestion):
 
 @app.route("/modificationQuestion/<idQuestion>",methods = ['POST']) #Code d'enregistrement d'une question une fois que toutes ses infos ont été rentrées pour une modif
 def modificationQuestion(idQuestion):
-    if 'UserId' and 'Username' in session:
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
         etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
@@ -201,7 +224,7 @@ def modificationQuestion(idQuestion):
 
 @app.route("/creationFeuille") #Page de création d'une feuille de questions
 def creationFeuille():
-    if 'UserId' and 'Username' in session:
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
         #print(UserId)
@@ -236,7 +259,7 @@ def supprimer(idQuestion):
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
-    if 'UserId' or 'Username' in session:
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
         session.pop('UserId', None)
         session.pop('Username', None)
         return render_template("acceuil.html")
