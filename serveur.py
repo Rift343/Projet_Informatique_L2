@@ -3,6 +3,7 @@ from manipulationQuestion import *
 from manipulation_User import *
 from md_mermaid import *
 from markdownHTML import *
+from manipulation_Etu import *
 import hashlib
 from flask_socketio import SocketIO
 
