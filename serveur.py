@@ -3,6 +3,7 @@ from manipulationQuestion import *
 from manipulation_User import *
 from md_mermaid import *
 from markdownHTML import *
+from manipulation_Etu import *
 import hashlib
 from flask_socketio import SocketIO
 
@@ -22,6 +23,14 @@ def index():
         else:
             Username = session['Username']
             return render_template("acceuil_connecte_etu.html", Username=Username)
+    else:
+        return render_template("acceuil.html")
+
+@app.route("/acceuil_connecte_etu") #Page principale du site
+def index3():
+    if 'Username' in session:
+        Username = session['Username']
+        return render_template("acceuil_connecte_etu.html", Username=Username)
     else:
         return render_template("acceuil.html")
 
@@ -58,7 +67,7 @@ def connexion():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     mot_de_passe = request.form['password'] #Son mot de passe
     
-    if request.form.get(typecompte, False) == 'on':
+    if request.form.get('typecompte', False) == 'on':
         listeetu = etuCSV()
         for sous_liste in listeetu:
             if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
