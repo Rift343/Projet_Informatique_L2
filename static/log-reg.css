@@ -1,0 +1,121 @@
+.log_reg{
+    display: flex;
+    justify-content:center;
+    flex-direction: columns;
+    align-items: center;
+}
+
+.log_reg form{
+    margin-top: 20px;
+    padding: 40px 60px;
+    background-color: #dadada;
+    border-radius: 30px;
+    min-width: 300px;
+}
+
+.log_reg form h1{
+    color: #ce1711;
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: 'Poppins', sans-serif;
+} 
+
+.log_reg form .erreurLog{
+    color: #ce1711; 
+    padding: 20px;
+    font-family: 'Poppins', sans-serif;
+} 
+
+.log_reg form .entree{
+    flex: flex;
+    flex-direction: column;
+}  
+
+.log_reg form .entree input[type='text'], input[type='password'], input[type='email']{
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f0f0f0;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    outline: none;
+}  
+
+.log_reg form .entree input[type="checkbox"]:not(:checked), input[type="checkbox"]:checked {
+	position: absolute;
+	left: -9999px;
+}
+
+.log_reg form .entree input[type="checkbox"]:not(:checked) + label, input[type="checkbox"]:checked + label {
+	position: relative;
+	padding-left: 75px;
+	cursor: pointer;
+}
+
+.log_reg form .entree input[type="checkbox"]:not(:checked) + label:before, input[type="checkbox"]:checked + label:before, input[type="checkbox"]:not(:checked) + label:after, input[type="checkbox"]:checked + label:after {
+	content: '';
+	position: absolute;
+}
+
+.log_reg form .entree input[type="checkbox"]:not(:checked) + label:before, input[type="checkbox"]:checked + label:before {
+	left:0; top: -3px;
+	width: 65px; 
+    height: 30px;
+	background-color: #ffffff;
+	border-radius: 15px;
+	transition: background-color .2s;
+}
+
+.log_reg form .entree input[type="checkbox"]:not(:checked) + label:after, input[type="checkbox"]:checked + label:after {
+	width: 20px; 
+    height: 20px;
+	transition: all .2s;
+	border-radius: 50%;
+	background: #7F8C9A;
+	top: 2px; left: 5px;
+}
+
+.log_reg form .entree input[type="checkbox"]:checked + label:before {
+	background:#7F8C9A; 
+}
+
+.log_reg form .entree input[type="checkbox"]:checked + label:after {
+	background: #bb3632;
+	top: 2px; left: 40px;
+}
+
+.log_reg form .entree input[type="checkbox"]:checked + label .boite, input[type="checkbox"]:not(:checked) + label .boite:before, input[type="checkbox"]:checked + label .boite:after {
+	position: absolute;
+	left: 6px;
+	width: 65px;
+	border-radius: 15px;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 22px;
+	transition: all .2s;
+}
+
+.log_reg form > input::placeholder{
+    font-family: 'Poppins', sans-serif;
+}
+
+.log_reg form input[type='submit']{
+    padding: 15px 25px;
+    border-radius: 5px;
+    border:none;
+    font-size: 15px;
+    color: #fff;
+    background-color: #ce1711;
+    outline:none;
+    cursor:pointer;
+    margin-bottom: 20px;
+} 
+
+.log_reg form label{
+    font-family: 'Poppins', sans-serif;
+}
+
+.log_reg form label a{
+    font-family: 'Poppins', sans-serif;
+    color: #ce1711;
+}
