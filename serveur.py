@@ -66,7 +66,7 @@ def connexion():
     nom_utilisateur = request.form['idUser'] #On récupère son id
     mot_de_passe = request.form['password'] #Son mot de passe
     
-    if request.form.get(typecompte, False) == 'on':
+    if request.form.get('typecompte', False) == 'on':
         listeetu = etuCSV()
         for sous_liste in listeetu:
             if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
