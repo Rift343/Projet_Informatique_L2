@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="static/main.css">
+  <link rel="stylesheet" href="static/log-reg.css" />
   <script></script>
   <title>QuizTio</title>
   <script></script>
@@ -35,11 +36,35 @@
             <label for="name">Entrez votre mot de passe : </label><br>
             <input type="password" name="password" minlength="2" placeholder="Mot de passe" required>
         </div>
+        <div class="entree">
+            <label>Professeur </label>
+            <input type="checkbox" id="boiteetu" />
+			<label for="boiteetu" aria-describedby="label"><span class="boite"></span></label>
+            <label>Eleve</label>
+        </div><br>
         <input type = "submit" value = "Valider" />
         <br>
         <label>Vous n'êtes pas membre ? Créez un compte <a href="register">ici</a>.</label>
     </form>
 </div><!--
+
+[type="checkbox"]:not(:checked) + label,
+	[type="checkbox"]:checked + label {
+		position: relative;
+		padding-left: 75px;
+		cursor: pointer;
+	}
+
+.log_reg form .entree input[type="checkbox"]:not(:checked), input[type="checkbox"]:checked{
+    padding: 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #f0f0f0;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
 <div id="bot">
 <a href="/">Acceuil</a>
 <a href="register">S'enregistrer</a>
