@@ -15,6 +15,14 @@ def index():
     else:
         return render_template("acceuil.html")
 
+@app.route("/acceuil_connecte_etu") #Page principale du site
+def index3():
+    if 'Username' in session:
+        Username = session['Username']
+        return render_template("acceuil_connecte_etu.html", Username=Username)
+    else:
+        return render_template("acceuil.html")
+
 @app.route("/register") #Page de création d'un compte
 def reg():
     return render_template("register.html", erreru=False)
