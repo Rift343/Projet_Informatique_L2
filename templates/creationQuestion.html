@@ -32,7 +32,7 @@
   }
   function supp_rep(n){
     //pour supprimer une reponse, on prends en entrer le numero de la reponse que l'on veut supprimer
-    rep_li.splice(n,n);
+    rep_li.splice(n,1);
     //on supprime la reponse dans rep_li puis on recreer les span ou sont affiché les reponses
     num = 0;
     document.getElementById('li_rep_possibles').value=""+rep_li.join(";");
