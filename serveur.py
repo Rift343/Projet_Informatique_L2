@@ -10,8 +10,13 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 app.config['UPLOAD_FOLDER'] = "upload"
+app.config['SECRET_KEY'] = 'secret!'
+socketio = SocketIO(app)
 
-
+li_ques_ouverte =[]# li session/question ouverte
+dico_question_ouverte_to_prof = {}# id_q to userId prof
+dico_eleve_par_prof ={}# user id prof to socket id eleve
+li_prof_socket_id = {}#id q to session socket id du prof
 
 
 @app.route("/acceuil") #Page principale du site
@@ -62,6 +67,7 @@ def enregistrement():
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
+        session['type'] == "pro"
         csv = lireCSV()
         for User in csv:
             if User[1]==nom_utilisateur:
@@ -202,6 +208,16 @@ def question(idQuestion):
     else:
         return render_template("non_connecte.html")
 
+
+@app.route("/import_eleve",methods = ['POST']) #Page de visualisation d'une question
+def import_eleve(idQuestion):
+    if 'Username' and 'UserId' in session and session['type'] == "pro":
+        file = request.files['file']
+        ajoutEtu(app.config['UPLOAD_FOLDER']+file)
+        
+
+
+
 @app.route("/modificationQuestion/<idQuestion>") #Page de modification d'une question
 def modifierQuestion(idQuestion):
     if 'Username' and 'UserId' in session and session['type'] == "pro":
@@ -244,7 +260,7 @@ def modificationQuestion(idQuestion):
 
 
 
-@app.route("/creationFeuille") #Page de création d'une feuille de questions
+@app.route("/creationFeuille") #Page dde création d'une feuille de questionse création d'une feuille de questions
 def creationFeuille():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
@@ -288,9 +304,55 @@ def deco():
         session.pop('type', None)
         return redirect(url_for('index1'))
 
-#@app.route("/feuille")
-#def feuille():
+
+@app.route("/sequence/<idQuestion>") #Page pour afficher q
+def sequence(idQuestion):
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
+
+        pass
+    if 'UserId' or 'Username' in session and session['type'] == "etu":
+        if li_prof_cours != []:
+            trouve = False
+            
+                
+@socketio.on('ouvrir_q')#prof ouvre question
+def ouvrir_q(id_q):
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
+
+        li_prof_cours.append(session['UserId'])
+        dico_question_ouverte_to_prof[id_q]=session['UserId']
+        li_prof_socket_id[id_q]=request.namespace.socket.sessid
+        dico_eleve_par_prof[session['UserId']]= []
+    
+
+@socketio.on('avancer_q')#prof avance sequence
+def avancer_q(id_q):
+    pass
+@socketio.on('bloquer_rep_q')#prof bloque rep
+def bloquer_rep_q(id_q):
+    pass
+@socketio.on('eleve_reponse_q')#eleve reponds
+def eleve_reponse_q(id_q):
+    pass
+    
+
+@socketio.on('acceder_q')#eleve accede sequence
+def acceder_q(id_q):
+    for eleme in dico_question_ouverte_to_prof.keys :
+        if id_q == eleme :
+            currentSocketId = request.namespace.socket.sessid
+            prof = dico_question_ouverte_to_prof.get(eleme)
+            dico_eleve_par_prof[prof].append(currentSocketId)
+            sess_id_prof = li_prof_socket_id[id_q]
+            #envoyer +1 prof
+        
+        
+        
+        
+        #@app.route("/feuille")
+#def feuille():                 
 #    return render_template("feuille.html")
 
 if __name__ == '__main__':
     app.run(host="localhost", port=8000, debug = True)# modifier le port si un autre groupe tourne déjà sur 5000 
+    socketio.run(app)
