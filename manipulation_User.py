@@ -1,5 +1,6 @@
 import csv
 import os
+from random import randrange
 
 littlePATH = "/csv"
 
@@ -40,18 +41,21 @@ def ajouterUser(Nom,password,email):
             return False
     
     with open(PATH,'a',newline='') as FILE:
-        id = 1
-        print (id)
-        print (listeid)
-        print(id in listeid)
+        li=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"]
+        id = "EA167PM8"
+        #print (id)
+        #print (listeid)
+        #print(id in listeid)
         while (str(id) in listeid):
-            id = id +1
+            id = ""
+            for i in range (8):
+                id = id+li[randrange(len(li))]
         Ecriture=csv.writer(FILE,delimiter=';')   
         Ecriture.writerow([id,Nom,email,password])      
         
     return True
 
-#print(ajouterUser("Jaque","JE","vneiu@gmail.com"))
+#print(ajouterUser("hiu","bj","bui@yahoo.com"))
 
 
     
