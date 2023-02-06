@@ -19,7 +19,7 @@ dico_eleve_par_prof ={}# user id prof to socket id eleve
 li_prof_socket_id = {}#id q to session socket id du prof
 
 
-@app.route("/acceuil") #Page principale du site
+@app.route("/") #Page principale du site
 def index1():
     if 'Username' in session:
         if(session['type'] == "pro"):
