@@ -14,8 +14,8 @@ app.config['UPLOAD_FOLDER'] = "upload"
 
 
 
-@app.route("/") #Page principale du site
-def index():
+@app.route("/acceuil") #Page principale du site
+def index1():
     if 'Username' in session:
         if(session['type'] == "pro"):
             Username = session['Username']
@@ -27,7 +27,7 @@ def index():
         return render_template("acceuil.html")
 
 @app.route("/acceuil_connecte_etu") #Page principale du site
-def index3():
+def index2():
     if 'Username' in session:
         Username = session['Username']
         return render_template("acceuil_connecte_etu.html", Username=Username)
@@ -262,10 +262,11 @@ def feuille():
 
 @app.route("/supprimer/<idQuestion>")
 def supprimer(idQuestion):
-    UserId = session['UserId']
-    delQuestion(UserId,idQuestion)
-    listedico=depuis_csv(UserId)
-    return redirect(url_for('/'))
+    if 'UserId' in session and session['type'] == "pro":
+        UserId = session['UserId']
+        delQuestion(UserId,idQuestion)
+        listedico=depuis_csv(UserId)
+        return redirect(url_for('BDD'))
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
@@ -273,7 +274,7 @@ def deco():
         session.pop('UserId', None)
         session.pop('Username', None)
         session.pop('type', None)
-        return redirect(url_for('/'))
+        return redirect(url_for('index1'))
 
 #@app.route("/feuille")
 #def feuille():
