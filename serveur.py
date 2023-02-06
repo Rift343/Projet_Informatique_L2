@@ -19,8 +19,8 @@ dico_eleve_par_prof ={}# user id prof to socket id eleve
 li_prof_socket_id = {}#id q to session socket id du prof
 
 
-@app.route("/") #Page principale du site
-def index():
+@app.route("/acceuil") #Page principale du site
+def index1():
     if 'Username' in session:
         if(session['type'] == "pro"):
             Username = session['Username']
@@ -32,7 +32,7 @@ def index():
         return render_template("acceuil.html")
 
 @app.route("/acceuil_connecte_etu") #Page principale du site
-def index3():
+def index2():
     if 'Username' in session:
         Username = session['Username']
         return render_template("acceuil_connecte_etu.html", Username=Username)
@@ -278,17 +278,19 @@ def feuille():
 
 @app.route("/supprimer/<idQuestion>")
 def supprimer(idQuestion):
-    UserId = session['UserId']
-    delQuestion(UserId,idQuestion)
-    listedico=depuis_csv(UserId)
-    return redirect(url_for('BDD'))
+    if 'UserId' in session and session['type'] == "pro":
+        UserId = session['UserId']
+        delQuestion(UserId,idQuestion)
+        listedico=depuis_csv(UserId)
+        return redirect(url_for('BDD'))
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
         session.pop('UserId', None)
         session.pop('Username', None)
-        return render_template("acceuil.html")
+        session.pop('type', None)
+        return redirect(url_for('index1'))
 
 
 @app.route("/sequence/<idQuestion>") #Page pour afficher q

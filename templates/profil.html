@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="static/main.css">
+  <script></script>
+  <title>QuizTio</title>
+  <script></script>
+</head>
+<body>
+  <div class="nom">QuizTio</div>
+  <ul class="menu">
+    <li>
+      {{Username}}
+      <ul class="sousMenu">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="BDD">Liste de vos questions</a></li>
+        <li><a href="creationQuestion">Créer une question</a></li>
+        <li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+        <li><a href="deco">Se déconnecter</a></li>
+      </ul>
+    </li>
+  </ul>
+<div id="mid">
+    <br>
+    <form action="import_eleve" method="post">
+        <label for="fichier">Entrez un fichier csv avec les identifiants de vos élèves :</label>
+        <input id="fichier" name="fichier" type="file" accept=".csv,text/csv" required>
+    </form>
+    <br>
+</div>
+
+<!--
+<div id="bot">
+<a href="./">Acceuil</a>
+<a href="register">S'enregistrer</a>
+<a href="login">Se connecter</a>
+<a href="creationQuestion">Créer une question</a>
+<a href="BDD">Liste de vos questions</a>
+<a href="creationFeuille">Créer une feuille d'exercices</a>
+</div>-->
+</body>
+
+</html>

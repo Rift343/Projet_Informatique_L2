@@ -42,22 +42,27 @@
       </ul>
     </li>
   </ul>
-<div id="mid">
-  <tr>
-    <td class="eti">
-      {% for eti in dictionnaire["ET"]: %}{{eti+" "}}{%endfor%}
-    </td><br><br>
-    <td>{{dictionnaire["Question"]| safe}}</td><br><br><br><br>
-    <td>{% for rep in dictionnaire["REP"]: %}
-          {%if rep in dictionnaire["BREP"]%}
-            <span class='BREP'>{{rep| safe}}</span>  
-          {% else %}
-            <span class='MREP'>{{rep| safe}}</span> 
-          {%endif%}
-        {%endfor%}</td><br>
-        
-        
-  </tr>
+
+  <div class="question"><br>
+    <form action = "" method = "post">
+        <div class="etiquettes">
+          {% for eti in dictionnaire["ET"]: %}
+            <span class='etiquette'>{{eti}}</span>
+          {%endfor%}
+        </div>
+        <h1>Question :</h1>
+        <td>
+          {{dictionnaire["Question"]| safe}}
+        </td>
+        <div class="reponses">
+          {% for rep in dictionnaire["REP"]: %}
+            {%if rep in dictionnaire["BREP"]%}
+              <span class='BREP'>{{rep| safe}}</span>  
+            {% else %}
+              <span class='MREP'>{{rep| safe}}</span> 
+            {%endif%}
+          {%endfor%}
+        </div>
 
 </div><!--
 <div id="bot">
