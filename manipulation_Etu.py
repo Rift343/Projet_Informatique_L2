@@ -42,5 +42,7 @@ def ajoutEtu(fichierCSV):
                 mdp = i[-1]
                 i.append(hashlib.sha256(mdp.encode()).hexdigest())
                 Ecriture.writerow(i)
+    
+    os.remove(fichierCSV)
     return True
                 
