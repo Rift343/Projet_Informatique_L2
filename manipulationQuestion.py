@@ -1,6 +1,7 @@
 import csv
 import os
 import markdownHTML
+from random import randrange
 littlePATH = "/csv"
 
 def depuis_csv(ID_User):
@@ -110,11 +111,17 @@ print(f+"\n\n")
 print(markdownHTML.markdownToHtml(f))
 
 def estDansCSV(ID_User,ID_Question):
-    maliste = depuis_csv(ID_User)
-    for i in maliste:
-        if (i['ID']==ID_Question):
-            return False
-    return True
+    PATH = os.getcwd()
+    PATH = PATH+littlePATH+"/ID_Question"+".csv"
+    with open(PATH,'r') as FILE:
+        lecture=csv.reader(FILE,delimiter=';')
+        maliste=[]
+        for ligne in lecture:
+            maliste.append(ligne)
+            for i in maliste:
+                if (i[0]==ID_Question):
+                    return False
+            return True
 
 
 def doublon(ID_User,Question,reponse):
@@ -139,7 +146,8 @@ def dans_csv(ID_User,Dico_csv):
 
     Ecrit la question de Dico_csv dans le fichier contenant les questions de ID_User
     """
-    id =1
+    li=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z","a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z","0","1","2","3","4","5","6","7","8","9"]
+    id ="AHYpV56e"
     ListeCSV=list()
     PATH= os.getcwd()
     PATH =  PATH+littlePATH+"/question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
@@ -148,8 +156,9 @@ def dans_csv(ID_User,Dico_csv):
     if(os.path.isfile(PATH)):
         #id=1
         while (estDansCSV(ID_User,str(id))==False):
-            id = id + 1
-            #print(id)
+            id =""
+            for i in range (8):
+                id = id+li[randrange(len(li))]
         ListeCSV.append(id)
         #On regarde si on n'écrit pas un question en double. 
         #Si on écrit un question en double alors on return False
@@ -158,6 +167,10 @@ def dans_csv(ID_User,Dico_csv):
           
     else:
         #id=1
+        while (estDansCSV(ID_User,str(id))==False):
+            id =""
+            for i in range (8):
+                id = id+li[randrange(len(li))]
         ListeCSV.append(id)
 
     for etiquette in Dico_csv['ET']:
@@ -176,7 +189,13 @@ def dans_csv(ID_User,Dico_csv):
     with open(PATH,'a',newline='') as FILE:
         Ecriture=csv.writer(FILE,delimiter=';')   
         Ecriture.writerow(ListeCSV)
-        FILE.close() 
+        FILE.close()
+    PATH = os.getcwd()
+    PATH = PATH+littlePATH+"/ID_Question"+".csv"
+    with open(PATH,'a',newline='') as FILE:
+        Ecriture=csv.writer(FILE,delimiter=';')   
+        Ecriture.writerow([id,ID_User])
+        FILE.close()  
     return id
 
 #print(dans_csv(2,{'Question': 'Nb Ocet INT', 'ET': ['Info'], 'REP': ['2', '3', '4','5'], 'BREP': ['4']}) )    
@@ -265,7 +284,17 @@ def delQuestion(ID_User,IDquestion):
             #print(ListeCSV)      
             Ecriture.writerows(ListeCSV)
         FILE.close()
-
+    PATH= os.getcwd()
+    PATH =  PATH+littlePATH+"/ID_Question"+".csv"
+    with open(PATH,"r") as FILE:
+        lecture=csv.reader(FILE,delimiter=";")
+        li=[]
+        for i in lecture:
+            if(i[0]!=IDquestion):
+                li.append(i)
+        with open(PATH,"w") as FILE2:
+            Ecriture=csv.writer(FILE2,delimiter=';')
+            Ecriture.writerows(li)
 
 #delQuestion(1,4)
 
