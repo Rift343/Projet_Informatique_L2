@@ -26,6 +26,18 @@ def index1():
     else:
         return render_template("acceuil.html")
 
+@app.route("/profil") #Page principale du site
+def profil():
+    if 'Username' in session:
+        if(session['type'] == "pro"):
+            Username = session['Username']
+            return render_template("profil.html", Username=Username)
+        else:
+            Username = session['Username']
+            return render_template("profiletu.html", Username=Username)
+    else:
+        return render_template("acceuil.html")
+
 @app.route("/acceuil_connecte_etu") #Page principale du site
 def index2():
     if 'Username' in session:
