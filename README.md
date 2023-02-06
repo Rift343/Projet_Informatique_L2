@@ -55,4 +55,3 @@ https://www.flaticon.com/fr/icone-gratuite/poubelle_3182109?term=trash&page=1&po
 # Attention
 Le fichier mermaid.js et load-mathjax.js du dossier static et temp sont les codes sources des bibliothèques mermaid et mathjax. Nous les avons téléchargés séparément 
 afin d'éviter de devoir installer entièrement la bibliothèque mermaid et mathjax. Ces fichiers ont été mis à la disposition de tous par les créateurs et n'ont pas été modifiés.
-blabla
