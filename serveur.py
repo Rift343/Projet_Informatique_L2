@@ -265,14 +265,15 @@ def supprimer(idQuestion):
     UserId = session['UserId']
     delQuestion(UserId,idQuestion)
     listedico=depuis_csv(UserId)
-    return redirect(url_for('BDD'))
+    return redirect(url_for('/'))
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
         session.pop('UserId', None)
         session.pop('Username', None)
-        return render_template("acceuil.html")
+        session.pop('type', None)
+        return redirect(url_for('/'))
 
 #@app.route("/feuille")
 #def feuille():
