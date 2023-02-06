@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="../static/main.css">
+  <link rel="stylesheet" href="../static/question.css" />
   <title>QuizTio</title>
   <script>
     function get_responses(){
@@ -46,24 +47,25 @@
 
   <div class="question"><br>
     <form action = "" method = "post">
-        <div class="etiquettes">
-          {% for eti in dictionnaire["ET"]: %}
-            <span class='etiquette'>{{eti}}</span>
-          {%endfor%}
-        </div>
-        <h1>Question :</h1>
-        <td>
-          {{dictionnaire["Question"]| safe}}
-        </td>
-        <div class="reponses">
-          {% for rep in dictionnaire["REP"]: %}
-            {%if rep in dictionnaire["BREP"]%}
-              <span class='BREP'>{{rep| safe}}</span>  
-            {% else %}
-              <span class='MREP'>{{rep| safe}}</span> 
-            {%endif%}
-          {%endfor%}
-        </div>
+      <a>Etiquettes :</a>
+      <div class="etiquettes">
+        {% for eti in dictionnaire["ET"]: %}
+          <span class='etiquette'>{{eti}}</span>
+        {%endfor%}
+      </div>
+      <h1>Question :</h1>
+      <b>
+        {{dictionnaire["Question"]| safe}}
+      </b><br><br>
+      <div class="reponses">
+        {% for rep in dictionnaire["REP"]: %}
+          {%if rep in dictionnaire["BREP"]%}
+            <span class='BREP'>{{rep| safe}}</span>  
+          {% else %}
+            <span class='MREP'>{{rep| safe}}</span> 
+          {%endif%}
+        {%endfor%}
+      </div>
 
 </div><!--
 <div id="bot">
