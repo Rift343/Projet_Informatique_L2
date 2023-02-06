@@ -29,15 +29,18 @@ def ajoutEtu(fichierCSV):
     stockage de l'ensemble des étudiants en append ('a') ensuite l'on ecrit nom, prenom, 
     numéro etuduant et mdp. 
     """
-    with (open(fichierCSV),'r') as FILE:
+    PATH = os.getcwd()
+    fichierCSV = PATH +'/'+fichierCSV
+    print(fichierCSV)
+    with open(fichierCSV,'r') as FILE:
         lecture=csv.reader(FILE,delimiter=';')
         PATH=os.getcwd()
         PATH = PATH+littlePATH+"/Etu.csv"
         with (open(PATH,'a',newline='')) as FILE2:
-            Ecriture = csv.writer
+            Ecriture = csv.writer(FILE2,delimiter=';')
             for i in lecture:
                 mdp = i[-1]
-                i.append(hashlib.sha256(mdp.encode()).hexdigest(),delimiter=';')
+                i.append(hashlib.sha256(mdp.encode()).hexdigest())
                 Ecriture.writerow(i)
     return True
                 

@@ -210,10 +210,12 @@ def question(idQuestion):
 
 
 @app.route("/import_eleve",methods = ['POST']) #Page de visualisation d'une question
-def import_eleve(idQuestion):
+def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
-        file = request.files['file']
-        ajoutEtu(app.config['UPLOAD_FOLDER']+file)
+        f = request.files['fichier']
+        print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         
 
 
