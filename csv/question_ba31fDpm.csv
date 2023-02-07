@@ -38,3 +38,4 @@ def fact(n):
    if(n==0):
       return 1
 ```";oui;non;FINREP;oui
+lLonP5gw;test;QCM;FINET;#Je suis un question test de creation de question;vrai;faux;FINREP;vrai
