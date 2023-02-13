@@ -6,7 +6,8 @@ Ceci est le dépot du code d'un projet d'informatique de licence 2 à l'Universi
 
 1 - Installez flask selon votre plate-forme : https://flask.palletsprojects.com/en/2.2.x/installation/#install-flask <br/>
 2 - Installez la bibliothèque Markdown avec la commande : pip install markdown <br/>
-3 - Téléchargez le code source. Les autres bibliothèques sont présentes sous forme de ficher source à l'intérieur. <br/>
+3 - Installez la bibliothèque Flask_socketIO avec la commande : pip install flask-socketio <br/>
+4 - Téléchargez le code source. Les autres bibliothèques sont présentes sous forme de ficher source à l'intérieur. <br/>
 
 # Consignes de lancement:
 
