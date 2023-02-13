@@ -209,15 +209,13 @@ def question(idQuestion):
         return render_template("non_connecte.html")
 
 
-@app.route("/import_eleve",methods = ['POST']) #Page de visualisation d'une question
+@app.route("/import_eleve",methods = ['POST'])
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
         print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
-        
-
 
 
 @app.route("/modificationQuestion/<idQuestion>") #Page de modification d'une question

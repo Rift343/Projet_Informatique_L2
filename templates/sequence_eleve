@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="../static/question.css" />
+    <title>QuizTio</title>
+    <script>
+        function get_responses(){
+        li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
+        for (element in li_bonne_rep){
+            li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
+        }
+        return li_bonne_rep;
+        }
+
+        function envoi_rep(){
+            emit('envoi_rep', reponse);
+        }
+        function quitter(){
+            emit('quitter');
+        }
+    </script>
+    <script src="../static/mermaid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="../static/load-mathjax.js" async></script>
+    <script>hljs.initHighlightingOnLoad()
+    window.addEventListener('load',() =>{
+        let codeBlock=document.getElementsByTagName('code');
+        for(let i in codeBlock)
+        {
+            hljs.highlightBlock(codeBlock[i]);
+        }
+    });
+    </script>
+</head>
+<body>
+    <div class="nom">QuizTio</div>
+    <ul class="menu">
+        <li>
+        {{Username}}
+            <ul class="sousMenu">
+                <li><a href="../">Accueil</a></li>
+                <li><a href="profil">Profil</a></li>
+                <li><a href="../BDD">Liste de vos questions</a></li>
+                <li><a href="../creationQuestion">Créer une question</a></li>
+                <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
+                <li><a href="../deco">Se déconnecter</a></li>
+            </ul>
+        </li>
+    </ul>
+
+    <div class="question"><br>
+        <form action = "" method = "post">
+            <h1>Question :</h1>
+            <b>
+            {{dictionnaire["Question"]| safe}}
+            </b><br><br>
+            <div class="reponses">
+            {% for rep in dictionnaire["REP"]: %}
+                <span class='REP'>{{rep| safe}}</span>
+            {%endfor%}
+            <input type="button" onclick="envoi_rep()" value="envoi réponse">
+            <input type="button" onclick="quitter()" value="Quitter">
+        </form>
+    </div>
+    
+
+</div><!--
+<div id="bot">
+<a href="../">Acceuil</a>
+<a href="../register">S'enregistrer</a>
+<a href="../login">Se connecter</a>
+<a href="../creationQuestion">Créer une question</a>
+<a href="../BDD">Liste de vos questions</a>
+<a href="../creationFeuille">Créer une feuille d'exercices</a>
+</div>-->
+</body>
+
+</html>
