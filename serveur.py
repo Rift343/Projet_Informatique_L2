@@ -346,7 +346,7 @@ def afficheSequenceProf(id):
     if 'Username' in session and session['type']=="pro":
         
         
-        return render_template("sequence_prof.html", id_seq=id)
+        return render_template("sequence_prof.html", id_seq=id, dictionnaire=getQuestion(session['UserId'], id))
     else:
         return render_template("acceuil.html")
         
