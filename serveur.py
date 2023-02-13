@@ -67,7 +67,7 @@ def enregistrement():
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
-        session['type'] == "pro"
+        session['type'] = "pro"
         csv = lireCSV()
         for User in csv:
             if User[1]==nom_utilisateur:
@@ -213,7 +213,7 @@ def question(idQuestion):
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
-        print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
 
