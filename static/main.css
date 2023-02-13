@@ -126,6 +126,16 @@ body{
     display: inline-block;
 }
 
+.REP {
+    border-radius: 25px; 
+    background: #c3d1f0; 
+    padding: 6px; 
+    min-width: 10%; 
+    min-height: 25px; 
+    margin: 6px;
+    display: inline-block;
+}
+
 .nom {
     position: fixed;
     top: 20px;
