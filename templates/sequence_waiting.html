@@ -14,9 +14,6 @@
         return li_bonne_rep;
         }
 
-        function envoi_rep(){
-            emit('envoi_rep', reponse);
-        }
         function quitter(){
             emit('quitter');
         }
@@ -51,21 +48,10 @@
         </li>
     </ul>
 
-    <div class="question"><br>
-        <form action = "" method = "post">
-            <h1>Question :</h1>
-            <b>
-            {{dictionnaire["Question"]| safe}}
-            </b><br><br>
-            <div class="reponses">
-            {{num=0}}
-            {% for rep in dictionnaire["REP"]: %}
-                <input type="checkbox" id="'+num +'" name="'+num +'"> <span class='REP'>{{rep| safe}}</span>
-                {{num=num+1}}
-            {%endfor%}
-            <input type="button" onclick="envoi_rep()" value="envoi réponse">
-            <input type="button" onclick="quitter()" value="Quitter">
-        </form>
+    <div class="waiting_screen"><br>
+        <h1>Code Séquence</h1>
+        <h3>En attente du professeur...</h3>
+        <input type="button" onclick="quitter()" value="Quitter">
     </div>
     
 

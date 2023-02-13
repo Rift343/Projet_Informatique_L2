@@ -295,6 +295,8 @@ def supprimer(idQuestion):
         delQuestion(UserId,idQuestion)
         listedico=depuis_csv(UserId)
         return redirect(url_for('BDD'))
+    else:
+        return render_template("non_connecte.html")
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
@@ -303,6 +305,8 @@ def deco():
         session.pop('Username', None)
         session.pop('type', None)
         return redirect(url_for('index1'))
+    else:
+        return render_template("non_connecte.html")
 
 
 @app.route("/sequence/<idQuestion>") #Page pour afficher q
