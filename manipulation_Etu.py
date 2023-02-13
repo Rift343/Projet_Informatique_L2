@@ -18,7 +18,7 @@ def etuCSV():
         listeEtu = list()
         for i in lecture:
             listeEtu.append(i)
-        os.close(FILE)
+        #os.close(FILE)
     return listeEtu
 
 
@@ -43,8 +43,8 @@ def ajoutEtu(fichierCSV):
                 mdp = i[-1]
                 i.append(hashlib.sha256(mdp.encode()).hexdigest())
                 Ecriture.writerow(i)
-            os.close(FILE2)
-        os.close(FILE)
+            #os.close(FILE2)
+        #os.close(FILE)
     
     os.remove(fichierCSV)
     return True
@@ -68,5 +68,5 @@ def modificationEtu(numeroEtu,password):
     with open(PATH,'w') as FILE:
         Ecriture = csv.writer(FILE,delimiter=';')
         Ecriture.writerows(listeEtudiant)
-        os.close(FILE)
+        #os.close(FILE)
 
