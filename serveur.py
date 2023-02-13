@@ -337,10 +337,10 @@ def modif_mdp_etu_2():
 def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
 
-        li_prof_cours.append(session['UserId'])
-        dico_question_ouverte_to_prof[id_seq]=session['UserId']
-        li_prof_socket_id[id_seq]=request.namespace.socket.sessid
-        dico_eleve_par_prof[session['UserId']]= []
+            li_prof_cours.append(session['UserId'])
+            dico_question_ouverte_to_prof[id_seq]=session['UserId']
+            li_prof_socket_id[id_seq]=request.namespace.socket.sessid
+            dico_eleve_par_prof[session['UserId']]= []
     
 @socketio.on('fermer_seq')#prof ouvre sequence
 def ouvrir_q(id_seq):
@@ -354,10 +354,17 @@ def ouvrir_q(id_seq):
 
 
 @socketio.on('questionSuivante')#prof avance sequence
-def avancer_q():
+def avancer_q(id_seq,id_q):
     li_eleve=dico_eleve_par_prof(session['UserId'])
     #recuperer contenu question suivante
     q_suiv = ""
+    if (estDansCSV(id_seq) and id_q==""):
+        ##question seule
+        q_suiv = getQuestion(session["UserID"], id_seq)
+        q_suiv = traductionUneQuestionToHTML(q_suiv)
+    elif(id_q==id_seq):
+        pass
+    #deux autre cas : derniere question, question de sequence
     emit("nouvelle_q",q_suiv, room=li_eleve)
     emit("nouvelle_q",q_suiv, room=request.namespace.socket.sessid)
     

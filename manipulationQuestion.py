@@ -110,7 +110,7 @@ A --- B
 print(f+"\n\n")
 print(markdownHTML.markdownToHtml(f))
 
-def estDansCSV(ID_User,ID_Question):
+def estDansCSV(ID_Question):
     """
     Entré: ID_User=> l'identifiant de l'utilisateur 
             ID_Question=>l'identifiant de la question que l'on cherche
@@ -168,7 +168,7 @@ def dans_csv(ID_User,Dico_csv):
     #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
         #id=1
-        while (estDansCSV(ID_User,str(id))==False):
+        while (estDansCSV(str(id))==False):
             id =""
             for i in range (8):
                 id = id+li[randrange(len(li))]
@@ -180,7 +180,7 @@ def dans_csv(ID_User,Dico_csv):
           
     else:
         #id=1
-        while (estDansCSV(ID_User,str(id))==False):
+        while (estDansCSV(str(id))==False):
             id =""
             for i in range (8):
                 id = id+li[randrange(len(li))]
