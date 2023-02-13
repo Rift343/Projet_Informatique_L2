@@ -70,3 +70,53 @@ def modificationEtu(numeroEtu,password):
         Ecriture.writerows(listeEtudiant)
         #os.close(FILE)
 
+def ajouterHistoEtu(listeDeLaRep,numEtu):
+    """
+    Entré: listeDeLaRep=>Liste correspondant au élement de la réponse format à définir
+            numEtu=> Numéro de l'étudiant dans lequel on veut ajouter un historique
+    Sortie:Rien
+    Principe: On va transformer listeDeLaRep en string puis on va vérifier que la réponse 
+    n'existent pas déja dans l'historique. Puis on fait la modification dans Etu.csv
+    """
+    RepStr = "@||||@".join([str(elem)for elem in listeDeLaRep])
+    PATH=os.getcwd()
+    PATH=PATH+littlePATH+"/Etu.csv"
+    listeEtu = etuCSV()
+    monBoolean = True
+    for i in range(len(listeEtu)):
+        if (listeEtu[i][2]==str(numEtu)):
+            for x in range(4,len(listeEtu[i])):
+                #print(listeEtu[i][x])
+                if(listeEtu[i][x]==RepStr):
+                    monBoolean=False
+            if monBoolean:
+                listeEtu[i].append(RepStr)
+    with open(PATH,'w',newline='') as FILE:
+        Ecriture = csv.writer(FILE,delimiter=';')
+        for etu in listeEtu:
+            Ecriture.writerow(etu)
+
+
+
+#print(etuCSV())
+
+def GetHistoEtu(numEtu):
+    """
+    Entrée:numEtu=>numero de l'étudiant 
+    Sortie:Une de liste de liste de string
+    Principe: On lit la liste des etudiants. 
+    Lorsque l'on à trouver l'étudiant qui nous intéresse alors on récupère sont historique
+    en supprimant les delimiter que l'on avait ajouter afin d'avoir une liste de liste de string
+    qui correspond au réponse
+    """
+    listeEtu=etuCSV()
+    listeRetour=[]
+    for i in listeEtu:
+        if (i[2]==str(numEtu)):
+            for y in range(4,len(i)):
+                listeRetour.append(i[y].split("@||||@"))
+    return listeRetour
+
+#ajouterHistoEtu(["JE","suis","une","liste"],1258)
+#ajouterHistoEtu(["JE","suis","une","autre","liste"],1258)
+#print(GetHistoEtu(1258))

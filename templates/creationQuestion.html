@@ -82,9 +82,24 @@ function changerCouleurRep(ele){
 
     
 }
-  </script>
+
+function afficheEtiquette(){
+    var eti = {{listeEtiquettes|safe}};
+    for(etiquettes of eti){
+        document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
+            "<span class='etiquette'><p>"+etiquettes+"</p></span>";
+    }
+
+}
+
+function addEti(){  
+    document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
+        "<span class='etiquette'><p>"+document.getElementById("neti").value+"</p></span>";
+
+}
+</script>
 </head>
-<body>
+<body onload="afficheEtiquette()">
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
@@ -106,9 +121,10 @@ function changerCouleurRep(ele){
         <textarea name="enonce" id="enonce" required></textarea>
     </div>
     
-    <div class="entree">
-        <label for="etiquettes">Entrez la/les étiquettes de votre question (séparées par des ";" s'il y en a plusieurs) : </label><br>
-        <input type="text" name="etiquettes" id="etiquettes">
+    <div id="listeEti">
+        <input type="text" id="neti">
+        <input type="button" value="nouvelle etiquette" onclick=addEti()>
+        
     </div>
 
     
