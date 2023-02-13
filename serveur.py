@@ -316,6 +316,24 @@ def sequence(idQuestion):
         if li_prof_cours != []:
             trouve = False
             
+@app.route("/changement_mdp_etu")
+def modif_mdp_etu():
+    if 'Username' in session:
+        Username = session['Username']
+        return render_template("changement_mdp_etu.html", Username=Username)
+    else:
+        return render_template("changement_mdp_etu")
+    
+@app.route("/changement_mdp_etu",methods = ['POST'])
+def modif_mdp_etu_2():
+    if 'Username' in session:
+        Username = session['Username']
+        nouveauMdp = request.form['newMdp']
+        modificationEtu(Username, nouveauMdp)
+        return render_template("changement_mdp_etu.html", Username=Username)
+    else:
+        return render_template("changement_mdp_etu")
+            
                 
 @socketio.on('ouvrir_seq')#prof ouvre sequence
 def ouvrir_q(id_seq):

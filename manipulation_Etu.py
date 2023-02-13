@@ -18,6 +18,7 @@ def etuCSV():
         listeEtu = list()
         for i in lecture:
             listeEtu.append(i)
+        #os.close(FILE)
     return listeEtu
 
 
@@ -42,7 +43,30 @@ def ajoutEtu(fichierCSV):
                 mdp = i[-1]
                 i.append(hashlib.sha256(mdp.encode()).hexdigest())
                 Ecriture.writerow(i)
+            #os.close(FILE2)
+        #os.close(FILE)
     
     os.remove(fichierCSV)
     return True
                 
+def modificationEtu(numeroEtu,password):
+    """
+    Entré: numeroEtu-> le numéro de l'étudiant où l'on veut modifier le mot de passe
+            password-> le nouveau password sans le hash
+    Sortie: Rien
+    Principe: On lit le fichier des étudiants, on fait la modificaiton du password au bon étudiant
+              Puis l'on réécrit tout le ficher csv avec les modification
+    """
+    listeEtudiant = etuCSV()
+    print(listeEtudiant)
+    for i in range (len(listeEtudiant)):
+        if (listeEtudiant[i][2]==numeroEtu):
+            password = hashlib.sha256(password.encode()).hexdigest()
+            listeEtudiant[i][3] = password
+    PATH = os.getcwd()
+    PATH=PATH+littlePATH+"/Etu.csv"
+    with open(PATH,'w') as FILE:
+        Ecriture = csv.writer(FILE,delimiter=';')
+        Ecriture.writerows(listeEtudiant)
+        #os.close(FILE)
+
