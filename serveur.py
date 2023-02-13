@@ -314,36 +314,75 @@ def sequence(idQuestion):
         if li_prof_cours != []:
             trouve = False
             
+@app.route("/changement_mdp_etu")
+def modif_mdp_etu():
+    if 'Username' in session:
+        Username = session['Username']
+        return render_template("changement_mdp_etu.html", Username=Username)
+    else:
+        return render_template("changement_mdp_etu")
+    
+@app.route("/changement_mdp_etu",methods = ['POST'])
+def modif_mdp_etu_2():
+    if 'Username' in session:
+        Username = session['Username']
+        nouveauMdp = request.form['newMdp']
+        modificationEtu(Username, nouveauMdp)
+        return render_template("changement_mdp_etu.html", Username=Username)
+    else:
+        return render_template("changement_mdp_etu")
+            
                 
-@socketio.on('ouvrir_q')#prof ouvre question
-def ouvrir_q(id_q):
+@socketio.on('ouvrir_seq')#prof ouvre sequence
+def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
 
         li_prof_cours.append(session['UserId'])
-        dico_question_ouverte_to_prof[id_q]=session['UserId']
-        li_prof_socket_id[id_q]=request.namespace.socket.sessid
+        dico_question_ouverte_to_prof[id_seq]=session['UserId']
+        li_prof_socket_id[id_seq]=request.namespace.socket.sessid
         dico_eleve_par_prof[session['UserId']]= []
     
-
-@socketio.on('avancer_q')#prof avance sequence
-def avancer_q(id_q):
-    pass
-@socketio.on('bloquer_rep_q')#prof bloque rep
-def bloquer_rep_q(id_q):
-    pass
-@socketio.on('eleve_reponse_q')#eleve reponds
-def eleve_reponse_q(id_q):
-    pass
+@socketio.on('fermer_seq')#prof ouvre sequence
+def ouvrir_q(id_seq):
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
+        
+        li_prof_cours.remove(session['UserId'])
+        dico_question_ouverte_to_prof.pop(id_seq)
+        li_prof_socket_id.pop(id_seq)
+        dico_eleve_par_prof.pop(session['UserId'])
     
 
+
+@socketio.on('questionSuivante')#prof avance sequence
+def avancer_q():
+    li_eleve=dico_eleve_par_prof(session['UserId'])
+    #recuperer contenu question suivante
+    q_suiv = ""
+    emit("nouvelle_q",q_suiv, room=li_eleve)
+    emit("nouvelle_q",q_suiv, room=request.namespace.socket.sessid)
+    
+    
+@socketio.on('stop_rep')#prof bloque rep
+def bloquer_rep_q():
+    li_eleve=dico_eleve_par_prof(session['UserId'])
+    
+    emit("bloquer_rep", room=li_eleve)
+    
+
+@socketio.on('eleve_reponse_q')#eleve reponds
+def eleve_reponse_q(id_seq, id_rep,reponse):
+    #enregistrer rep
+    prof = li_prof_socket_id(id_seq)
+    emit("rep", reponse, room=[prof])
+
 @socketio.on('acceder_q')#eleve accede sequence
-def acceder_q(id_q):
+def acceder_q(id_seq):
     for eleme in dico_question_ouverte_to_prof.keys :
         if id_q == eleme :
             currentSocketId = request.namespace.socket.sessid
             prof = dico_question_ouverte_to_prof.get(eleme)
             dico_eleve_par_prof[prof].append(currentSocketId)
-            sess_id_prof = li_prof_socket_id[id_q]
+            sess_id_prof = li_prof_socket_id[id_seq]
             #envoyer +1 prof
         
         

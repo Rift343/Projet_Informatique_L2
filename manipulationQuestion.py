@@ -111,6 +111,12 @@ print(f+"\n\n")
 print(markdownHTML.markdownToHtml(f))
 
 def estDansCSV(ID_User,ID_Question):
+    """
+    Entré: ID_User=> l'identifiant de l'utilisateur 
+            ID_Question=>l'identifiant de la question que l'on cherche
+    Sortie:True Si ID_Question et dans le fichier ID_Question ou False sinon
+    Principe: On ouvre le ficher ID_Question.csv puis l'on recherche si il y a une occurence de ID_Question
+    """
     PATH = os.getcwd()
     PATH = PATH+littlePATH+"/ID_Question"+".csv"
     with open(PATH,'r') as FILE:
@@ -125,6 +131,13 @@ def estDansCSV(ID_User,ID_Question):
 
 
 def doublon(ID_User,Question,reponse):
+    """
+    Entrée: ID_User=>L'identifiant de l'utilisateur
+            Question=> La question que l'on modifie
+            reponse=> La réponse que l'on ajouter
+    Sortie:Un boolean si la réponse et présente on doublon
+    Cherche dans une question si la réponse n'est pas un doublon
+    """
     maliste=depuis_csv(ID_User)
     for i in maliste:
         if (i['Question']==Question):
