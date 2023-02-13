@@ -337,6 +337,20 @@ def modif_mdp_etu_2():
         return render_template("changement_mdp_etu")
             
                 
+                
+                
+                
+                
+@app.route("/afficheSequence/<id>") #Page principale du site
+def afficheSequenceProf(id):
+    if 'Username' in session and session['type']=="pro":
+        
+        
+        return render_template("sequence_prof.html", id_seq=id)
+    else:
+        return render_template("acceuil.html")
+        
+        
 @socketio.on('ouvrir_seq')#prof ouvre sequence
 def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
