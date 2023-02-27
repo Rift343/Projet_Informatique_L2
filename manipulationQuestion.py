@@ -18,8 +18,8 @@ def depuis_csv(ID_User):
     #On récupere le PATH jusqu'au répertoire de travails
     PATH = PATH+littlePATH+"/question_"+str(ID_User)+".csv"#Au modifié pour correspondre dès que les csv seront changés de répertoires
     #On ajoute au PATH le chemin vers notre fichier
-    print(PATH)
-    print(os.path.isfile(PATH))
+    #print(PATH)
+    #print(os.path.isfile(PATH))
     if(not(os.path.isfile(PATH))):
         return []
 
