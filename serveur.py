@@ -67,7 +67,7 @@ def enregistrement():
     else:
         print("compte créée")
         session['Username'] = nom_utilisateur
-        session['type'] == "pro"
+        session['type'] = "pro"
         csv = lireCSV()
         for User in csv:
             if User[1]==nom_utilisateur:
@@ -213,7 +213,7 @@ def question(idQuestion):
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
-        print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
 
@@ -337,6 +337,20 @@ def modif_mdp_etu_2():
         return render_template("changement_mdp_etu")
             
                 
+                
+                
+                
+                
+@app.route("/afficheSequence/<id>") #Page principale du site
+def afficheSequenceProf(id):
+    if 'Username' in session and session['type']=="pro":
+        
+        
+        return render_template("sequence_prof.html", id_seq=id, dictionnaire=getQuestion(session['UserId'], id))
+    else:
+        return render_template("acceuil.html")
+        
+        
 @socketio.on('ouvrir_seq')#prof ouvre sequence
 def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":

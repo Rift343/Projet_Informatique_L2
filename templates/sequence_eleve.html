@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="../static/question.css" />
     <title>QuizTio</title>
     <script>
+        reponse=[]
+
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
@@ -14,7 +16,18 @@
         return li_bonne_rep;
         }
 
+
+        function changeState(REP){
+            if (REP in reponse){
+                index=reponse.indexOf(REP);
+                reponse.splice(index,1);
+            }
+            else{
+                reponse.push(REP);
+            }
+        }
         function envoi_rep(){
+            
             emit('envoi_rep', reponse);
         }
         function quitter(){
@@ -58,10 +71,8 @@
             {{dictionnaire["Question"]| safe}}
             </b><br><br>
             <div class="reponses">
-            {{num=0}}
             {% for rep in dictionnaire["REP"]: %}
-                <input type="checkbox" id="'+num +'" name="'+num +'"> <span class='REP'>{{rep| safe}}</span>
-                {{num=num+1}}
+                <input type="checkbox" id="'+{{loop.index0}}+'" name="'+{{loop.index0}}+'" onclick="changeState('{{rep| safe}}')"> <span class='REP'>{{rep| safe}}</span>
             {%endfor%}
             <input type="button" onclick="envoi_rep()" value="envoi réponse">
             <input type="button" onclick="quitter()" value="Quitter">
