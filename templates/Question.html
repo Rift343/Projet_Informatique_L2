@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="../static/main.css">
   <link rel="stylesheet" href="../static/question.css" />
+  <script src="../static/mermaid.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+  <script src="../static/load-mathjax.js" async></script>
   <title>QuizTio</title>
   <script>
     function get_responses(){
@@ -15,10 +19,6 @@
     }
 
   </script>
-    <script src="../static/mermaid.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
-    <script src="../static/load-mathjax.js" async></script>
     <script>hljs.initHighlightingOnLoad()
       window.addEventListener('load',() =>{
         let codeBlock=document.getElementsByTagName('code');
@@ -40,6 +40,7 @@
         <li><a href="../BDD">Liste de vos questions</a></li>
         <li><a href="../creationQuestion">Créer une question</a></li>
         <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
+        <li><a href="../creationSequence">Créer une séquence</a></li>
         <li><a href="../deco">Se déconnecter</a></li>
       </ul>
     </li>

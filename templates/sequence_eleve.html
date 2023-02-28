@@ -4,14 +4,20 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../static/main.css">
     <link rel="stylesheet" href="../static/question.css" />
+    <script src="../static/mermaid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="../static/load-mathjax.js" async></script>
     <title>QuizTio</title>
     <script src="../static/socket.io.min.js"></script>
     <script>
-        socketio.on('bloquer_rep'){
+        const socket=io()
+        reponse=[]
+
+        socket.on('bloquer_rep', ()=>{
             document.getElementById("outon").setAttribute(hidden,true)
             document.getElementById("desac").setAttribute(hidden,false)
-        }
-        reponse=[]
+        });
 
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
@@ -39,10 +45,6 @@
             emit('quitter');
         }
     </script>
-    <script src="../static/mermaid.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
-    <script src="../static/load-mathjax.js" async></script>
     <script>hljs.initHighlightingOnLoad()
     window.addEventListener('load',() =>{
         let codeBlock=document.getElementsByTagName('code');

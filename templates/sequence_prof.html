@@ -4,8 +4,15 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../static/main.css">
     <link rel="stylesheet" href="../static/question.css" />
+    <script src="../static/mermaid.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+    <script src="../static/load-mathjax.js" async></script>
     <title>QuizTio</title>
+    <script src="../static/socket.io.min.js"></script>
     <script>
+        const socket=io()
+
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
@@ -13,7 +20,6 @@
         }
         return li_bonne_rep;
         }
-
 
         function suivant(){
             emit('questionSuivante');
@@ -34,13 +40,9 @@
             elements3.setAttribute(hidden, false);
         }
         function quitter(){
-            emit('quitter');
+            emit('fermer_seq');
         }
     </script>
-    <script src="../static/mermaid.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
-    <script src="../static/load-mathjax.js" async></script>
     <script>hljs.initHighlightingOnLoad()
     window.addEventListener('load',() =>{
         emit('', "{{id_seq| safe}}")
