@@ -1,5 +1,6 @@
 from flask import Flask, redirect, url_for, request, render_template, session
 from manipulationQuestion import *
+from manipulationSequence import *
 from manipulation_User import *
 from md_mermaid import *
 from markdownHTML import *
@@ -288,6 +289,32 @@ def feuille():
     else:
         return render_template("non_connecte.html")
 
+
+@app.route("/creationSequence") #Page dde création d'une feuille de questionse création d'une feuille de questions
+def creationFeuille():
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
+        UserId = session['UserId']
+        Username = session['Username']
+        #print(UserId)
+        dico = depuis_csv(UserId)
+        
+        return render_template("creationSequence.html",li_dictionnaire=traductionQuestionToHTML(dico), Username=Username)
+    else:
+        return render_template("non_connecte.html")
+
+@app.route("/creationSequence",methods = ['POST']) #La création d'une feuille 
+def feuille():
+    ListeIDQuestion=request.form.getlist('idQuestion')
+    #print(ListeIDQuestion)
+    if 'UserId' and 'Username'in session:
+        UserId = session['UserId']
+        Username = session['Username']
+        ajouterSequence(UserId, ListeIDQuestion)
+        return render_template("acceuil.html", Username=Username) 
+    else:
+        return render_template("non_connecte.html")
+
+
 @app.route("/supprimer/<idQuestion>")
 def supprimer(idQuestion):
     if 'UserId' in session and session['type'] == "pro":
@@ -315,7 +342,7 @@ def sequence(idQuestion):
 
         pass
     if 'UserId' or 'Username' in session and session['type'] == "etu":
-        if li_prof_cours != []:
+        if li_ques_ouverte != []:
             trouve = False
             
 @app.route("/changement_mdp_etu")
@@ -341,12 +368,14 @@ def modif_mdp_etu_2():
                 
                 
                 
-@app.route("/afficheSequence/<id>") #Page principale du site
+@app.route("/afficheSequence/<id>") #page pour debuter une sequence
 def afficheSequenceProf(id):
     if 'Username' in session and session['type']=="pro":
         
-        
-        return render_template("sequence_prof.html", id_seq=id, dictionnaire=getQuestion(session['UserId'], id))
+        if(estDansCSV(id)):
+            return render_template("sequence_prof.html", id_seq=id, dictionnaire=getQuestion(session['UserId'], id))
+        else :
+            return render_template("sequence_prof.html", id_seq=id)
     else:
         return render_template("acceuil.html")
         
@@ -380,11 +409,22 @@ def avancer_q(id_seq,id_q):
         ##question seule
         q_suiv = getQuestion(session["UserID"], id_seq)
         q_suiv = traductionUneQuestionToHTML(q_suiv)
+        emit("nouvelle_q",q_suiv, room=li_eleve)
+        emit("nouvelle_q",q_suiv, room=request.namespace.socket.sessid)
     elif(id_q==id_seq):
         pass
+    else:
+        li_q = lireSequence(session['UserId'],id_seq)
+        i=0
+        while[i< len(li_q) and li_q[i]!= id_q]:
+            i=i+1
+        if (i>=len(li_q)):
+            emit("fin_seq", room=request.namespace.socket.sessid)
+        else:
+            q_suiv=li_q[i]
     #deux autre cas : derniere question, question de sequence
-    emit("nouvelle_q",q_suiv, room=li_eleve)
-    emit("nouvelle_q",q_suiv, room=request.namespace.socket.sessid)
+            emit("nouvelle_q",q_suiv, room=li_eleve)
+            emit("nouvelle_q",q_suiv, room=request.namespace.socket.sessid)
     
     
 @socketio.on('stop_rep')#prof bloque rep
