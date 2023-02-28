@@ -18,7 +18,7 @@ li_ques_ouverte =[]# li session/question ouverte
 dico_question_ouverte_to_prof = {}# id_q to userId prof
 dico_eleve_par_prof ={}# user id prof to socket id eleve
 li_prof_socket_id = {}#id q to session socket id du prof
-
+seq_id_to_seq_progress = {}#seq_id_to_seq_progress
 
 @app.route("/") #Page principale du site
 def index1():
@@ -381,13 +381,26 @@ def afficheSequenceProf(id):
         
         
 @socketio.on('ouvrir_seq')#prof ouvre sequence
-def ouvrir_q(data):
+def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
 
             li_prof_cours.append(session['UserId'])
-            dico_question_ouverte_to_prof[data]=session['UserId']
-            li_prof_socket_id[data]=request.namespace.socket.sessid
+            dico_question_ouverte_to_prof[id_seq]=session['UserId']
+            li_prof_socket_id[id_seq]=request.namespace.socket.sessid
             dico_eleve_par_prof[session['UserId']]= []
+
+            if(estDansCSV(id)):
+                dico = getQuestion(id)
+                emit("nouvelle_q",traductionUneQuestionToHTML(dico), room=[request.namespace.socket.sessid])
+            else :
+                seq = lireSequence(session["UserId"], id)
+                if(len(seq)>0):
+                    dico = seq[0]
+                    emit("nouvelle_q",traductionUneQuestionToHTML(dico), room=[request.namespace.socket.sessid])
+            seq_id_to_seq_progress[id_seq]
+
+
+        
     
 @socketio.on('fermer_seq')#prof ferme sequence
 def ouvrir_q(data):
@@ -435,20 +448,22 @@ def bloquer_rep_q():
     
 
 @socketio.on('eleve_reponse_q')#eleve reponds
-def eleve_reponse_q(id_seq, id_rep,reponse):
+def eleve_reponse_q(id_seq,reponse):
     #enregistrer rep
+    #AJOUT ID_SEQ CODE SEQUENCE ELEVE
     prof = li_prof_socket_id(id_seq)
     emit("rep", reponse, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence
 def acceder_q(id_seq):
     for eleme in dico_question_ouverte_to_prof.keys :
-        if id_q == eleme :
+        if id_seq == eleme :
             currentSocketId = request.namespace.socket.sessid
             prof = dico_question_ouverte_to_prof.get(eleme)
             dico_eleve_par_prof[prof].append(currentSocketId)
             sess_id_prof = li_prof_socket_id[id_seq]
             #envoyer +1 prof
+            emit()
         
         
         
