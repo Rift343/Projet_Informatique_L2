@@ -58,7 +58,7 @@ def modificationEtu(numeroEtu,password):
               Puis l'on réécrit tout le ficher csv avec les modification
     """
     listeEtudiant = etuCSV()
-    print(listeEtudiant)
+    #print(listeEtudiant)
     for i in range (len(listeEtudiant)):
         if (listeEtudiant[i][2]==numeroEtu):
             password = hashlib.sha256(password.encode()).hexdigest()
