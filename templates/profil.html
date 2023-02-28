@@ -32,9 +32,9 @@
     </form>
     <br>
     <form>
-      <label>Liste des Séquences :</label>
-      {%for seq in listeSeq%}
-      <span><a href="../afficheSequence/seq">afficher la sequence</a>{{seq}}</span>
+      <label>Liste des Séquences :</label><br>
+      {%for seq in liste%}
+      <span><a href="../afficheSequence/{{seq[0]}}">afficher la sequence</a>{{seq[0]}}</span><br>
     {%endfor%}
     </form>
 </div>

@@ -34,10 +34,11 @@ def index1():
 
 @app.route("/profil") #Page principale du site
 def profil():
-    if 'Username' in session:
+    if 'Username' and 'UserId' in session:
         if(session['type'] == "pro"):
             Username = session['Username']
-            return render_template("profil.html", Username=Username)
+            ID_User = session['UserId']
+            return render_template("profil.html", Username=Username, liste=lireSequenceUser(ID_User))
         else:
             Username = session['Username']
             return render_template("profiletu.html", Username=Username)
@@ -63,10 +64,10 @@ def enregistrement():
     mot_de_passe = request.form['password'] #Son mot de passe
     #mot_de_passe = hashlib.sha256(b)
     if ajouterUser(nom_utilisateur,hashlib.sha256(mot_de_passe.encode()).hexdigest(),email) == False:
-        print("le nom d'utilisateur ou le mail est déjà lié à un compte")
+        #print("le nom d'utilisateur ou le mail est déjà lié à un compte")
         return render_template("login.html", erreur=True)
     else:
-        print("compte créée")
+        #print("compte créée")
         session['Username'] = nom_utilisateur
         session['type'] = "pro"
         csv = lireCSV()
@@ -90,7 +91,7 @@ def connexion():
         listeetu = etuCSV()
         for sous_liste in listeetu:
             if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
-                print("connexion")
+                #print("connexion")
                 session['Username'] = nom_utilisateur
                 IdUser = sous_liste[0]
                 session['UserId'] = IdUser
@@ -100,7 +101,7 @@ def connexion():
         listeUser = lireCSV()
         for sous_liste in listeUser:
             if sous_liste[1] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
-                print("connexion")
+                #print("connexion")
                 session['Username'] = nom_utilisateur
                 IdUser = sous_liste[0]
                 session['UserId'] = IdUser
@@ -118,9 +119,9 @@ def BDD():          #les questions qui ont cette étiquette
         #print(UserId)
         dico = depuis_csv(UserId)
         dico=traductionQuestionToHTML(dico)
-        for question in dico:
-            for rep in question['REP']:
-                print(rep)
+        #for question in dico:
+            #for rep in question['REP']:
+                #print(rep)
         return render_template("BDD.html", li_dictionnaire=dico, Username=Username)
     else:
         return render_template("non_connecte.html")
@@ -166,7 +167,7 @@ def ajoutQuestion():
             li_etiquettes = etiquettes.split(';')
             li_etiquettes.append("QuestionOuverte")
         
-        print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
          
         
         dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
@@ -193,7 +194,7 @@ def visuIFrame():
         reponses = reponses.replace("\r","")
         li_rep = reponses.split(';')
         dict = {"idQ": 0,"Question": enonce.replace("\r",""), "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
-        print(dict)
+        #print(dict)
         return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict)) #on renvoie les donnée de la question sur l'IFrame de la page creation question
 
 @app.route("/question/<idQuestion>") #Page de visualisation d'une question
@@ -202,7 +203,7 @@ def question(idQuestion):
         Username = session['Username']
         UserId = session['UserId']
         dico = getQuestion(UserId, idQuestion)
-        print(dico)
+        #print(dico)
         dico = traductionUneQuestionToHTML(dico)
 
         return render_template("Question.html", dictionnaire=dico, Username=Username)
@@ -214,7 +215,7 @@ def question(idQuestion):
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
-        print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
+        #print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
 
@@ -250,7 +251,7 @@ def modificationQuestion(idQuestion):
         for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-        print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
+        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
         li_etiquettes = etiquettes.split(';') 
         li_rep = reponses.split(';')
         dictionnaire = {"ID": idQuestion, "Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
@@ -276,7 +277,7 @@ def creationFeuille():
 @app.route("/creationFeuille",methods = ['POST']) #La création d'une feuille 
 def feuille():
     ListeIDQuestion=request.form.getlist('idQuestion')
-    print(ListeIDQuestion)
+    #print(ListeIDQuestion)
     if 'UserId' and 'Username'in session:
         UserId = session['UserId']
         Username = session['Username']
@@ -310,7 +311,7 @@ def Sequence():
         UserId = session['UserId']
         Username = session['Username']
         ajouterSequence(UserId, ListeIDQuestion)
-        return render_template("acceuil.html", Username=Username) 
+        return render_template("acceuil_connecte.html", Username=Username) 
     else:
         return render_template("non_connecte.html")
 
