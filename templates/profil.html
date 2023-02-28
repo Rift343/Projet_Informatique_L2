@@ -18,6 +18,7 @@
         <li><a href="BDD">Liste de vos questions</a></li>
         <li><a href="creationQuestion">Créer une question</a></li>
         <li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+        <li><a href="creationSequence">Créer une séquence</a></li>
         <li><a href="deco">Se déconnecter</a></li>
       </ul>
     </li>
@@ -31,9 +32,9 @@
     </form>
     <br>
     <form>
-      <label>Liste des Séquences :</label>
-      {%for seq in listeSeq%}
-      <span><a href="../afficheSequence/seq">afficher la sequence</a>{{seq}}</span>
+      <label>Liste des Séquences :</label><br>
+      {%for seq in liste%}
+      <span><a href="../afficheSequence/{{seq[0]}}">afficher la sequence</a>{{seq[0]}}</span><br>
     {%endfor%}
     </form>
 </div>
