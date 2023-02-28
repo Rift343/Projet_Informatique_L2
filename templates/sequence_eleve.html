@@ -5,7 +5,12 @@
     <link rel="stylesheet" href="../static/main.css">
     <link rel="stylesheet" href="../static/question.css" />
     <title>QuizTio</title>
+    <script src="../static/socket.io.min.js"></script>
     <script>
+        socketio.on('bloquer_rep'){
+            document.getElementById("outon").setAttribute(hidden,true)
+            document.getElementById("desac").setAttribute(hidden,false)
+        }
         reponse=[]
 
         function get_responses(){
@@ -28,7 +33,7 @@
         }
         function envoi_rep(){
             
-            emit('envoi_rep', reponse);
+            emit('eleve_reponse_q', "{{id_seq| safe}}",reponse);
         }
         function quitter(){
             emit('quitter');
@@ -74,7 +79,8 @@
             {% for rep in dictionnaire["REP"]: %}
                 <input type="checkbox" id="'+{{loop.index0}}+'" name="'+{{loop.index0}}+'" onclick="changeState('{{rep| safe}}')"> <span class='REP'>{{rep| safe}}</span>
             {%endfor%}
-            <input type="button" onclick="envoi_rep()" value="envoi réponse">
+            <input type="button" id="outon" onclick="envoi_rep()" value="envoi réponse" hidden="false">
+            <label id="desac" hidden="true">Réponses désactivées</label>
             <input type="button" onclick="quitter()" value="Quitter">
         </form>
     </div>
