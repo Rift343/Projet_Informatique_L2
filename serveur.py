@@ -291,7 +291,7 @@ def feuille():
 
 
 @app.route("/creationSequence") #Page dde création d'une feuille de questionse création d'une feuille de questions
-def creationFeuille():
+def creationSequence():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
@@ -303,7 +303,7 @@ def creationFeuille():
         return render_template("non_connecte.html")
 
 @app.route("/creationSequence",methods = ['POST']) #La création d'une feuille 
-def feuille():
+def Sequence():
     ListeIDQuestion=request.form.getlist('idQuestion')
     #print(ListeIDQuestion)
     if 'UserId' and 'Username'in session:
