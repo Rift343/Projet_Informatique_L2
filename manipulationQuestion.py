@@ -77,7 +77,7 @@ def traductionQuestionToHTML(listeDico):
             i['REP'][x] = markdownHTML.markdownToHtml(i['REP'][x])
         for y in range(len(i['BREP'])):
              i['BREP'][y] = markdownHTML.markdownToHtml(i['BREP'][y])
-    print(listeDico)    
+    #print(listeDico)    
     return listeDico
 
 def traductionUneQuestionToHTML(dico):
@@ -107,8 +107,8 @@ graph LR
 A --- B
 ```
 """
-print(f+"\n\n")
-print(markdownHTML.markdownToHtml(f))
+#print(f+"\n\n")
+#print(markdownHTML.markdownToHtml(f))
 
 def estDansCSV(ID_Question):
     """
