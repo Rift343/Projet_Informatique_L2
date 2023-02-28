@@ -43,6 +43,7 @@
     <script src="../static/load-mathjax.js" async></script>
     <script>hljs.initHighlightingOnLoad()
     window.addEventListener('load',() =>{
+        emit('', "{{id_seq| safe}}")
         let codeBlock=document.getElementsByTagName('code');
         for(let i in codeBlock)
         {
