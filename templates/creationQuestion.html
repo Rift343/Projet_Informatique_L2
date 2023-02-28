@@ -84,7 +84,7 @@ function changerCouleurRep(ele){
 }
 
 function afficheEtiquette(){
-    var eti = {{listeEtiquettes|safe}};
+    var eti = "{{listeEtiquettes|safe}}";
     for(etiquettes of eti){
         document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
             "<span class='etiquette'><p>"+etiquettes+"</p></span>";
