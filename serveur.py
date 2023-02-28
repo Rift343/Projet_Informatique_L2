@@ -381,21 +381,21 @@ def afficheSequenceProf(id):
         
         
 @socketio.on('ouvrir_seq')#prof ouvre sequence
-def ouvrir_q(id_seq):
+def ouvrir_q(data):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
 
             li_prof_cours.append(session['UserId'])
-            dico_question_ouverte_to_prof[id_seq]=session['UserId']
-            li_prof_socket_id[id_seq]=request.namespace.socket.sessid
+            dico_question_ouverte_to_prof[data]=session['UserId']
+            li_prof_socket_id[data]=request.namespace.socket.sessid
             dico_eleve_par_prof[session['UserId']]= []
     
 @socketio.on('fermer_seq')#prof ferme sequence
-def ouvrir_q(id_seq):
+def ouvrir_q(data):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
         
         li_prof_cours.remove(session['UserId'])
-        dico_question_ouverte_to_prof.pop(id_seq)
-        li_prof_socket_id.pop(id_seq)
+        dico_question_ouverte_to_prof.pop(data)
+        li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
     
 
