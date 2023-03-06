@@ -171,6 +171,7 @@ def ajoutQuestion():
          
         
         dictionnaire = {"Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
+        
         idQ = str(dans_csv(UserId, dictionnaire)) #Ajout du dictionnaire d'une question dans le csv des questions
         return redirect(url_for('question',idQuestion = idQ, Username=Username)) #On renvoie la personne sur la vue de la question créée (si elle a bien été créée)
     else:
