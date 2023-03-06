@@ -146,7 +146,7 @@ def ajoutQuestion():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
-        etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+        etiquettes = request.form.getlist('checkEti') #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
         reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
@@ -158,13 +158,13 @@ def ajoutQuestion():
                 if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                     li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
             li_rep = reponses.split(';')
-            li_etiquettes = etiquettes.split(';')
+            li_etiquettes = etiquettes
             li_etiquettes.append("QCM")
                     
         else:
             li_rep=[]
             li_bonnes_reponses.append(reponses)
-            li_etiquettes = etiquettes.split(';')
+            li_etiquettes = etiquettes
             li_etiquettes.append("QuestionOuverte")
         
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
@@ -179,7 +179,7 @@ def ajoutQuestion():
 @app.route("/visuIFrame",methods = ['POST']) #Code afin de visualiser une question en cours de creation
 def visuIFrame():
         UserId = session['UserId']
-        etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+        etiquettes = request.form.getlist('checkEti') #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
         reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
@@ -190,7 +190,7 @@ def visuIFrame():
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i].replace("\r","")) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
-        li_etiquettes = etiquettes.replace("\r","").split(';') 
+        li_etiquettes = etiquettes
         reponses = reponses.replace("\r","")
         li_rep = reponses.split(';')
         dict = {"idQ": 0,"Question": enonce.replace("\r",""), "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
