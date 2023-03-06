@@ -124,10 +124,10 @@ def estDansCSV(ID_Question):
         maliste=[]
         for ligne in lecture:
             maliste.append(ligne)
-            for i in maliste:
-                if (i[0]==ID_Question):
-                    return False
-            return True
+        for i in maliste:
+            if (i[0]==ID_Question):
+                return False
+        return True
 
 
 def doublon(ID_User,Question,reponse):
@@ -168,6 +168,7 @@ def dans_csv(ID_User,Dico_csv):
     #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
         #id=1
+        print("on teste que cela est faux : "+str(estDansCSV(str(id))))
         while (estDansCSV(str(id))==False):
             id =""
             for i in range (8):
