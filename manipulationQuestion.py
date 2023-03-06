@@ -114,7 +114,7 @@ def estDansCSV(ID_Question):
     """
     Entré: ID_User=> l'identifiant de l'utilisateur 
             ID_Question=>l'identifiant de la question que l'on cherche
-    Sortie:False Si ID_Question et dans le fichier ID_Question ou True sinon
+    Sortie:True Si ID_Question et dans le fichier ID_Question ou False sinon
     Principe: On ouvre le ficher ID_Question.csv puis l'on recherche si il y a une occurence de ID_Question
     """
     PATH = os.getcwd()
@@ -168,7 +168,7 @@ def dans_csv(ID_User,Dico_csv):
     #Si oui alors il faut attribuer à la 
     if(os.path.isfile(PATH)):
         #id=1
-        while (estDansCSV(str(id))==True):
+        while (estDansCSV(str(id))==False):
             id =""
             for i in range (8):
                 id = id+li[randrange(len(li))]
