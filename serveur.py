@@ -6,7 +6,7 @@ from md_mermaid import *
 from markdownHTML import *
 from manipulation_Etu import *
 import hashlib
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO 
 
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
@@ -367,8 +367,6 @@ def modif_mdp_etu_2():
                 
                 
                 
-                
-                
 @app.route("/afficheSequence/<id>") #page pour debuter une sequence
 def afficheSequenceProf(id):
     if 'Username' in session and session['type']=="pro":
@@ -392,14 +390,14 @@ def ouvrir_q(id_seq):
             if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
                 dico = getQuestion(session['UserId'], id_seq)
                 print(traductionUneQuestionToHTML(dico))
-                socketio.emit("nouvelle_q", question=traductionUneQuestionToHTML(dico), room=[request.sid])
+                socketio.emit("nouvelle_q", {"question:'bonjour'"}, room=[request.sid]) #traductionUneQuestionToHTML(dico)
             else :
                 seq = lireSequence(session["UserId"], id_seq)
                 print(seq)
                 if(len(seq)>0):
                     dico = getQuestion(session['UserId'], seq[0])
                     print(traductionUneQuestionToHTML(dico))
-                    socketio.emit("nouvelle_q", question=traductionUneQuestionToHTML(dico), room=[request.sid])
+                    socketio.emit("nouvelle_q", {"question:'bonjour'"}, room=[request.sid]) #traductionUneQuestionToHTML(dico)
                     seq_id_to_seq_progress[id_seq] = seq[0]
 
 
@@ -424,8 +422,8 @@ def avancer_q(id_seq,id_q):
         q_suiv = getQuestion(session["UserID"], id_seq)
         q_suiv = traductionUneQuestionToHTML(q_suiv)
         print(q_suiv)
-        socketio.emit("nouvelle_q", question=q_suiv, room=li_eleve)
-        socketio.emit("nouvelle_q", question=q_suiv, room=request.sid)
+        socketio.emit("nouvelle_q", {'question:q_suiv'}, room=li_eleve)
+        socketio.emit("nouvelle_q", {'question:q_suiv'}, room=request.sid)
     elif(id_q==id_seq):
         pass
     else:
@@ -439,8 +437,8 @@ def avancer_q(id_seq,id_q):
             q_suiv=li_q[i]
             #deux autre cas : derniere question, question de sequence
             print(q_suiv)
-            socketio.emit("nouvelle_q", question=q_suiv, room=li_eleve)
-            socketio.emit("nouvelle_q", question=q_suiv, room=request.sid)
+            socketio.emit("nouvelle_q", {'question:q_suiv'}, room=li_eleve)
+            socketio.emit("nouvelle_q", {'question:q_suiv'}, room=request.sid)
     
     
 @socketio.on('stop_rep')#prof bloque rep
@@ -467,8 +465,6 @@ def acceder_q(id_seq):
             sess_id_prof = li_prof_socket_id[id_seq]
             #envoyer +1 prof
             socketio.emit()
-        
-        
         
         
         #@app.route("/feuille")

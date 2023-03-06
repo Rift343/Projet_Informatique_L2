@@ -9,12 +9,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
     <script src="../static/load-mathjax.js" async></script>
     <title>QuizTio</title>
-    <script src="../static/socket.io.min.js"></script>
+    <script src="../../static/socket.io.min.js"></script>
     <script>
-        const socket=io()
+        const socket=io();
+        //socket.connect('http://'+document.domain+':'+location.port);
 
         socket.on('nouvelle_q', (question) =>{
             console.log(question)
+            console.log('ok')
         });
 
         function get_responses(){
