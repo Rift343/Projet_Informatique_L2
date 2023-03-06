@@ -22,30 +22,55 @@
         }
 
         function suivant(){
-            emit('questionSuivante');
+            socket.emit('questionSuivante', '{{id_seq|safe}}', '{{dictionnaire["ID"]|safe}}');
         }
         function rep_direct(){
             //afficher ou non les réponses (stats etc)
         }
         function stop_rep(){
-            emit('stop_rep');
+            socket.emit('stop_rep');
         }
         function correction(){
             //enlever l'attribut hidden de la correction
-            let elements1 = document.getElementsByClassName('REP');
-            elements1.setAttribute(hidden, true);
-            let elements2 = document.getElementsByClassName('BREP');
-            elements2.setAttribute(hidden, false);
-            let elements3 = document.getElementsByClassName('MREP');
-            elements3.setAttribute(hidden, false);
+            if((document.getElementsByClassName('REP'))[0].style.display === 'inline-block'){
+                let elements1 = document.getElementsByClassName('REP');
+                for (element of elements1){
+                    element.setAttribute('style', 'display: none;');
+                }
+                let elements2 = document.getElementsByClassName('BREP');
+                for (element of elements2){
+                    element.setAttribute('style', 'display: inline-block;');
+                }
+                let elements3 = document.getElementsByClassName('MREP');
+                for (element of elements3){
+                    element.setAttribute('style', 'display: inline-block;');
+                }
+            }
+            else{
+                let elements1 = document.getElementsByClassName('REP');
+                for (element of elements1){
+                    element.setAttribute('style', 'display: inline-block;');
+                }
+                let elements2 = document.getElementsByClassName('BREP');
+                for (element of elements2){
+                    element.setAttribute('style', 'display: none;');
+                }
+                let elements3 = document.getElementsByClassName('MREP');
+                for (element of elements3){
+                    element.setAttribute('style', 'display: none;');
+                }
+            }
+        }
+        function ouvrir_seq(){
+            socket.emit('ouvrir_seq', '{{id_seq|safe}}')
         }
         function quitter(){
-            emit('fermer_seq');
+            socket.emit('fermer_seq');
         }
     </script>
     <script>hljs.initHighlightingOnLoad()
     window.addEventListener('load',() =>{
-        emit('', "{{id_seq| safe}}")
+        socket.emit('', "{{id_seq| safe}}")
         let codeBlock=document.getElementsByTagName('code');
         for(let i in codeBlock)
         {
@@ -54,7 +79,8 @@
     });
     </script>
 </head>
-<body>
+<body onload="ouvrir_seq()">
+
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
@@ -79,11 +105,11 @@
             </b><br><br>
             <div class="reponses">
             {% for rep in dictionnaire["REP"]: %}
-                <span class='REP'>{{rep| safe}}</span>
+                <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
                 {%if rep in dictionnaire["BREP"]%}
-                    <span class='BREP' hidden>{{rep| safe}}</span>  
+                    <span class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
                 {% else %}
-                    <span class='MREP' hidden>{{rep| safe}}</span> 
+                    <span class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
                 {%endif%}<br>
             {%endfor%}
             <input type="button" onclick="rep_direct()" value="réponses en direct">
