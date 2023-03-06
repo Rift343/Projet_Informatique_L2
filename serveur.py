@@ -390,7 +390,7 @@ def ouvrir_q(id_seq):
             dico_eleve_par_prof[session['UserId']]= []
             print(id_seq)
             print(estDansCSV(id_seq))
-            if(estDansCSV(id_seq)):
+            if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
                 dico = getQuestion(session['UserId'], id_seq)
                 print(traductionUneQuestionToHTML(dico))
                 socketio.emit("nouvelle_q", question=traductionUneQuestionToHTML(dico), room=[request.sid])
