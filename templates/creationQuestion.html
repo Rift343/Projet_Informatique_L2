@@ -83,20 +83,35 @@ function changerCouleurRep(ele){
     
 }
 
+function changerCouleurEti(ele){
+    //changer couleur est appeler quand on click sur la case a cocher qui permet d'indiquer si une reponse ou juste ou non
+    //si la case est coche, la reponse est juste, on l'affiche alors en vert
+    if(ele.checked == true){
+        ele.parentElement.style="border-radius: 25px; background: #AAAAAA; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+        ele.name="checkEti"
+    }
+    else{//sinon la reponse est fausse, alors on l'affiche en rouge
+        ele.parentElement.style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+        ele.name="notCheckEti"
+    }    
+}
+
+
 function afficheEtiquette(){
-    var eti = "{{listeEtiquettes|safe}}";
+    var eti = {{listeEtiquettes|safe}};
     for(etiquettes of eti){
         document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
-            "<span class='etiquette'><p>"+etiquettes+"</p></span>";
+            '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+etiquettes.replace(/ /g,'')+'"onclick=changerCouleurEti(this)><span id="contenuEti">'+etiquettes+'</span></span>';
     }
 
 }
 
 function addEti(){  
     document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
-        "<span class='etiquette'><p>"+document.getElementById("neti").value+"</p></span>";
+    '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+document.getElementById("neti").value.replace(/ /g,'')+'" onclick=changerCouleurEti(this)><span id="contenuEti">'+document.getElementById("neti").value+'</span></span>';
 
 }
+
 </script>
 </head>
 <body onload="afficheEtiquette()">
@@ -125,7 +140,6 @@ function addEti(){
     <div id="listeEti">
         <input type="text" id="neti">
         <input type="button" value="nouvelle etiquette" onclick=addEti()>
-        <input type="text" id="etiquettes" name="etiquettes"><!--- TEMPORAIIIIIIIIRE !!!!!!!!!-->
     </div>
 
     
