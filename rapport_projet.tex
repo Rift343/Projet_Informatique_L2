@@ -74,27 +74,50 @@ Université de Montpellier.
 \section{Organisation}
 
 \subsection{Outils}
-Pour notre projet on a utiliser différent outils. Tout d'abord pour on a utiliser un espace de dépot pour notre code. Etant donné que tout les membres du groupe
-connaissaient et s'avait utilisé Github avant même le début du projet, Github à donc été choisit intuitivement.Ensuite vient le moment des logiciels sur lequelle nous
-allions travailler. Etant donné que l'on était habitué à travailler avec Visual Studio Code et VScodium alors ce choix à aussi été naturelle. En plus Visual Studio
-Code et VScodium possède tout deux une intégration de github et de python ce qui facilite l'écriture ainsi que la mise en commun des travaux.
+Pour notre projet on a utiliser différent outils. Tout d'abord pour on a 
+utiliser un espace de dépot pour notre code. Etant donné que tout les membres 
+du groupe
+connaissaient et s'avait utilisé Github avant même le début du projet, 
+Github à donc été choisit intuitivement.Ensuite vient le moment des logiciels 
+sur lequelle nous
+allions travailler. Etant donné que l'on était habitué à travailler avec 
+Visual Studio Code et VScodium alors ce choix à aussi été naturelle. 
+En plus Visual Studio
+Code et VScodium possède tout deux une intégration de github et de python ce 
+qui facilite l'écriture ainsi que la mise en commun des travaux.
 
 ajout de figure pours vscode et github
 \subsection{Organisation du travail}
-Nous nous somme au départ du second projet répartit la travail de la facon suivante: Clément Chevalier s'occuperait dans un premier temps de la gestion des étiquette,
-Rebagliato Lucas et Pavie--Routaboul Clément s'occuperai des séquences des questions et des comptes étudiants, ils seront rejoint par Clément Chevalier lorsque qu'il
-aurra terminé ca partie. Et Conrath Matthieu s'occupera de l'écriture et de la récupération des donneés dans les csv(historique et enregistrement des étudiants).
+Nous nous somme au départ du second projet répartit la travail de la facon 
+suivante: Clément Chevalier s'occuperait dans un premier temps de la gestion
+des étiquette,
+Rebagliato Lucas et Pavie--Routaboul Clément s'occuperai des séquences des 
+questions et des comptes étudiants, ils seront rejoint par Clément Chevalier
+lorsque qu'il
+aurra terminé ca partie. Et Conrath Matthieu s'occupera de l'écriture et de la
+récupération des donneés dans les csv(historique et enregistrement des 
+étudiants).
 \subsection{Déroulement du projet dans le temps}
-Ainsi l'on commenca rapidement par réaliser la création des comptes étudiants. Conrath Matthieu s'occupa de l'enregistrement, la récupération et la modification des
-comptes étudiants. Dans le même temps Pavie--Routaboul Clément et Rebagliato Lucas s'occuperent de mettre en place la récupération d'un fichier csv ainsi que de la
-connexion d'un étudiant à son compte. Ensuite Conrath Matthieu à réaliser l'écriture et la lecture des fichiers d'historique pendant que Pavie--Routaboul Clément et
-Rebagliato Lucas s'occuperent des séquences et des questions en direct. De son côté Chevalier Clément corriga la manière dont les étiquettes était crée lors de la
-création des questions.   
+Ainsi l'on commenca rapidement par réaliser la création des comptes étudiants.
+Conrath Matthieu s'occupa de l'enregistrement, la récupération et la 
+modification des
+comptes étudiants. Dans le même temps Pavie--Routaboul Clément et Rebagliato
+Lucas s'occuperent de mettre en place la récupération d'un fichier csv ainsi
+que de la
+connexion d'un étudiant à son compte. Ensuite Conrath Matthieu à réaliser 
+l'écriture et la lecture des fichiers d'historique pendant que Pavie--Routaboul
+Clément et
+Rebagliato Lucas s'occuperent des séquences et des questions en direct. De son 
+côté Chevalier Clément corriga la manière dont les étiquettes était crée lors
+de la création des questions.   
 
 \section{Cahier des charges}
 
-Avant de commencer l'on doit rappeler ce qui a été fait durant la première étape du projet. Nous avons permis la création de compte ainsi que la création et la
-visulisation de questions et de feuilles de question. Cepandent nous avions pas permis à l'utilisateur d'utiliser les étiquettes déja existantes. Ainsi la première
+Avant de commencer l'on doit rappeler ce qui a été fait durant la première étape
+du projet. Nous avons permis la création de compte ainsi que la création et la
+visulisation de questions et de feuilles de question. Cepandent nous avions pas
+permis à l'utilisateur d'utiliser les étiquettes déja existantes. Ainsi la 
+première
 étape à faire et des réglers ce petit problème.
 
 \section{Architecture et choix techniques}
@@ -102,7 +125,8 @@ visulisation de questions et de feuilles de question. Cepandent nous avions pas 
 1 à 2 page(s) 
 \begin{itemize}
 \item Architecture du projet
-\item Choix technologiques  avec leurs justifications (pourquoi ce choix, comment il a été fait, par qui...),
+\item Choix technologiques  avec leurs justifications (pourquoi ce choix, 
+comment il a été fait, par qui...),
 \end{itemize}
 
     
@@ -110,12 +134,47 @@ visulisation de questions et de feuilles de question. Cepandent nous avions pas 
 
 Explication technique de deux ou trois points (1 à 3 pages max)
 \begin{description}
-\item[Obligatoire] Comment se fait la récupération des réponses et l'affichage en direct sur le poste enseignant,
+\item[Obligatoire] Comment se fait la récupération des réponses et l'affichage
+en direct sur le poste enseignant,
+
+\subsection{Récupération et affichage des questions en direct}
+
+Tout d'abord commencont par la récupération des questions depuis le fichier 
+csv. Etant donné que l'on possède l'identifiant du professeur ainsi que 
+l'identifiant de la question; On peut alors utilisé la fonction getQuestion qui
+prend un paramètre
+les deux identifiants précisé si-dessus. Afin de récupérer la question, il faut
+ouvir le fichier csv avec open en passant en paramètre le chemin absolue du
+fichier voulu (que l'on abregera en PATH) et r pour préciser un mode d'ouverture
+en écriture: 
+\begin{lstlisting}
+ with open(PATH,'r') as FILE:
+\end{lstlisting}
+Ensuite afin de lire un csv il nous faut utiliser un fonction de la bibliothèque
+csv nommé reader qui nous donne un objet que l'on peut lire comme un liste de 
+liste de chaine de charactère
+\begin{lstlisting}
+ lecture=csv.reader(FILE,delimiter=';')
+ ListeQuestion=[]
+ for ligne in lecture:
+    ListeQuestion.append(ligne)
+\end{lstlisting}
+Ici l'on stocke le contenue de lecture dans une véritable liste car lecture
+ne peut pas être lue via les indices. Ici le seul moyen de lire convenablement
+notre fichier est d'utilisé une boucle for du type "for i in liste:". \\
+Ensuite il nous reste plus qu'a formaté les listes. Pour rappel dans les 
+fichiers contenant les questions ainsi que leur réponse est de la forme:\\
+Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...
+(ET=étiquette REP=réponse BREP=Bonne réponse)
+Enfin il suffit de parcourir les questions est de comparés leurs identifiants 
+avec celui passé en paramètre. 
+
 \item[Au choix] Un ou deux  points techniques supplémentaires.  
 \end{description}
 
 \section{Bilan}
 
-Bilan et analyse rétrospective et difficultés rencontrées (environ une page). Ce bilan peut aborder à la fois les aspects organisationnels et techniques.
+Bilan et analyse rétrospective et difficultés rencontrées (environ une page). 
+Ce bilan peut aborder à la fois les aspects organisationnels et techniques.
 
     \end{document}
