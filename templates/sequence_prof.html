@@ -13,6 +13,10 @@
     <script>
         const socket=io()
 
+        socket.on('nouvelle_q', (question) =>{
+            console.log(question)
+        });
+
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
