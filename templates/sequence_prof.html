@@ -15,10 +15,15 @@
         //socket.connect('http://'+document.domain+':'+location.port);
 
         socket.on('nouvelle_q', (question) =>{
+            console.log(question[Question])
+            document.getElementById("enonce").innerHTML=question[Question]
             console.log(question)
             console.log('ok')
         });
-
+        socket.on('fin_seq', (question) =>{
+            console.log("seq fini")
+            console.log('ok')
+        });
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
@@ -28,7 +33,7 @@
         }
 
         function suivant(){
-            socket.emit('questionSuivante', '{{id_seq|safe}}', '{{dictionnaire["ID"]|safe}}');
+            socket.emit('questionSuivante', {'id_seq':'{{id_seq|safe}}', 'id_q':'{{dictionnaire["ID"]|safe}}'});
         }
         function rep_direct(){
             //afficher ou non les réponses (stats etc)
@@ -107,8 +112,16 @@
             <input type="button" onclick="suivant()" value="Suivant">
             <h1>Question :</h1>
             <b>
+                <div id="enonce">
             {{dictionnaire["Question"]| safe}}
-            </b><br><br>
+            </div></b><br><br>
+
+
+
+
+
+
+
             <div class="reponses">
             {% for rep in dictionnaire["REP"]: %}
                 <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
