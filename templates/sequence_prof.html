@@ -13,12 +13,39 @@
     <script>
         const socket=io();
         //socket.connect('http://'+document.domain+':'+location.port);
-
+        id_seq='{{id_seq|safe}}'
+        id_q='{{dictionnaire["ID"]|safe}}'
+        rep_direct=false
+        nb_rep_totale=0
         socket.on('nouvelle_q', (question) =>{
+            console.log(question.question["Question"])
+            console.log(Object.keys(question))
+            
+            document.getElementById("enonce").innerHTML=question.question["Question"]
+            document.getElementById("champs_reponses").innerHTML = ""
+            for (element of question.question["REP"]){
+                document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                    "<span class='REP' style='display: inline-block;'>"+element+"</span>"
+                    
+                if(question.question["BREP"].includes(element)){
+                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                    "<div class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                }
+                else{
+                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                    "<div class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                }
+            }
+            
             console.log(question)
             console.log('ok')
         });
+        
 
+        socket.on('fin_seq', (question) =>{
+            console.log("seq fini")
+            console.log('ok')
+        });
         function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
@@ -28,7 +55,7 @@
         }
 
         function suivant(){
-            socket.emit('questionSuivante', '{{id_seq|safe}}', '{{dictionnaire["ID"]|safe}}');
+            socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
         }
         function rep_direct(){
             //afficher ou non les réponses (stats etc)
@@ -107,9 +134,18 @@
             <input type="button" onclick="suivant()" value="Suivant">
             <h1>Question :</h1>
             <b>
+                <div id="enonce">
             {{dictionnaire["Question"]| safe}}
-            </b><br><br>
-            <div class="reponses">
+            </div></b><br><br>
+
+
+
+
+
+
+
+            <div class="reponses" id="reponses">
+            <div id="champs_reponses">
             {% for rep in dictionnaire["REP"]: %}
                 <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
                 {%if rep in dictionnaire["BREP"]%}
@@ -117,7 +153,7 @@
                 {% else %}
                     <span class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
                 {%endif%}<br>
-            {%endfor%}
+            {%endfor%}</div>
             <input type="button" onclick="rep_direct()" value="réponses en direct">
             <input type="button" onclick="stop_rep()" value="stop réponses">
             <input type="button" onclick="correction()" value="affichage correction">

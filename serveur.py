@@ -389,16 +389,11 @@ def ouvrir_q(id_seq):
             print(id_seq)
             print(estDansCSV(id_seq))
             if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
-                dico = getQuestion(session['UserId'], id_seq)
-                print(traductionUneQuestionToHTML(dico))
-                socketio.emit("nouvelle_q", {"question:'bonjour'"}, room=[request.sid]) #traductionUneQuestionToHTML(dico)
+                pass
             else :
                 seq = lireSequence(session["UserId"], id_seq)
                 print(seq)
                 if(len(seq)>0):
-                    dico = getQuestion(session['UserId'], seq[0])
-                    print(traductionUneQuestionToHTML(dico))
-                    socketio.emit("nouvelle_q", {"question:'bonjour'"}, room=[request.sid]) #traductionUneQuestionToHTML(dico)
                     seq_id_to_seq_progress[id_seq] = seq[0]
 
 
@@ -414,32 +409,41 @@ def ouvrir_q(data):
 
 
 @socketio.on('questionSuivante')#prof avance sequence
-def avancer_q(id_seq,id_q):
+def avancer_q(dic):
+    id_seq = dic['id_seq']
+    id_q = dic['id_q']
+    print('demande de question suivante ', id_seq, id_q)
     li_eleve=dico_eleve_par_prof[session['UserId']]
     #recuperer contenu question suivante
     q_suiv = ""
     if (estDansCSV(id_seq) and id_q==""):
-        ##question seule
+        ##question seule*
+        print("demande question seule")
         q_suiv = getQuestion(session["UserID"], id_seq)
         q_suiv = traductionUneQuestionToHTML(q_suiv)
         print(q_suiv)
-        socketio.emit("nouvelle_q", {'question:q_suiv'}, room=li_eleve)
-        socketio.emit("nouvelle_q", {'question:q_suiv'}, room=request.sid)
-    elif(id_q==id_seq):
-        pass
+        socketio.emit("nouvelle_q", {'question':q_suiv}, room=li_eleve)
+        socketio.emit("nouvelle_q", {'question':q_suiv}, room=request.sid)
     else:
         li_q = lireSequence(session['UserId'],id_seq)
+        print("demande question suiv seq")
         i=0
-        while[i< len(li_q) and li_q[i]!= id_q]:
+        print(li_q)
+        while(i< len(li_q) and li_q[i]!= id_q):
             i=i+1
+            print(li_q[i], id_q)
+        print(i, len(li_q))
         if (i>=len(li_q)):
+            print("sequence terminer")
             socketio.emit("fin_seq", room=request.sid)
         else:
-            q_suiv=li_q[i]
+
+            q_suiv=li_q[i+1]
             #deux autre cas : derniere question, question de sequence
             print(q_suiv)
-            socketio.emit("nouvelle_q", {'question:q_suiv'}, room=li_eleve)
-            socketio.emit("nouvelle_q", {'question:q_suiv'}, room=request.sid)
+            print(getQuestion(session["UserId"], q_suiv))
+            socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, room=li_eleve)
+            socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, room=request.sid)
     
     
 @socketio.on('stop_rep')#prof bloque rep
@@ -454,7 +458,7 @@ def eleve_reponse_q(id_seq,reponse):
     #enregistrer rep
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
     prof = li_prof_socket_id(id_seq)
-    socketio.emit("rep", reponse, room=[prof])
+    socketio.emit("rep", {'reponse':reponse}, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence
 def acceder_q(id_seq):
