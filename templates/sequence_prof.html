@@ -15,8 +15,9 @@
         //socket.connect('http://'+document.domain+':'+location.port);
 
         socket.on('nouvelle_q', (question) =>{
-            console.log(question[Question])
-            document.getElementById("enonce").innerHTML=question[Question]
+            console.log(question.question["Question"])
+            console.log(Object.keys(question))
+            document.getElementById("enonce").innerHTML=question.question["Question"]
             console.log(question)
             console.log('ok')
         });
