@@ -39,10 +39,10 @@
         }
         function envoi_rep(){
             
-            emit('eleve_reponse_q', "{{id_seq| safe}}",reponse);
+            socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},reponse);
         }
         function quitter(){
-            emit('quitter');
+            socket.emit('quitter');
         }
     </script>
     <script>hljs.initHighlightingOnLoad()

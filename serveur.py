@@ -463,7 +463,7 @@ def eleve_reponse_q(id_seq,reponse):
     #enregistrer rep
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
     prof = li_prof_socket_id(id_seq)
-    socketio.emit("rep", reponse, room=[prof])
+    socketio.emit("rep", {'reponse':reponse}, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence
 def acceder_q(id_seq):
