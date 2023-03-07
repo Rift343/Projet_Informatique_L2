@@ -389,16 +389,11 @@ def ouvrir_q(id_seq):
             print(id_seq)
             print(estDansCSV(id_seq))
             if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
-                dico = getQuestion(session['UserId'], id_seq)
-                print(traductionUneQuestionToHTML(dico))
-                socketio.emit("nouvelle_q", {"question":traductionUneQuestionToHTML(dico)}, room=[request.sid])
+                pass
             else :
                 seq = lireSequence(session["UserId"], id_seq)
                 print(seq)
                 if(len(seq)>0):
-                    dico = getQuestion(session['UserId'], seq[0])
-                    print(traductionUneQuestionToHTML(dico))
-                    socketio.emit("nouvelle_q", {"question":traductionUneQuestionToHTML(dico)}, room=[request.sid])
                     seq_id_to_seq_progress[id_seq] = seq[0]
 
 
