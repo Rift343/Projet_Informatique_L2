@@ -122,7 +122,7 @@ def nbUserHisto(dicoHisto):
     #print(DicoNB)
     return(DicoNB)
 
-def supprimerUneQuestion(Liste,ID_Users,ID_Question):
+def supprimerUnHisto(Liste,ID_Users,ID_Question):
     """
     Entré: liste de type[date,Vrai ou Faux,idetu,Sequence ou direct,id sequence]
     Id de l'utilisateur(prof), id de la question à laquelle on veut supprimer l'historique
@@ -140,6 +140,24 @@ def supprimerUneQuestion(Liste,ID_Users,ID_Question):
             #print(ID_Users,i[0],i[y])
             ajouterHisto(ID_Users,i[0],i[y])    
 
+def supprimerligne(idUser,idQuestion):
+    """
+    Entré: l'id de la question et de l'utilisateur
+    Tache: supprime l'historique d'une question. Utilisé pour la suppression d'une question
+    """
+    historique = lireHisto(idUser)
+    for i in range (len(historique)):
+        if str(historique[i][0]) == str(idQuestion):
+            historique.pop(i)
+            PATH = os.getcwd()
+            PATH = PATH+littlePATH+"/historique_"+str(idUser)+".csv"
+            os.remove(PATH)
+            for x in historique:
+                for z in range(1,len(x)):
+                    #print(ID_Users,i[0],i[y])
+                     ajouterHisto(idUser,x[0],x[z])
+            return
+    
 
 """
 ajouterHisto(1,1,["Jour/moi/annes","Juste ou Faux","idEtu","Direct ou Sequence","identifiant de la seq"])
@@ -152,6 +170,7 @@ ajouterHisto(1,2,["07/04/2003","Vrai","ae","Sequence","76"])
 ajouterHisto(1,2,["07/04/2003","Faux","ae","Sequence","76"])
 ajouterHisto(1,2,["07/04/2003","Faux","ea","Sequence","76"])
 ajouterHisto(1,2,["07/04/2003","Faux","ve","Sequence","76"])
+
 #print(lireHisto(1))
 dicoPourFaciliteLesStat(1)
 DicoDirect,DicoSeq =dicoPourFaciliteLesStat(1)
@@ -161,5 +180,6 @@ print("Nombre de reponse positive au sequence",Nombre_de_Pos)
 print("Nombre de reponse positive des question en direct : ",Nombre_de_Pos2)
 print("Nb de participant au séquence : ",nbUserHisto(DicoSeq))
 print("Nb de participant au question en direct : ", nbUserHisto(DicoDirect))
-#supprimerUneQuestion(["07/04/2003","Faux","ve","Sequence","76"],1,2)
-#print(lireHistoQuestion(1,4))"""
+#supprimerUnHisto(["07/04/2003","Faux","ve","Sequence","76"],1,2)
+#print(lireHistoQuestion(1,4))
+supprimerligne(1,2)"""
