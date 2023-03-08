@@ -99,7 +99,7 @@ def nbPositive(Dico):
             if element[1]=='Vrai':
                 compteur=compteur+1
         if compteur==0:
-            DicoNB[key] = 0
+            DicoNB[key] = (0,DicoNB[key])
         else :
             DicoNB[key] = ((compteur/DicoNB[key])*100,DicoNB[key])
     return DicoNB
@@ -119,8 +119,28 @@ def nbUserHisto(dicoHisto):
             if not( element[2] in liste):
                 liste.append(element[2])
                 DicoNB[key]=DicoNB[key]+1            
-    print(DicoNB)
+    #print(DicoNB)
     return(DicoNB)
+
+def supprimerUneQuestion(Liste,ID_Users,ID_Question):
+    """
+    Entré: liste de type[date,Vrai ou Faux,idetu,Sequence ou direct,id sequence]
+    Id de l'utilisateur(prof), id de la question à laquelle on veut supprimer l'historique
+    Tache: supprimer un réponse à une question
+    """
+    historique = lireHisto(ID_Users)
+    for i in range (len(historique)):
+        if str(historique[i][0]) == str(ID_Question):
+            historique[i].remove(Liste)
+    PATH = os.getcwd()
+    PATH = PATH+littlePATH+"/historique_"+str(ID_Users)+".csv"
+    os.remove(PATH)   
+    for i in historique:
+        for y in range(1,len(i)):
+            #print(ID_Users,i[0],i[y])
+            ajouterHisto(ID_Users,i[0],i[y])    
+
+
 """
 ajouterHisto(1,1,["Jour/moi/annes","Juste ou Faux","idEtu","Direct ou Sequence","identifiant de la seq"])
 ajouterHisto(1,1,["22/09/76","Faux","ve","Direct"])
@@ -131,11 +151,15 @@ ajouterHisto(1,2,["07/04/2003","Vrai","ae","Sequence","7o"])
 ajouterHisto(1,2,["07/04/2003","Vrai","ae","Sequence","76"])
 ajouterHisto(1,2,["07/04/2003","Faux","ae","Sequence","76"])
 ajouterHisto(1,2,["07/04/2003","Faux","ea","Sequence","76"])
-ajouterHisto(1,2,["07/04/2003","Faux","ve","Sequence","76"])"""
-print(lireHisto(1))
+ajouterHisto(1,2,["07/04/2003","Faux","ve","Sequence","76"])
+#print(lireHisto(1))
 dicoPourFaciliteLesStat(1)
 DicoDirect,DicoSeq =dicoPourFaciliteLesStat(1)
 Nombre_de_Pos=nbPositive(DicoSeq)
-print(Nombre_de_Pos)
-nbUserHisto(DicoSeq)
-#print(lireHistoQuestion(1,4))
+Nombre_de_Pos2=nbPositive(DicoDirect)
+print("Nombre de reponse positive au sequence",Nombre_de_Pos)
+print("Nombre de reponse positive des question en direct : ",Nombre_de_Pos2)
+print("Nb de participant au séquence : ",nbUserHisto(DicoSeq))
+print("Nb de participant au question en direct : ", nbUserHisto(DicoDirect))
+#supprimerUneQuestion(["07/04/2003","Faux","ve","Sequence","76"],1,2)
+#print(lireHistoQuestion(1,4))"""
