@@ -2,6 +2,8 @@ import csv
 import os
 import markdownHTML
 import hashlib
+
+
 littlePATH = "/csv"
 
 def etuCSV():
@@ -117,6 +119,45 @@ def GetHistoEtu(numEtu):
                 listeRetour.append(i[y].split("@||||@"))
     return listeRetour
 
-#ajouterHistoEtu(["JE","suis","une","liste"],1258)
-#ajouterHistoEtu(["JE","suis","une","autre","liste"],1258)
-#print(GetHistoEtu(1258))
+def dicoHistoetu(numEtu):
+    """
+    Entré: le numero etu
+    Sorti: DicoQuestionDirect,DicoQuestionSeq
+    """
+    lst = GetHistoEtu(numEtu)
+    DicoQuestionDirect={}
+    DicoQuestionSeq={}
+    for question in lst:
+        if question[3]=='Sequence':
+            print ("OK")
+            if("seq"+question[4] in DicoQuestionSeq ):
+                    DicoQuestionSeq["seq"+question[4]].append(question)
+            else:
+                    DicoQuestionSeq["seq"+question[4]] = [question]
+        elif question[3]=='Direct':
+            print('OK2')
+            if(question[2] in DicoQuestionDirect):
+                    DicoQuestionDirect[question[2]].append(question)
+            else:
+                    DicoQuestionDirect[question[2]] = [question]
+    """
+    print(DicoQuestionSeq)
+    print(DicoQuestionDirect)
+    """
+    return DicoQuestionDirect,DicoQuestionSeq
+    
+
+ajouterHistoEtu(["date","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date2","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date2","FV","idQ2","Sequence","idS"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Sequence","idS2"],1258)
+ajouterHistoEtu(["date","FV","idQ","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ2","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ3","Direct"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Direct"],1258)
+print(GetHistoEtu(1258))
+print(dicoHistoetu(1258))
+
+

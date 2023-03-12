@@ -8,6 +8,22 @@ from manipulation_Etu import *
 import hashlib
 from flask_socketio import SocketIO 
 
+import time
+import datetime
+def new_date():
+    """
+    renvoie la date exact du jour,
+    exemple: 2023/03/12/23/30/49.586607
+    """
+    mydate = str(datetime.datetime.now())
+    print(mydate)
+    mydate=list(mydate)
+    for i in range (len(mydate)):
+        if mydate[i] in ['-',':',' ']:
+            mydate[i]='/'
+    mydate = ''.join(mydate)
+    return mydate
+
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 app.config['UPLOAD_FOLDER'] = "upload"
