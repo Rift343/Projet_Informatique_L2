@@ -158,6 +158,7 @@ ajouterHistoEtu(["date2","FV","idQ2","Direct"],1258)
 ajouterHistoEtu(["date2","FV","idQ3","Direct"],1258)
 ajouterHistoEtu(["date3","FV","idQ","Direct"],1258)
 print(GetHistoEtu(1258))
+print(GetHistoEtu(666))
 print(dicoHistoetu(1258))
 
 
