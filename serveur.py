@@ -388,13 +388,15 @@ def modif_mdp_etu_2():
                 
                 
 @app.route("/afficheSequence/<id>") #page pour debuter une sequence
-def afficheSequenceProf(id):
+def afficheSequence(id):
     if 'Username' in session and session['type']=="pro":
         
-        if(estDansCSV(id)):
+        if(estDansCSV(id)):#Sequence
             print(lireSequence(session['UserId'], id))
             print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
+        else:
+            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
     else:
         dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
         return render_template("sequence_eleve.html", id_seq=id)
@@ -457,8 +459,9 @@ def avancer_q(dic):
             print("sequence terminer")
             socketio.emit("fin_seq", room=request.sid)
         else:
-
             q_suiv=li_q[i+1]
+            seq_id_to_seq_progress[id_seq]=q_suiv
+            
             #deux autre cas : derniere question, question de sequence
             print(q_suiv)
             print(getQuestion(session["UserId"], q_suiv))
@@ -489,7 +492,12 @@ def acceder_q(id_seq):
             dico_eleve_par_prof[prof].append(currentSocketId)
             sess_id_prof = li_prof_socket_id[id_seq]
             #envoyer +1 prof
-            socketio.emit()
+            q={}
+            q_suiv=seq_id_to_seq_progress[id_seq]
+            q["REP"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["REP"]
+            q["Question"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["Question"]
+            socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))})
+
         
         
         #@app.route("/feuille")
