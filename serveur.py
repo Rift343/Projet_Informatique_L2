@@ -397,9 +397,11 @@ def afficheSequence(id):
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
         else:
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
-    else:
+    elif(session['type']!="pro"):
         dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
-        return render_template("sequence_eleve.html", id_seq=id)
+        return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
+    else:
+        render_template("acceuil.html")
         
         
 @socketio.on('ouvrir_seq')#prof ouvre sequence
