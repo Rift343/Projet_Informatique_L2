@@ -398,7 +398,6 @@ def afficheSequence(id):
         else:
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
     else:
-        dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
         return render_template("sequence_eleve.html", id_seq=id)
         
         
