@@ -57,6 +57,9 @@
         function quitter(){
             socket.emit('quitter');
         }
+        function acceder(){
+            socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})
+        }
     </script>
     <script>hljs.initHighlightingOnLoad()
     window.addEventListener('load',() =>{
@@ -66,9 +69,10 @@
             hljs.highlightBlock(codeBlock[i]);
         }
     });
+
     </script>
 </head>
-<body onload="socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})">
+<body onload="acceder()">
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>

@@ -484,7 +484,7 @@ def eleve_reponse_q(id_seq,reponse):
 
 @socketio.on('acceder_q')#eleve accede sequence
 def acceder_q(id_seq):
-    for eleme in dico_question_ouverte_to_prof.keys :
+    for eleme in dico_question_ouverte_to_prof: #.keys()
         if id_seq == eleme :
             currentSocketId = request.sid
             prof = dico_question_ouverte_to_prof.get(eleme)
