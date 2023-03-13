@@ -191,4 +191,5 @@ DicoD,DicoS = dicoHistoetu(1258)
 print(DicoD)
 print(DicoS)
 supprimerhistoQuestion("idQ")
+supprimerhistoQuestion("vbeu")
 
