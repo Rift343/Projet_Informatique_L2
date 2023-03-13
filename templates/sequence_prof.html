@@ -44,6 +44,12 @@
 
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")
+            alert("La Sequence est terminer !");
+            
+        });
+        socket.on('nouveau_eleve', (question) =>{
+            document.getElementById("nb_eleve").innerHTML=document.getElementById("nb_eleve").innerHTML+"+1";
+            
         });
         
         /*function get_responses(){
@@ -131,7 +137,7 @@
 
     <div class="question"><br>
         <form>
-            <input type="button" onclick="suivant()" value="Suivant">
+            <input type="button" onclick="suivant()" value="Suivant"><span id="nb_eleve">0</span>
             <h1>Question :</h1>
             <b>
                 <div id="enonce">
