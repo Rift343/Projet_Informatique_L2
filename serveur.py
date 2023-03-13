@@ -479,9 +479,10 @@ def bloquer_rep_q():
 
 @socketio.on('eleve_reponse_q')#eleve reponds
 def eleve_reponse_q(id_seq,reponse):
+    print(reponse)
     #enregistrer rep
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
-    prof = li_prof_socket_id(id_seq)
+    prof = li_prof_socket_id[id_seq["id_seq"]]
     socketio.emit("rep", {'reponse':reponse}, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence

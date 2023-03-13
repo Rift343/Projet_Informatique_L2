@@ -41,6 +41,12 @@
             console.log('ok')
         });
         
+        socket.on('rep', (reponse)=>{
+            console.log(reponse)
+            //for(i=0;i<reponse.length;i++){
+                //console.log(question[question.question["REP"][reponse[i]]])
+            //}
+        });
 
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")

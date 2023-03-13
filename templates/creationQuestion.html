@@ -29,8 +29,8 @@
         num=num+1;
     }
     document.getElementById('nb_rep_possibles').value=num;
-  }
-  function supp_rep(n){
+}
+function supp_rep(n){
     //pour supprimer une reponse, on prends en entrer le numero de la reponse que l'on veut supprimer
     rep_li.splice(n,1);
     //on supprime la reponse dans rep_li puis on recreer les span ou sont affiché les reponses
@@ -43,9 +43,9 @@
         num=num+1;
     }
     document.getElementById('nb_rep_possibles').value=num;
-  }
-  
-  
+}
+
+
     function visualisation_iframe() {
     //pour visualiser la question que l'on est en train de creer, on change 
     //la cible et l'action du formulaire, on soumet le formulaire au serveur
@@ -98,7 +98,7 @@ function changerCouleurEti(ele){
 
 
 function afficheEtiquette(){
-    var eti = {{listeEtiquettes|safe}};
+    var eti = "{{listeEtiquettes|safe}}";
     for(etiquettes of eti){
         document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
             '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+etiquettes.replace(/ /g,'')+'"onclick=changerCouleurEti(this)><span id="contenuEti">'+etiquettes+'</span></span>';

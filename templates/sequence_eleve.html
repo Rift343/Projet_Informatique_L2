@@ -11,6 +11,7 @@
     <title>QuizTio</title>
     <script src="../static/socket.io.min.js"></script>
     <script>
+        var num=0
         const socket=io()
         reponse=[]
 
@@ -27,7 +28,8 @@
             document.getElementById("champs_reponses").innerHTML = ""
             for (element of question.question["REP"]){
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<span class='REP' style='display: inline-block;'>"+element+"</span>"
+                    "<span class='REP' style='display: inline-block;'> <input type='checkbox' id='"+num +"' name='"+num +"'>"+element+"</span><br>" //
+                num=num+1
             }
             console.log(question)
             console.log('ok')
@@ -52,7 +54,14 @@
             }
         }
         function envoi_rep(){
-            socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},reponse);
+            li_Brep_indices=[]
+            for(i=0;i<num;i++){
+                checkbox = document.getElementById(i);
+                if(checkbox.checked){
+                    li_Brep_indices.push(i)
+                }
+            }
+            socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);
         }
         function quitter(){
             socket.emit('quitter');
@@ -96,7 +105,7 @@
             <div class="reponses" id="reponses">
             <div id="champs_reponses">
             </div>
-            <input type="button" id="outon" onclick="envoi_rep()" value="envoi réponse" hidden="false">
+            <input type="button" id="outon" name="outon" onclick="envoi_rep()" value="envoi réponse">
             <label id="desac" hidden="true">Réponses désactivées</label>
             <input type="button" onclick="quitter()" value="Quitter">
         </form>
