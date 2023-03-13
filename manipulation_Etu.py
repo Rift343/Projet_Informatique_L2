@@ -155,7 +155,7 @@ def  supprimerhistoQuestion(IDQuestion):
             tamp = listeetu[i][y].split("@||||@")
             if tamp[2]==IDQuestion:
                 listeetu[i][y]="delete"
-                print (tamp)
+                #print (tamp)
                 z=z-1
     #print(listeetu)
     listsupp=[]
@@ -171,6 +171,23 @@ def  supprimerhistoQuestion(IDQuestion):
         Ecriture = csv.writer(FILE,delimiter=';')
         Ecriture.writerows(listsupp)
 
+def suppHisto(liste,idEtu):
+    #print(etuCSV())
+    listeEtu=etuCSV()
+    for i in range (len(listeEtu)):
+        if listeEtu[i][2] == idEtu:
+            for y in range(len(listeEtu[i])):
+                #print(listeEtu[i][y])
+                if listeEtu[i][y].split("@||||@") == liste:
+                    listeEtu[i].pop(y)
+                    PATH = os.getcwd()
+                    PATH = PATH+littlePATH+"/Etu.csv"
+                    with open(PATH,'w',newline='') as FILE:
+                        Ecriture = csv.writer(FILE,delimiter=';')
+                        Ecriture.writerows(listeEtu)
+                    return
+    
+"""
 ajouterHistoEtu(["date","FV","idQ","Sequence","idS"],1258)
 ajouterHistoEtu(["date2","FV","idQ","Sequence","idS"],1258)
 ajouterHistoEtu(["date2","FV","idQ2","Sequence","idS"],1258)
@@ -190,6 +207,7 @@ print(dicoHistoetu(666))
 DicoD,DicoS = dicoHistoetu(1258)
 print(DicoD)
 print(DicoS)
-supprimerhistoQuestion("idQ")
-supprimerhistoQuestion("vbeu")
+#supprimerhistoQuestion("idQ")
+#supprimerhistoQuestion("vbeu")
+suppHisto(["date","FV","idQ","Sequence","idS"],"1258")"""
 

@@ -65,9 +65,9 @@ def modifierSequence(ID_User,IdSequence, ListeSequence):
     PATH=os.getcwd()
     PATH = PATH+littlePATH+"/Sequence_"+str(ID_User)+".csv"
     sequence=lireSequenceUser(ID_User)
-    print(sequence)
+    #print(sequence)
     for i in range(0,len(sequence)):
-        print(sequence[i][0])
+        #print(sequence[i][0])
         if str(sequence[i][0])==str(IdSequence):
             print('OK')
             sequence2 = [IdSequence]
