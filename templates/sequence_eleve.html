@@ -28,28 +28,18 @@
             for (element of question.question["REP"]){
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
                     "<span class='REP' style='display: inline-block;'>"+element+"</span>"
-                    
-                if(question.question["BREP"].includes(element)){
-                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
-                }
-                else{
-                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
-                }
             }
-            
             console.log(question)
             console.log('ok')
         });
 
-        function get_responses(){
+        /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
             li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
         }
         return li_bonne_rep;
-        }
+        }*/
 
 
         function changeState(REP){
@@ -78,7 +68,7 @@
     });
     </script>
 </head>
-<body>
+<body onload="socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})">
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
@@ -95,12 +85,13 @@
         <form action = "" method = "post">
             <h1>Question :</h1>
             <b>
-            {{dictionnaire["Question"]| safe}}
-            </b><br><br>
-            <div class="reponses">
-            {% for rep in dictionnaire["REP"]: %}
-                <input type="checkbox" id="'+{{loop.index0}}+'" name="'+{{loop.index0}}+'" onclick="changeState('{{rep| safe}}')"> <span class='REP'>{{rep| safe}}</span>
-            {%endfor%}
+            <div id="enonce">
+
+            </div></b><br><br>
+
+            <div class="reponses" id="reponses">
+            <div id="champs_reponses">
+            </div>
             <input type="button" id="outon" onclick="envoi_rep()" value="envoi réponse" hidden="false">
             <label id="desac" hidden="true">Réponses désactivées</label>
             <input type="button" onclick="quitter()" value="Quitter">

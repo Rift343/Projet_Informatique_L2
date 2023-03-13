@@ -44,15 +44,15 @@
 
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")
-            console.log('ok')
         });
-        function get_responses(){
+        
+        /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
             li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
         }
         return li_bonne_rep;
-        }
+        }*/
 
         function suivant(){
             socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
@@ -137,12 +137,6 @@
                 <div id="enonce">
             {{dictionnaire["Question"]| safe}}
             </div></b><br><br>
-
-
-
-
-
-
 
             <div class="reponses" id="reponses">
             <div id="champs_reponses">
