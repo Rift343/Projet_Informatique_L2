@@ -2,8 +2,9 @@ import csv
 import os
 import markdownHTML
 from random import randrange
+import manipulation_Etu
 littlePATH = "/csv"
-
+import HistoQuestion
 def depuis_csv(ID_User):
     """
     Ouvre un fichier au format csv
@@ -275,6 +276,8 @@ def delQuestion(ID_User,IDquestion):
     Tâche effectuer:Supprime la question ayant la même id que IDquestion.
     On doit réécrire en intégralité le fichier
     """
+    HistoQuestion.supprimerligne(ID_User,IDquestion)
+    manipulation_Etu.supprimerhistoQuestion(IDquestion)
     PATH= os.getcwd()
     PATH =  PATH+littlePATH+"/question_"+str(ID_User)+".csv"
     if (os.path.isfile(PATH)):

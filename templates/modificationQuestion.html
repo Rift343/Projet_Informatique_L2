@@ -61,16 +61,51 @@
     }
     document.getElementById('nb_rep_possibles').value=num;
   }
+
+  function changerCouleurEti(ele){
+    //changer couleur est appeler quand on click sur la case a cocher qui permet d'indiquer si une reponse ou juste ou non
+    //si la case est coche, la reponse est juste, on l'affiche alors en vert
+    if(ele.checked == true){
+        ele.parentElement.style="border-radius: 25px; background: #AAAAAA; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+        ele.name="checkEti"
+    }
+    else{//sinon la reponse est fausse, alors on l'affiche en rouge
+        ele.parentElement.style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"
+        ele.name="notCheckEti"
+    }    
+  }
+
+  function afficheEtiquette(){
+    var eti = {{listeEtiquettes|safe}};
+    var listeEti = {{dictionnaire['ET']|safe}};
+    for(etiquettes of eti){
+        if(listeEti.includes(etiquettes)){
+            document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
+                '<br><span id = "etiquettte" style="border-radius: 25px; background: #AAAAAA; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="checkEti" value="'+etiquettes.replace(/ /g,'')+'"onclick=changerCouleurEti(this) checked><span id="contenuEti">'+etiquettes+'</span></span>';
+        }
+        else{
+            document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
+                '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+etiquettes.replace(/ /g,'')+'"onclick=changerCouleurEti(this)><span id="contenuEti" checked="unchecked">'+etiquettes+'</span></span>';
+        }
+    }
+
+  }
+
+  function addEti(){  
+    document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
+    '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+document.getElementById("neti").value.replace(/ /g,'')+'" onclick=changerCouleurEti(this) ><span id="contenuEti">'+document.getElementById("neti").value+'</span></span>';
+
+  }
   </script>
 </head>
-<body onload="chargement()">
+<body onload="chargement();afficheEtiquette()">
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
             {{Username}}
             <ul class="sousMenu">
                 <li><a href="/">Accueil</a></li>
-                <li><a href="../profil">Profil</a></li>
+                <li><a href="profil">Profil</a></li>
                 <li><a href="../BDD">Liste de vos questions</a></li>
                 <li><a href="../creationQuestion">Créer une question</a></li>
                 <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
@@ -86,9 +121,9 @@
         <textarea name="enonce" id="enonce" required>{{dictionnaire["Question"]}}</textarea>
     </div>
     
-    <div class="entree">
-        <label for="etiquettes">Entrez la/les étiquettes de votre question (séparées par des ";" s'il y en a plusieurs) : </label><br>
-        <input type="text" name="etiquettes" id="etiquettes" value='{% for eti in dictionnaire["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}'>
+    <div id="listeEti">
+        <input type="text" id="neti">
+        <input type="button" value="nouvelle etiquette" onclick=addEti()>
     </div>
 
     
@@ -107,7 +142,7 @@
     </div>        
     <input type="text" name="li_rep_possibles" id="li_rep_possibles" hidden>
         <input type="number" name="nb_rep_possibles" id="nb_rep_possibles" hidden><br>
-    <input type="submit" name="submit" id="submit" value ="Ajouter la question !">
+    <input type="submit" name="submit" id="submit" value ="Modifier la question !">
 </form><br><br><span id="numero_load" hidden>{{dictionnaire["BREP"]}}</span></div>
 
 </body>

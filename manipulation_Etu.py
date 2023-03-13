@@ -2,6 +2,8 @@ import csv
 import os
 import markdownHTML
 import hashlib
+
+
 littlePATH = "/csv"
 
 def etuCSV():
@@ -19,6 +21,7 @@ def etuCSV():
         for i in lecture:
             listeEtu.append(i)
         #os.close(FILE)
+        
     return listeEtu
 
 
@@ -117,6 +120,76 @@ def GetHistoEtu(numEtu):
                 listeRetour.append(i[y].split("@||||@"))
     return listeRetour
 
-#ajouterHistoEtu(["JE","suis","une","liste"],1258)
-#ajouterHistoEtu(["JE","suis","une","autre","liste"],1258)
-#print(GetHistoEtu(1258))
+def dicoHistoetu(numEtu):
+    """
+    Entré: le numero etu
+    Sorti: DicoQuestionDirect,DicoQuestionSeq
+    """
+    lst = GetHistoEtu(numEtu)
+    DicoQuestionDirect={}
+    DicoQuestionSeq={}
+    for question in lst:
+        if question[3]=='Sequence':
+            #print ("OK")
+            if("seq"+question[4] in DicoQuestionSeq ):
+                    DicoQuestionSeq["seq"+question[4]].append(question)
+            else:
+                    DicoQuestionSeq["seq"+question[4]] = [question]
+        elif question[3]=='Direct':
+            #print('OK2')
+            if(question[2] in DicoQuestionDirect):
+                    DicoQuestionDirect[question[2]].append(question)
+            else:
+                    DicoQuestionDirect[question[2]] = [question]
+    """
+    print(DicoQuestionSeq)
+    print(DicoQuestionDirect)
+    """
+    return DicoQuestionDirect,DicoQuestionSeq
+    
+def  supprimerhistoQuestion(IDQuestion):
+    listeetu =etuCSV()
+    for i in range (len(listeetu)):
+         z =len(listeetu[i])
+         for y in range(4,z):
+            tamp = listeetu[i][y].split("@||||@")
+            if tamp[2]==IDQuestion:
+                listeetu[i][y]="delete"
+                print (tamp)
+                z=z-1
+    #print(listeetu)
+    listsupp=[]
+    for i in range(len(listeetu)):
+        listsupp.append([])
+        for y in listeetu[i]:
+            if y != 'delete':
+                listsupp[i].append(y)
+    #print(listsupp)
+    PATH = os.getcwd()
+    PATH = PATH+littlePATH+"/Etu.csv"
+    with open(PATH,'w',newline='') as FILE:
+        Ecriture = csv.writer(FILE,delimiter=';')
+        Ecriture.writerows(listsupp)
+
+ajouterHistoEtu(["date","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date2","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date2","FV","idQ2","Sequence","idS"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Sequence","idS"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Sequence","idS2"],1258)
+ajouterHistoEtu(["date","FV","idQ","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ2","Direct"],1258)
+ajouterHistoEtu(["date2","FV","idQ3","Direct"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Direct"],1258)
+ajouterHistoEtu(["date3","FV","idQ","Direct"],65741)
+ajouterHistoEtu(["date4","FV","idQ","Direct"],65741)
+ajouterHistoEtu(["date4","FV","idQ2","Direct"],65741)
+print(GetHistoEtu(1258))
+print(GetHistoEtu(666))
+print(dicoHistoetu(666))
+DicoD,DicoS = dicoHistoetu(1258)
+print(DicoD)
+print(DicoS)
+supprimerhistoQuestion("idQ")
+supprimerhistoQuestion("vbeu")
+

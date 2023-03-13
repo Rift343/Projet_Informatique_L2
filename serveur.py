@@ -8,6 +8,22 @@ from manipulation_Etu import *
 import hashlib
 from flask_socketio import SocketIO 
 
+import time
+import datetime
+def new_date():
+    """
+    renvoie la date exact du jour,
+    exemple: 2023/03/12/23/30/49.586607
+    """
+    mydate = str(datetime.datetime.now())
+    print(mydate)
+    mydate=list(mydate)
+    for i in range (len(mydate)):
+        if mydate[i] in ['-',':',' ']:
+            mydate[i]='/'
+    mydate = ''.join(mydate)
+    return mydate
+
 app = Flask(__name__)
 app.secret_key = 'rfgcvgbhnj,k;k;,jhngfvcgfgbnh,jk;ljnhbgvfd'
 app.config['UPLOAD_FOLDER'] = "upload"
@@ -245,7 +261,7 @@ def modificationQuestion(idQuestion):
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
-        etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+        etiquettes = request.form.getlist('checkEti') #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
         reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
@@ -256,7 +272,7 @@ def modificationQuestion(idQuestion):
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
-        li_etiquettes = etiquettes.split(';') 
+        li_etiquettes = etiquettes
         li_rep = reponses.split(';')
         dictionnaire = {"ID": idQuestion, "Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         modif_csv(UserId, dictionnaire) #Ajout du dictionnaire d'une question dans le csv des questions
