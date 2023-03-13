@@ -20,7 +20,7 @@
         socket.on('nouvelle_q', (question) =>{
             console.log(question.question["Question"])
             console.log(Object.keys(question))
-            
+            id_q=question.question["ID"]
             document.getElementById("enonce").innerHTML=question.question["Question"]
             document.getElementById("champs_reponses").innerHTML = ""
             for (element of question.question["REP"]){
