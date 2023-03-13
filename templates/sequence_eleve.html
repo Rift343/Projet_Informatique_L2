@@ -19,13 +19,27 @@
             document.getElementById("desac").setAttribute(hidden,false)
         });
 
-        function get_responses(){
+        socket.on('nouvelle_q', (question) =>{
+            console.log(question.question["Question"])
+            console.log(Object.keys(question))
+            
+            document.getElementById("enonce").innerHTML=question.question["Question"]
+            document.getElementById("champs_reponses").innerHTML = ""
+            for (element of question.question["REP"]){
+                document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                    "<span class='REP' style='display: inline-block;'>"+element+"</span>"
+            }
+            console.log(question)
+            console.log('ok')
+        });
+
+        /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
             li_bonne_rep[element] = li_bonne_rep[element].replace(/\D/g,'');
         }
         return li_bonne_rep;
-        }
+        }*/
 
 
         function changeState(REP){
@@ -38,7 +52,6 @@
             }
         }
         function envoi_rep(){
-            
             socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},reponse);
         }
         function quitter(){
@@ -55,7 +68,7 @@
     });
     </script>
 </head>
-<body>
+<body onload="socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})">
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
@@ -63,9 +76,6 @@
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
                 <li><a href="profil">Profil</a></li>
-                <li><a href="../BDD">Liste de vos questions</a></li>
-                <li><a href="../creationQuestion">Créer une question</a></li>
-                <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
                 <li><a href="../deco">Se déconnecter</a></li>
             </ul>
         </li>
@@ -75,12 +85,13 @@
         <form action = "" method = "post">
             <h1>Question :</h1>
             <b>
-            {{dictionnaire["Question"]| safe}}
-            </b><br><br>
-            <div class="reponses">
-            {% for rep in dictionnaire["REP"]: %}
-                <input type="checkbox" id="'+{{loop.index0}}+'" name="'+{{loop.index0}}+'" onclick="changeState('{{rep| safe}}')"> <span class='REP'>{{rep| safe}}</span>
-            {%endfor%}
+            <div id="enonce">
+
+            </div></b><br><br>
+
+            <div class="reponses" id="reponses">
+            <div id="champs_reponses">
+            </div>
             <input type="button" id="outon" onclick="envoi_rep()" value="envoi réponse" hidden="false">
             <label id="desac" hidden="true">Réponses désactivées</label>
             <input type="button" onclick="quitter()" value="Quitter">

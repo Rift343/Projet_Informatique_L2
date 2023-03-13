@@ -232,9 +232,12 @@ def question(idQuestion):
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
-        #print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
+        print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        return redirect(url_for('profil',Username=session['Username'], liste=lireSequenceUser(session['UserId'])))
+    else:
+        return render_template("non_connecte.html")
 
 
 @app.route("/modificationQuestion/<idQuestion>") #Page de modification d'une question
@@ -258,7 +261,7 @@ def modificationQuestion(idQuestion):
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         UserId = session['UserId']
         Username = session['Username']
-        etiquettes = request.form['etiquettes'] #Ses étiquettes = str separé par ";"
+        etiquettes = request.form.getlist('checkEti') #Ses étiquettes = str separé par ";"
         enonce = request.form['enonce'] #Son énoncé sous la forme markdown avec un titre mis en avant dans la bdd
         reponses = request.form['li_rep_possibles'] #Ses réponses
         reponses_pour_BREP = request.form['li_rep_possibles'].split(';') #Ses réponses sous forme de liste
@@ -269,7 +272,7 @@ def modificationQuestion(idQuestion):
             if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                 li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
-        li_etiquettes = etiquettes.split(';') 
+        li_etiquettes = etiquettes
         li_rep = reponses.split(';')
         dictionnaire = {"ID": idQuestion, "Question": enonce, "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         modif_csv(UserId, dictionnaire) #Ajout du dictionnaire d'une question dans le csv des questions
@@ -385,15 +388,17 @@ def modif_mdp_etu_2():
                 
                 
 @app.route("/afficheSequence/<id>") #page pour debuter une sequence
-def afficheSequenceProf(id):
+def afficheSequence(id):
     if 'Username' in session and session['type']=="pro":
         
-        if(estDansCSV(id)):
+        if(estDansCSV(id)):#Sequence
             print(lireSequence(session['UserId'], id))
             print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
+        else:
+            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
     else:
-        return render_template("acceuil.html")
+        return render_template("sequence_eleve.html", id_seq=id)
         
         
 @socketio.on('ouvrir_seq')#prof ouvre sequence
@@ -453,8 +458,9 @@ def avancer_q(dic):
             print("sequence terminer")
             socketio.emit("fin_seq", room=request.sid)
         else:
-
             q_suiv=li_q[i+1]
+            seq_id_to_seq_progress[id_seq]=q_suiv
+            
             #deux autre cas : derniere question, question de sequence
             print(q_suiv)
             print(getQuestion(session["UserId"], q_suiv))
@@ -485,7 +491,12 @@ def acceder_q(id_seq):
             dico_eleve_par_prof[prof].append(currentSocketId)
             sess_id_prof = li_prof_socket_id[id_seq]
             #envoyer +1 prof
-            socketio.emit()
+            q={}
+            q_suiv=seq_id_to_seq_progress[id_seq]
+            q["REP"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["REP"]
+            q["Question"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["Question"]
+            socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))})
+
         
         
         #@app.route("/feuille")
