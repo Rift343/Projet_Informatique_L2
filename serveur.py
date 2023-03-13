@@ -484,18 +484,23 @@ def eleve_reponse_q(id_seq,reponse):
 
 @socketio.on('acceder_q')#eleve accede sequence
 def acceder_q(id_seq):
+    print(id_seq)
+    print("session ouverte : ", dico_question_ouverte_to_prof)
     for eleme in dico_question_ouverte_to_prof: #.keys()
-        if id_seq == eleme :
+        print("avant le if")
+        if id_seq["id_seq"] == eleme :
+            print("après le if")
             currentSocketId = request.sid
             prof = dico_question_ouverte_to_prof.get(eleme)
             dico_eleve_par_prof[prof].append(currentSocketId)
-            sess_id_prof = li_prof_socket_id[id_seq]
+            sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
             #envoyer +1 prof
             q={}
-            q_suiv=seq_id_to_seq_progress[id_seq]
-            q["REP"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["REP"]
-            q["Question"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["Question"]
-            socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))})
+            q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
+            q["REP"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["REP"]
+            q["Question"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["Question"]
+            socketio.emit("nouvelle_q", {'question':q}, to=[request.sid])
+            print("requete envoyée")
 
         
         
