@@ -216,9 +216,12 @@ def question(idQuestion):
 def import_eleve():
     if 'Username' and 'UserId' in session and session['type'] == "pro":
         f = request.files['fichier']
-        #print(app.config['UPLOAD_FOLfDpDER']+'/'+f.filename)
+        print(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         f.save(app.config['UPLOAD_FOLDER']+'/'+f.filename)
         ajoutEtu(app.config['UPLOAD_FOLDER']+'/'+f.filename)
+        return redirect(url_for('profil',Username=session['Username'], liste=lireSequenceUser(session['UserId'])))
+    else:
+        return render_template("non_connecte.html")
 
 
 @app.route("/modificationQuestion/<idQuestion>") #Page de modification d'une question
@@ -377,7 +380,8 @@ def afficheSequenceProf(id):
             print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
             return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
     else:
-        return render_template("acceuil.html")
+        dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
+        return render_template("sequence_eleve.html", id_seq=id)
         
         
 @socketio.on('ouvrir_seq')#prof ouvre sequence
