@@ -85,12 +85,16 @@
         <form action = "" method = "post">
             <h1>Question :</h1>
             <b>
+                <div id="enonce">
             {{dictionnaire["Question"]| safe}}
-            </b><br><br>
-            <div class="reponses">
+            </div></b><br><br>
+
+            <div class="reponses" id="reponses">
+            <div id="champs_reponses">
             {% for rep in dictionnaire["REP"]: %}
-                <input type="checkbox" id="'+{{loop.index0}}+'" name="'+{{loop.index0}}+'" onclick="changeState('{{rep| safe}}')"> <span class='REP'>{{rep| safe}}</span>
-            {%endfor%}
+                <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
+                {%if rep in dictionnaire["BREP"]%}
+            {%endfor%}</div>
             <input type="button" id="outon" onclick="envoi_rep()" value="envoi réponse" hidden="false">
             <label id="desac" hidden="true">Réponses désactivées</label>
             <input type="button" onclick="quitter()" value="Quitter">
