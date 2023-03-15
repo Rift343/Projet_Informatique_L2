@@ -44,7 +44,7 @@ def index1():
             return render_template("acceuil_connecte.html", Username=Username)
         else:
             Username = session['Username']
-            return render_template("acceuil_connecte_etu.html", Username=Username)
+            return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
     else:
         return render_template("acceuil.html")
 
@@ -65,7 +65,7 @@ def profil():
 def index2():
     if 'Username' in session:
         Username = session['Username']
-        return render_template("acceuil_connecte_etu.html", Username=Username)
+        return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
     else:
         return render_template("acceuil.html")
 
@@ -112,7 +112,7 @@ def connexion():
                 IdUser = sous_liste[0]
                 session['UserId'] = IdUser
                 session['type'] = "etu"
-                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur)
+                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur, pas_bon=False)
     else:
         listeUser = lireCSV()
         for sous_liste in listeUser:
@@ -127,7 +127,7 @@ def connexion():
     #le mot de passe ou l'identifiant est incorrect
 
 
-@app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
+@app.route("/BDD") #Page d'acceuil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
     if 'UserId' and 'Username'in session and session['type'] == "pro":
         UserId = session['UserId']
@@ -398,7 +398,12 @@ def afficheSequence(id):
         else:
             return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id))
     elif(session['type']!="pro"):
-        return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
+        if(id not in li_ques_ouverte):
+            #pas fini mais id_seq incorrecte
+            return redirect(url_for('index3', pas_bon = True, Username=session["Username"]))
+            #return render_template("../acceuil_connecte_etu.html", pas_bon = True, Username=session["Username"])
+        else:
+            return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
     else:
         render_template("acceuil.html")
         
@@ -409,6 +414,7 @@ def ouvrir_q(id_seq):
             dico_question_ouverte_to_prof[id_seq]=session['UserId']
             li_prof_socket_id[id_seq]=request.sid
             dico_eleve_par_prof[session['UserId']]= []
+            li_ques_ouverte.append(id_seq)
             print(id_seq)
             print(estDansCSV(id_seq))
             if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
@@ -433,6 +439,7 @@ def fermer_seq(data):
         dico_question_ouverte_to_prof.pop(data)
         li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
+        li_ques_ouverte.pop(data)
         print("fin fermer seq serv")
     
 
