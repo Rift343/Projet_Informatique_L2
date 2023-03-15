@@ -418,6 +418,9 @@ def ouvrir_q(id_seq):
                 print(seq)
                 if(len(seq)>0):
                     seq_id_to_seq_progress[id_seq] = seq[0]
+                    li_q = lireSequence(session['UserId'],id_seq)
+                    q_suiv = li_q[0]
+                    socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))})
 
 
         
