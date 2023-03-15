@@ -38,16 +38,16 @@
                     
                 if(question.question["BREP"].includes(element)){
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div id='rep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='brep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
                 else{
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div id='rep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='mrep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
                 i++;
             }
             
-            
+            rep_direct_var=false;
             console.log(question)
             console.log('ok')
         });
@@ -62,21 +62,21 @@
             }
             console.log(liste_rep_eleve)
             if(rep_direct_var){
-                for (element in liste_rep_eleve){
-                    document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale+"%";
-                }
+                actualiser_rep()
+                
             }
-        
-        
-        
-        
-        
         }
-
-
-
         });
-
+    function actualiser_rep(){
+        for (element in liste_rep_eleve){
+            document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+            if(document.getElementById("brep_num_"+element)==null){
+                document.getElementById("mrep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+            }else{
+                document.getElementById("brep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+            }
+                }
+    }
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")
             alert("La Sequence est terminer !");
@@ -103,8 +103,10 @@
                 console.log("rep_num_"+element)
                 console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%")
                 console.log(document.getElementById("rep_num_"+element).style.width)
-                    document.getElementById("rep_num_"+element).style.width=(liste_rep_eleve[element]/nb_rep_totale)*100+"%";
+
                 }
+                actualiser_rep()
+                rep_direct_var=true
         }
         function stop_rep(){
             rep_bloquer=true;
@@ -116,29 +118,31 @@
             if((document.getElementsByClassName('REP'))[0].style.display === 'inline-block'){
                 let elements1 = document.getElementsByClassName('REP');
                 for (element of elements1){
-                    element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
                 for (element of elements2){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
                 for (element of elements3){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
+                    //setAttribute('style', 'display: inline-block;');
                 }
             }
             else{
                 let elements1 = document.getElementsByClassName('REP');
                 for (element of elements1){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
                 for (element of elements2){
-                    element.setAttribute('style', 'display: none;');
+                    //element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
                 for (element of elements3){
-                    element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
             }
         }
@@ -191,9 +195,9 @@
             {% for rep in dictionnaire["REP"]: %}
                 <span id="rep_num_{{loop.index}}" class='REP' style="display: inline-block;">{{rep| safe}}</span>
                 {%if rep in dictionnaire["BREP"]%}
-                    <span id="rep_num_{{loop.index}}" class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
+                    <span id="brep_num_{{loop.index}}" class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
                 {% else %}
-                    <span id="rep_num_{{loop.index}}" class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
+                    <span id="nrep_num_{{loop.index}}" class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
                 {%endif%}<br>
             {%endfor%}</div>
             <input type="button" onclick="rep_direct()" value="réponses en direct">
