@@ -15,32 +15,63 @@
         //socket.connect('http://'+document.domain+':'+location.port);
         id_seq='{{id_seq|safe}}'
         id_q='{{dictionnaire["ID"]|safe}}'
-        rep_direct=false
-        nb_rep_totale=0
+        rep_direct=false;
+        rep_bloquer=false;
+        nb_rep_totale=0;
+        liste_rep_eleve=[];
+
         socket.on('nouvelle_q', (question) =>{
             console.log(question.question["Question"])
             console.log(Object.keys(question))
             id_q=question.question["ID"]
             document.getElementById("enonce").innerHTML=question.question["Question"]
             document.getElementById("champs_reponses").innerHTML = ""
+            nb_rep_totale = 0;
+            i = 0;
+            rep_bloquer=false;
             for (element of question.question["REP"]){
+                liste_rep_eleve.push(0);
+                i++;
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<span class='REP' style='display: inline-block;'>"+element+"</span>"
+                    "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
                     
                 if(question.question["BREP"].includes(element)){
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='rep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
                 else{
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='rep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
             }
+            
             
             console.log(question)
             console.log('ok')
         });
+        socket.on('rep', (data) =>{
+            if(! rep_bloquer){
+            nb_rep_totale = nb_rep_totale+1;
+            reponse = data["reponse"];
+            for (element of reponse){
+                if(element<liste_rep_eleve.length)
+                liste_rep_eleve[parseInt(element)]=dico_rep_eleve[parseInt(element)]+1
+            }
+            if(rep_direct){
+                for (element in liste_rep_eleve){
+                    document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale+"%";
+                }
+            }
         
+        
+        
+        
+        
+        }
+
+
+
+        });
         socket.on('rep', (reponse)=>{
             console.log(reponse)
             //for(i=0;i<reponse.length;i++){
@@ -54,7 +85,7 @@
             
         });
         socket.on('nouveau_eleve', (question) =>{
-            document.getElementById("nb_eleve").innerHTML=document.getElementById("nb_eleve").innerHTML+"+1";
+            document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)+1;
             
         });
         
@@ -70,9 +101,12 @@
             socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
         }
         function rep_direct(){
-            //afficher ou non les réponses (stats etc)
+            for (element in liste_rep_eleve){
+                    document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale+"%";
+                }
         }
         function stop_rep(){
+            rep_bloquer=true;
             socket.emit('stop_rep');
         }
         function correction(){
@@ -144,7 +178,7 @@
     <div class="question"><br>
         <form>
             <input type="button" onclick="suivant()" value="Suivant"><span id="nb_eleve">0</span>
-            <h1>Question :</h1>
+            <h1>Sequence : {{id_seq|safe}} <br> Question : {{dictionnaire["ID"]|safe}}</h1>
             <b>
                 <div id="enonce">
             {{dictionnaire["Question"]| safe}}
@@ -153,11 +187,11 @@
             <div class="reponses" id="reponses">
             <div id="champs_reponses">
             {% for rep in dictionnaire["REP"]: %}
-                <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
+                <span id="rep_num_{{loop.index}}" class='REP' style="display: inline-block;">{{rep| safe}}</span>
                 {%if rep in dictionnaire["BREP"]%}
-                    <span class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
+                    <span id="rep_num_{{loop.index}}" class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
                 {% else %}
-                    <span class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
+                    <span id="rep_num_{{loop.index}}" class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
                 {%endif%}<br>
             {%endfor%}</div>
             <input type="button" onclick="rep_direct()" value="réponses en direct">
