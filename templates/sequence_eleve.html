@@ -22,6 +22,7 @@
         });
 
         socket.on('nouvelle_q', (question) =>{
+            num = 0
             console.log(question.question["Question"])
             console.log(Object.keys(question))
             
@@ -34,6 +35,9 @@
             }
             console.log(question)
             console.log('ok')
+            document.getElementById("outon").hidden = false
+            document.getElementById("env").hidden = true
+            document.getElementById("desac").hidden = true
         });
 
         /*function get_responses(){
@@ -59,6 +63,7 @@
             li_Brep_indices=[]
             for(i=0;i<num;i++){
                 checkbox = document.getElementById(i);
+                console.log(checkbox)
                 if(checkbox.checked){
                     li_Brep_indices.push(i)
                 }
