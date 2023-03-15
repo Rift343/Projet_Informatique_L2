@@ -16,11 +16,13 @@
         reponse=[]
 
         socket.on('bloquer_rep', ()=>{
-            document.getElementById("outon").setAttribute(hidden,true)
-            document.getElementById("desac").setAttribute(hidden,false)
+            console.log("bloquer rep recu")
+            document.getElementById("outon").hidden = true
+            document.getElementById("desac").hidden = false
         });
 
         socket.on('nouvelle_q', (question) =>{
+            num = 0
             console.log(question.question["Question"])
             console.log(Object.keys(question))
             
@@ -33,6 +35,14 @@
             }
             console.log(question)
             console.log('ok')
+            document.getElementById("outon").hidden = false
+            document.getElementById("env").hidden = true
+            document.getElementById("desac").hidden = true
+        });
+
+        socket.on('fin_seq', ()=>{
+            console.log("fin seq annoncée par le prof")
+            quitter();
         });
 
         /*function get_responses(){
@@ -54,17 +64,23 @@
             }
         }
         function envoi_rep(){
+            console.log("envoi rep")
             li_Brep_indices=[]
             for(i=0;i<num;i++){
                 checkbox = document.getElementById(i);
+                console.log(checkbox)
                 if(checkbox.checked){
                     li_Brep_indices.push(i)
                 }
             }
+            document.getElementById("outon").hidden = true
+            document.getElementById("env").hidden = false
+            console.log("envoi de : ", li_Brep_indices)
             socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);
         }
         function quitter(){
             socket.emit('quitter');
+            window.location.replace("../")
         }
         function acceder(){
             socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})
@@ -88,7 +104,7 @@
         {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
-                <li><a href="profil">Profil</a></li>
+                <li><a href="../profil">Profil</a></li>
                 <li><a href="../deco">Se déconnecter</a></li>
             </ul>
         </li>
@@ -96,7 +112,7 @@
 
     <div class="question"><br>
         <form action = "" method = "post">
-            <h1>Question :</h1>
+            <h2>Question :</h2>
             <b>
             <div id="enonce">
 
@@ -107,6 +123,7 @@
             </div>
             <input type="button" id="outon" name="outon" onclick="envoi_rep()" value="envoi réponse">
             <label id="desac" hidden="true">Réponses désactivées</label>
+            <label id="env" hidden="true">Réponse envoyée</label>
             <input type="button" onclick="quitter()" value="Quitter">
         </form>
     </div>

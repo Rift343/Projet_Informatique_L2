@@ -44,7 +44,7 @@ def index1():
             return render_template("acceuil_connecte.html", Username=Username)
         else:
             Username = session['Username']
-            return render_template("acceuil_connecte_etu.html", Username=Username)
+            return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
     else:
         return render_template("acceuil.html")
 
@@ -65,7 +65,7 @@ def profil():
 def index2():
     if 'Username' in session:
         Username = session['Username']
-        return render_template("acceuil_connecte_etu.html", Username=Username)
+        return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
     else:
         return render_template("acceuil.html")
 
@@ -112,7 +112,7 @@ def connexion():
                 IdUser = sous_liste[0]
                 session['UserId'] = IdUser
                 session['type'] = "etu"
-                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur)
+                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur, pas_bon=False)
     else:
         listeUser = lireCSV()
         for sous_liste in listeUser:
@@ -127,7 +127,7 @@ def connexion():
     #le mot de passe ou l'identifiant est incorrect
 
 
-@app.route("/BDD") #Page d'accueil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
+@app.route("/BDD") #Page d'acceuil du compte avec la vue de toutes les questions créées et les étiquettes en haut, lorsqu'on clique sur une étiquette on ne voit plus que
 def BDD():          #les questions qui ont cette étiquette
     if 'UserId' and 'Username'in session and session['type'] == "pro":
         UserId = session['UserId']
@@ -392,13 +392,18 @@ def afficheSequence(id):
     if 'Username' in session and session['type']=="pro":
         
         if(estDansCSV(id)):#Sequence
-            print(lireSequence(session['UserId'], id))
-            print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
-            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
+            #print(lireSequence(session['UserId'], id))
+            #print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
+            return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
         else:
-            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
+            return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id))
     elif(session['type']!="pro"):
-        return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
+        if(id not in li_ques_ouverte):
+            #pas fini mais id_seq incorrecte
+            return redirect(url_for('index3', pas_bon = True, Username=session["Username"]))
+            #return render_template("../acceuil_connecte_etu.html", pas_bon = True, Username=session["Username"])
+        else:
+            return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
     else:
         render_template("acceuil.html")
         
@@ -409,6 +414,7 @@ def ouvrir_q(id_seq):
             dico_question_ouverte_to_prof[id_seq]=session['UserId']
             li_prof_socket_id[id_seq]=request.sid
             dico_eleve_par_prof[session['UserId']]= []
+            li_ques_ouverte.append(id_seq)
             print(id_seq)
             print(estDansCSV(id_seq))
             if(not(estDansCSV(id_seq))): #le not() est temporaire car la fonction python est cassée
@@ -418,16 +424,23 @@ def ouvrir_q(id_seq):
                 print(seq)
                 if(len(seq)>0):
                     seq_id_to_seq_progress[id_seq] = seq[0]
+                    li_q = lireSequence(session['UserId'],id_seq)
+                    q_suiv = li_q[0]
+                    socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))})
 
 
         
     
 @socketio.on('fermer_seq')#prof ferme sequence
-def ouvrir_q(data):
-    if 'UserId' or 'Username' in session and session['type'] == "pro":
+def fermer_seq(data):
+    if 'UserId' in session and session['type'] == "pro":
+        print("fermer seq serv")
+        socketio.emit("fin_seq", to=session['UserId'])
         dico_question_ouverte_to_prof.pop(data)
         li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
+        li_ques_ouverte.pop(data)
+        print("fin fermer seq serv")
     
 
 
@@ -477,12 +490,28 @@ def avancer_q(dic):
 
             socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=request.sid)
     
-    
+
+@socketio.on('eleve_quitte')#prof bloque rep
+def bloquer_rep_q(id_seq):
+    for eleme in dico_question_ouverte_to_prof: #.keys()
+        print("avant le if")
+        if id_seq["id_seq"] == eleme :
+            print("après le if")
+            
+            prof = dico_question_ouverte_to_prof.get(eleme)
+            sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
+            if(session['UserId'] in dico_eleve_par_prof[prof]):
+                dico_eleve_par_prof[prof].remove(session['UserId'])
+                socketio.emit("eleve_a_quitter", to=sess_id_prof)#envoyer -1 prof
+                leave_room(prof)
+            
+            
+
 @socketio.on('stop_rep')#prof bloque rep
 def bloquer_rep_q():
-    li_eleve=dico_eleve_par_prof(session['UserId'])
-    
-    socketio.emit("bloquer_rep", room=li_eleve)
+    if 'UserId' in session and session['type'] == "pro":
+        print("bloquer rep reçu")
+        socketio.emit("bloquer_rep", to=session['UserId'])
     
 
 @socketio.on('eleve_reponse_q')#eleve reponds
@@ -501,14 +530,14 @@ def acceder_q(id_seq):
         print("avant le if")
         if id_seq["id_seq"] == eleme :
             print("après le if")
-            currentSocketId = request.sid
+            
             prof = dico_question_ouverte_to_prof.get(eleme)
             sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
-            if(currentSocketId not in dico_eleve_par_prof[prof]):
-                dico_eleve_par_prof[prof].append(currentSocketId)
-                socketio.emit("nouveau_eleve", to=sess_id_prof)#reparer compteur
-            join_room(prof)
-            #envoyer +1 prof
+            if(session['UserId'] not in dico_eleve_par_prof[prof]):
+                dico_eleve_par_prof[prof].append(session['UserId'])#envoyer +1 prof
+                socketio.emit("nouveau_eleve", to=sess_id_prof)
+                join_room(prof)
+            
             
             q={}
             q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
@@ -517,9 +546,9 @@ def acceder_q(id_seq):
             socketio.emit("nouvelle_q", {'question':q}, to=[request.sid])
             print("requete envoyée")
 
-        
-        
-        #@app.route("/feuille")
+
+
+#@app.route("/feuille")
 #def feuille():                 
 #    return render_template("feuille.html")
 

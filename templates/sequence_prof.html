@@ -14,47 +14,88 @@
         const socket=io();
         //socket.connect('http://'+document.domain+':'+location.port);
         id_seq='{{id_seq|safe}}'
-        id_q='{{dictionnaire["ID"]|safe}}'
-        rep_direct=false
-        nb_rep_totale=0
+        id_q=""
+        rep_direct_var=false;
+        rep_bloquer=false;
+        nb_rep_totale=0;
+        liste_rep_eleve=[];
+        qcm = false;
         socket.on('nouvelle_q', (question) =>{
             console.log(question.question["Question"])
             console.log(Object.keys(question))
             id_q=question.question["ID"]
             document.getElementById("enonce").innerHTML=question.question["Question"]
             document.getElementById("champs_reponses").innerHTML = ""
+            nb_rep_totale = 0;
+            i = 0;
+            rep_bloquer=false;
+            liste_rep_eleve=[];
+            
             for (element of question.question["REP"]){
+                liste_rep_eleve.push(0);
+                qcm=true;
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<span class='REP' style='display: inline-block;'>"+element+"</span>"
+                    "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
                     
                 if(question.question["BREP"].includes(element)){
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='brep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
                 else{
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    "<div id='mrep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
+                i++;
             }
             
+            rep_direct_var=false;
             console.log(question)
             console.log('ok')
         });
-        
-        socket.on('rep', (reponse)=>{
-            console.log(reponse)
-            //for(i=0;i<reponse.length;i++){
-                //console.log(question[question.question["REP"][reponse[i]]])
-            //}
+        socket.on('rep', (data) =>{
+            console.log(data)
+            if(! rep_bloquer){
+            nb_rep_totale = nb_rep_totale+1;
+            if(qcm){
+            reponse = data["reponse"];
+            for (element of reponse){
+                if(element<liste_rep_eleve.length)
+                liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
+            }}
+            else{
+                liste_rep_eleve.push(reponse[0])
+                }
+            console.log(liste_rep_eleve)
+            if(rep_direct_var){
+                actualiser_rep();
+                
+            }
+        }
         });
-
+    function actualiser_rep(){
+        if(qcm){
+            for (element in liste_rep_eleve){
+                document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+                if(document.getElementById("brep_num_"+element)==null){
+                    document.getElementById("mrep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+                }else{
+                    document.getElementById("brep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+                }
+                }}
+        else{
+            for(element of liste_rep_eleve){
+            document.getElementById("champs_reponses").innerHTMl=document.getElementById("champs_reponses").innerHTMl+"<span>"+element+"</span>"
+            }
+        }
+    
+    }
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")
             alert("La Sequence est terminer !");
             
         });
         socket.on('nouveau_eleve', (question) =>{
-            document.getElementById("nb_eleve").innerHTML=document.getElementById("nb_eleve").innerHTML+"+1";
+            document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)+1;
             
         });
         
@@ -70,9 +111,18 @@
             socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
         }
         function rep_direct(){
-            //afficher ou non les réponses (stats etc)
+            for (element in liste_rep_eleve){
+                console.log("rep_num_"+element);
+                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
+                console.log(document.getElementById("rep_num_"+element).style.width);
+
+                }
+                actualiser_rep()
+                rep_direct_var=true
         }
         function stop_rep(){
+            rep_bloquer=true;
+            console.log("stop_rep");
             socket.emit('stop_rep');
         }
         function correction(){
@@ -80,37 +130,41 @@
             if((document.getElementsByClassName('REP'))[0].style.display === 'inline-block'){
                 let elements1 = document.getElementsByClassName('REP');
                 for (element of elements1){
-                    element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
                 for (element of elements2){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
                 for (element of elements3){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
+                    //setAttribute('style', 'display: inline-block;');
                 }
             }
             else{
                 let elements1 = document.getElementsByClassName('REP');
                 for (element of elements1){
-                    element.setAttribute('style', 'display: inline-block;');
+                    element.style.display="inline-block";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
                 for (element of elements2){
-                    element.setAttribute('style', 'display: none;');
+                    //element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
                 for (element of elements3){
-                    element.setAttribute('style', 'display: none;');
+                    element.style.display="none";
                 }
             }
         }
         function ouvrir_seq(){
-            socket.emit('ouvrir_seq', '{{id_seq|safe}}')
+            socket.emit('ouvrir_seq', '{{id_seq|safe}}');
         }
         function quitter(){
-            socket.emit('fermer_seq');
+            socket.emit('fermer_seq', '{{id_seq|safe}}');
+            console.log("fermer seq atteint");
+            window.location.replace("../");
         }
     </script>
     <script>hljs.initHighlightingOnLoad()
@@ -132,7 +186,7 @@
         {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
-                <li><a href="profil">Profil</a></li>
+                <li><a href="../profil">Profil</a></li>
                 <li><a href="../BDD">Liste de vos questions</a></li>
                 <li><a href="../creationQuestion">Créer une question</a></li>
                 <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
@@ -144,22 +198,16 @@
     <div class="question"><br>
         <form>
             <input type="button" onclick="suivant()" value="Suivant"><span id="nb_eleve">0</span>
-            <h1>Question :</h1>
+            <h1>Sequence : {{id_seq|safe}} <br></h1>
+            <h2>Question :</h2>
             <b>
                 <div id="enonce">
-            {{dictionnaire["Question"]| safe}}
+
             </div></b><br><br>
 
             <div class="reponses" id="reponses">
             <div id="champs_reponses">
-            {% for rep in dictionnaire["REP"]: %}
-                <span class='REP' style="display: inline-block;">{{rep| safe}}</span>
-                {%if rep in dictionnaire["BREP"]%}
-                    <span class='BREP' hidden="true" style="display: none;">{{rep| safe}}</span>  
-                {% else %}
-                    <span class='MREP' hidden="true" style="display:none;">{{rep| safe}}</span> 
-                {%endif%}<br>
-            {%endfor%}</div>
+</div>
             <input type="button" onclick="rep_direct()" value="réponses en direct">
             <input type="button" onclick="stop_rep()" value="stop réponses">
             <input type="button" onclick="correction()" value="affichage correction">

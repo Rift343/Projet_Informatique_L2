@@ -32,8 +32,12 @@
     <form action = "" method = "post">
         <h1>Questionnaire</h1>
         <div class="entree">
-            <label for="idquest">entrez un id de question ou questionnaire: </label><br>
-            <input type="text" id="idquest" name="idquest" minlength="8" maxlength="8" placeholder="id question" required><br>
+            <label for="idquest">Entrez un identifiant de qu'un professeur a partagé : </label><br>
+            {%if pas_bon == True %}
+                <span style="color: red;">Il semblerez que la sequence n'existe pas, veuillez verifier le code ou reessayer</span>
+            {%endif%}
+            <input type="text" id="idquest" name="idquest" minlength="8" maxlength="8" placeholder="Identifiant" required><br>
+            
             <input type="button" value="ok" onclick="redirect_Seq()"/>
         </div>
     </form>
