@@ -424,10 +424,13 @@ def ouvrir_q(id_seq):
     
 @socketio.on('fermer_seq')#prof ferme sequence
 def ouvrir_q(data):
-    if 'UserId' or 'Username' in session and session['type'] == "pro":
+    if 'UserId' in session and session['type'] == "pro":
+        print("fermer seq serv")
+        socketio.emit("fin_seq", to=session['UserId'])
         dico_question_ouverte_to_prof.pop(data)
         li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
+        print("fin fermer seq serv")
     
 
 

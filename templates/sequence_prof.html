@@ -57,12 +57,12 @@
             nb_rep_totale = nb_rep_totale+1;
             reponse = data["reponse"];
             for (element of reponse){
-                if(element<liste_rep_eleve.length)
-                liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
+                if(element<liste_rep_eleve.length);
+                liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1;
             }
             console.log(liste_rep_eleve)
             if(rep_direct_var){
-                actualiser_rep()
+                actualiser_rep();
                 
             }
         }
@@ -100,9 +100,9 @@
         }
         function rep_direct(){
             for (element in liste_rep_eleve){
-                console.log("rep_num_"+element)
-                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%")
-                console.log(document.getElementById("rep_num_"+element).style.width)
+                console.log("rep_num_"+element);
+                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
+                console.log(document.getElementById("rep_num_"+element).style.width);
 
                 }
                 actualiser_rep()
@@ -110,7 +110,7 @@
         }
         function stop_rep(){
             rep_bloquer=true;
-            console.log("stop_rep")
+            console.log("stop_rep");
             socket.emit('stop_rep');
         }
         function correction(){
@@ -147,10 +147,12 @@
             }
         }
         function ouvrir_seq(){
-            socket.emit('ouvrir_seq', '{{id_seq|safe}}')
+            socket.emit('ouvrir_seq', '{{id_seq|safe}}');
         }
         function quitter(){
             socket.emit('fermer_seq');
+            console.log("fermer seq atteint");
+            window.location.replace("../");
         }
     </script>
     <script>hljs.initHighlightingOnLoad()

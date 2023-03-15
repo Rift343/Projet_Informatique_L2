@@ -40,6 +40,11 @@
             document.getElementById("desac").hidden = true
         });
 
+        socket.on('fin_seq', ()=>{
+            console.log("fin seq annoncée par le prof")
+            quitter();
+        });
+
         /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
