@@ -15,7 +15,7 @@
         //socket.connect('http://'+document.domain+':'+location.port);
         id_seq='{{id_seq|safe}}'
         id_q='{{dictionnaire["ID"]|safe}}'
-        rep_direct=false;
+        rep_direct_var=false;
         rep_bloquer=false;
         nb_rep_totale=0;
         liste_rep_eleve=[];
@@ -29,9 +29,10 @@
             nb_rep_totale = 0;
             i = 0;
             rep_bloquer=false;
+            liste_rep_eleve=[];
             for (element of question.question["REP"]){
                 liste_rep_eleve.push(0);
-                i++;
+                
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
                     "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
                     
@@ -43,6 +44,7 @@
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
                     "<div id='rep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
                 }
+                i++;
             }
             
             
@@ -50,14 +52,16 @@
             console.log('ok')
         });
         socket.on('rep', (data) =>{
+            console.log(data)
             if(! rep_bloquer){
             nb_rep_totale = nb_rep_totale+1;
             reponse = data["reponse"];
             for (element of reponse){
                 if(element<liste_rep_eleve.length)
-                liste_rep_eleve[parseInt(element)]=dico_rep_eleve[parseInt(element)]+1
+                liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
             }
-            if(rep_direct){
+            console.log(liste_rep_eleve)
+            if(rep_direct_var){
                 for (element in liste_rep_eleve){
                     document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale+"%";
                 }
@@ -71,13 +75,6 @@
 
 
 
-        });
-        socket.on('rep', (reponse)=>{
-            console.log("reception d'une réponse : ")
-            console.log(reponse)
-            //for(i=0;i<reponse.length;i++){
-                //console.log(question[question.question["REP"][reponse[i]]])
-            //}
         });
 
         socket.on('fin_seq', (question) =>{
@@ -103,7 +100,10 @@
         }
         function rep_direct(){
             for (element in liste_rep_eleve){
-                    document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale+"%";
+                console.log("rep_num_"+element)
+                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%")
+                console.log(document.getElementById("rep_num_"+element).style.width)
+                    document.getElementById("rep_num_"+element).style.width=(liste_rep_eleve[element]/nb_rep_totale)*100+"%";
                 }
         }
         function stop_rep(){
