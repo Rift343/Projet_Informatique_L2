@@ -70,6 +70,7 @@
         }
         function quitter(){
             socket.emit('quitter');
+            window.location.replace("../")
         }
         function acceder(){
             socket.emit('acceder_q', {'id_seq':"{{id_seq| safe}}"})
@@ -93,7 +94,7 @@
         {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
-                <li><a href="profil">Profil</a></li>
+                <li><a href="../profil">Profil</a></li>
                 <li><a href="../deco">Se déconnecter</a></li>
             </ul>
         </li>
