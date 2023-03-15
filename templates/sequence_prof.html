@@ -162,7 +162,7 @@
             socket.emit('ouvrir_seq', '{{id_seq|safe}}');
         }
         function quitter(){
-            socket.emit('fermer_seq');
+            socket.emit('fermer_seq', '{{id_seq|safe}}');
             console.log("fermer seq atteint");
             window.location.replace("../");
         }
@@ -186,7 +186,7 @@
         {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
-                <li><a href="profil">Profil</a></li>
+                <li><a href="../profil">Profil</a></li>
                 <li><a href="../BDD">Liste de vos questions</a></li>
                 <li><a href="../creationQuestion">Créer une question</a></li>
                 <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
@@ -198,7 +198,8 @@
     <div class="question"><br>
         <form>
             <input type="button" onclick="suivant()" value="Suivant"><span id="nb_eleve">0</span>
-            <h1>Sequence : {{id_seq|safe}} <br> Question :</h1>
+            <h1>Sequence : {{id_seq|safe}} <br></h1>
+            <h2>Question :</h2>
             <b>
                 <div id="enonce">
 
