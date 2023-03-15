@@ -477,7 +477,23 @@ def avancer_q(dic):
 
             socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=request.sid)
     
-    
+
+@socketio.on('eleve_quitte')#prof bloque rep
+def bloquer_rep_q(id_seq):
+    for eleme in dico_question_ouverte_to_prof: #.keys()
+        print("avant le if")
+        if id_seq["id_seq"] == eleme :
+            print("après le if")
+            
+            prof = dico_question_ouverte_to_prof.get(eleme)
+            sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
+            if(session['UserId'] in dico_eleve_par_prof[prof]):
+                dico_eleve_par_prof[prof].remove(session['UserId'])
+                socketio.emit("eleve_a_quitter", to=sess_id_prof)#envoyer -1 prof
+                leave_room(prof)
+            
+            
+
 @socketio.on('stop_rep')#prof bloque rep
 def bloquer_rep_q():
     if 'UserId' in session and session['type'] == "pro":
@@ -501,14 +517,14 @@ def acceder_q(id_seq):
         print("avant le if")
         if id_seq["id_seq"] == eleme :
             print("après le if")
-            currentSocketId = request.sid
+            
             prof = dico_question_ouverte_to_prof.get(eleme)
             sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
-            if(currentSocketId not in dico_eleve_par_prof[prof]):
-                dico_eleve_par_prof[prof].append(currentSocketId)
-                socketio.emit("nouveau_eleve", to=sess_id_prof)#reparer compteur
-            join_room(prof)
-            #envoyer +1 prof
+            if(session['UserId'] not in dico_eleve_par_prof[prof]):
+                dico_eleve_par_prof[prof].append(session['UserId'])#envoyer +1 prof
+                socketio.emit("nouveau_eleve", to=sess_id_prof)
+                join_room(prof)
+            
             
             q={}
             q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
