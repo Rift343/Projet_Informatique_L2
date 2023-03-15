@@ -3,8 +3,9 @@ import os
 import markdownHTML
 import hashlib
 
-
+listeDesNumEtu=[]
 littlePATH = "/csv"
+
 
 def etuCSV():
     """
@@ -23,6 +24,24 @@ def etuCSV():
         #os.close(FILE)
         
     return listeEtu
+
+def listeEtu():
+    """
+    permet de mettre à jour une liste global qui contient l'intégralité des numéros étudiant
+    qui son contenues dans le fichier Etu csv. Cette fonction est utile lors de la création
+    d'un nouvelle utilisateur pour vérifié si l'utilisateur existe déja (vérification de doublon
+    pour faire simple).
+    ATTENTION: si jamais l'on vient à devoir supprimer ou ajouter un étudiant il faudra
+    impérativement appeller cette fonction afin de mettre à jour la liste de numéro étudiant 
+    enregistré dans le fichier csv 
+    """
+    for i in etuCSV():
+        if i[2] not in listeDesNumEtu:
+            listeDesNumEtu.append(i[2])
+
+
+
+listeEtu()#A ne pas mettre en commentaire car permet d'initialiser une liste global des utilisateurs
 
 
 def ajoutEtu(fichierCSV):
@@ -43,13 +62,14 @@ def ajoutEtu(fichierCSV):
         with (open(PATH,'a',newline='')) as FILE2:
             Ecriture = csv.writer(FILE2,delimiter=';')
             for i in lecture:
-                mdp = i[-1]
-                i.append(hashlib.sha256(mdp.encode()).hexdigest())
-                Ecriture.writerow(i)
+                if i[2] not in listeDesNumEtu:
+                    mdp = i[-1]
+                    i.append(hashlib.sha256(mdp.encode()).hexdigest())
+                    Ecriture.writerow(i)
             #os.close(FILE2)
         #os.close(FILE)
-    
     os.remove(fichierCSV)
+    listeEtu()
     return True
                 
 def modificationEtu(numeroEtu,password):
