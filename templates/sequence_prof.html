@@ -67,7 +67,7 @@
                 }
             console.log(liste_rep_eleve)
             if(rep_direct_var){
-                actualiser_rep()
+                actualiser_rep();
                 
             }
         }
@@ -112,9 +112,9 @@
         }
         function rep_direct(){
             for (element in liste_rep_eleve){
-                console.log("rep_num_"+element)
-                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%")
-                console.log(document.getElementById("rep_num_"+element).style.width)
+                console.log("rep_num_"+element);
+                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
+                console.log(document.getElementById("rep_num_"+element).style.width);
 
                 }
                 actualiser_rep()
@@ -122,7 +122,7 @@
         }
         function stop_rep(){
             rep_bloquer=true;
-            console.log("stop_rep")
+            console.log("stop_rep");
             socket.emit('stop_rep');
         }
         function correction(){
@@ -159,10 +159,12 @@
             }
         }
         function ouvrir_seq(){
-            socket.emit('ouvrir_seq', '{{id_seq|safe}}')
+            socket.emit('ouvrir_seq', '{{id_seq|safe}}');
         }
         function quitter(){
-            socket.emit('fermer_seq');
+            socket.emit('fermer_seq', '{{id_seq|safe}}');
+            console.log("fermer seq atteint");
+            window.location.replace("../");
         }
     </script>
     <script>hljs.initHighlightingOnLoad()
@@ -184,7 +186,7 @@
         {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
-                <li><a href="profil">Profil</a></li>
+                <li><a href="../profil">Profil</a></li>
                 <li><a href="../BDD">Liste de vos questions</a></li>
                 <li><a href="../creationQuestion">Créer une question</a></li>
                 <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
@@ -196,7 +198,8 @@
     <div class="question"><br>
         <form>
             <input type="button" onclick="suivant()" value="Suivant"><span id="nb_eleve">0</span>
-            <h1>Sequence : {{id_seq|safe}} <br> Question :</h1>
+            <h1>Sequence : {{id_seq|safe}} <br></h1>
+            <h2>Question :</h2>
             <b>
                 <div id="enonce">
 

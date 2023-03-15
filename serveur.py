@@ -392,11 +392,11 @@ def afficheSequence(id):
     if 'Username' in session and session['type']=="pro":
         
         if(estDansCSV(id)):#Sequence
-            print(lireSequence(session['UserId'], id))
-            print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
-            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0])), Username=session['Username'])
+            #print(lireSequence(session['UserId'], id))
+            #print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
+            return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
         else:
-            return render_template("sequence_prof.html", id_seq=id, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id)), Username=session['Username'])
+            return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id))
     elif(session['type']!="pro"):
         return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
     else:
@@ -426,11 +426,14 @@ def ouvrir_q(id_seq):
         
     
 @socketio.on('fermer_seq')#prof ferme sequence
-def ouvrir_q(data):
-    if 'UserId' or 'Username' in session and session['type'] == "pro":
+def fermer_seq(data):
+    if 'UserId' in session and session['type'] == "pro":
+        print("fermer seq serv")
+        socketio.emit("fin_seq", to=session['UserId'])
         dico_question_ouverte_to_prof.pop(data)
         li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
+        print("fin fermer seq serv")
     
 
 
