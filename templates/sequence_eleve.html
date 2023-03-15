@@ -16,8 +16,9 @@
         reponse=[]
 
         socket.on('bloquer_rep', ()=>{
-            document.getElementById("outon").setAttribute(hidden,true)
-            document.getElementById("desac").setAttribute(hidden,false)
+            console.log("bloquer rep recu")
+            document.getElementById("outon").hidden = true
+            document.getElementById("desac").hidden = false
         });
 
         socket.on('nouvelle_q', (question) =>{
@@ -54,6 +55,7 @@
             }
         }
         function envoi_rep(){
+            console.log("envoi rep")
             li_Brep_indices=[]
             for(i=0;i<num;i++){
                 checkbox = document.getElementById(i);
@@ -61,6 +63,9 @@
                     li_Brep_indices.push(i)
                 }
             }
+            document.getElementById("outon").hidden = true
+            document.getElementById("env").hidden = false
+            console.log("envoi de : ", li_Brep_indices)
             socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);
         }
         function quitter(){
@@ -107,6 +112,7 @@
             </div>
             <input type="button" id="outon" name="outon" onclick="envoi_rep()" value="envoi réponse">
             <label id="desac" hidden="true">Réponses désactivées</label>
+            <label id="env" hidden="true">Réponse envoyée</label>
             <input type="button" onclick="quitter()" value="Quitter">
         </form>
     </div>

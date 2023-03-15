@@ -480,9 +480,9 @@ def avancer_q(dic):
     
 @socketio.on('stop_rep')#prof bloque rep
 def bloquer_rep_q():
-    li_eleve=dico_eleve_par_prof(session['UserId'])
-    
-    socketio.emit("bloquer_rep", room=li_eleve)
+    if 'UserId' in session and session['type'] == "pro":
+        print("bloquer rep reçu")
+        socketio.emit("bloquer_rep", to=session['UserId'])
     
 
 @socketio.on('eleve_reponse_q')#eleve reponds
@@ -517,9 +517,9 @@ def acceder_q(id_seq):
             socketio.emit("nouvelle_q", {'question':q}, to=[request.sid])
             print("requete envoyée")
 
-        
-        
-        #@app.route("/feuille")
+
+
+#@app.route("/feuille")
 #def feuille():                 
 #    return render_template("feuille.html")
 
