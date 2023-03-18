@@ -30,7 +30,7 @@
             i = 0;
             rep_bloquer=false;
             liste_rep_eleve=[];
-            
+            qcm=false
             for (element of question.question["REP"]){
                 liste_rep_eleve.push(0);
                 qcm=true;
@@ -56,14 +56,15 @@
             console.log(data)
             if(! rep_bloquer){
             nb_rep_totale = nb_rep_totale+1;
-            if(qcm){
             reponse = data["reponse"];
+            if(qcm){
             for (element of reponse){
                 if(element<liste_rep_eleve.length)
                 liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
             }}
             else{
-                liste_rep_eleve.push(reponse[0])
+                console.log(reponse)
+                liste_rep_eleve.push(reponse)
                 }
             console.log(liste_rep_eleve)
             if(rep_direct_var){
@@ -73,6 +74,7 @@
         }
         });
     function actualiser_rep(){
+        console.log(qcm)
         if(qcm){
             for (element in liste_rep_eleve){
                 document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
@@ -83,8 +85,9 @@
                 }
                 }}
         else{
+            document.getElementById("champs_reponses").innerHTML=""
             for(element of liste_rep_eleve){
-            document.getElementById("champs_reponses").innerHTMl=document.getElementById("champs_reponses").innerHTMl+"<span>"+element+"</span>"
+                document.getElementById("champs_reponses").innerHTML=document.getElementById("champs_reponses").innerHTML+"<span>"+element+"</span>";
             }
         }
     
@@ -114,14 +117,16 @@
             socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
         }
         function rep_direct(){
+            if(qcm){
             for (element in liste_rep_eleve){
                 console.log("rep_num_"+element);
                 console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
                 console.log(document.getElementById("rep_num_"+element).style.width);
 
                 }
-                actualiser_rep()
-                rep_direct_var=true
+            }
+            actualiser_rep()
+            rep_direct_var=true
         }
         function stop_rep(){
             rep_bloquer=true;

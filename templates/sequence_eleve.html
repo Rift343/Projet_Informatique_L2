@@ -87,7 +87,7 @@
             console.log("envoi de : ", li_Brep_indices)
             socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);}
             else{
-                socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},getElementById("c_rep").value);
+                socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},document.getElementById("c_rep").value);
             }
         }
         function quitter(){
