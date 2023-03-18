@@ -14,7 +14,7 @@
         var num=0
         const socket=io()
         reponse=[]
-
+        qcm=true
         socket.on('bloquer_rep', ()=>{
             console.log("bloquer rep recu")
             document.getElementById("outon").hidden = true
@@ -28,10 +28,18 @@
             
             document.getElementById("enonce").innerHTML=question.question["Question"]
             document.getElementById("champs_reponses").innerHTML = ""
+            qcm = true
+            if(question.question["REP"].length == 0){
+                qcm=false
+            }
+            if(qcm){
             for (element of question.question["REP"]){
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
                     "<span class='REP' style='display: inline-block;'> <input type='checkbox' id='"+num +"' name='"+num +"'>"+element+"</span><br>" //
                 num=num+1
+            }}
+            else{
+                document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML + "<input type=text id='c_rep'>"
             }
             console.log(question)
             console.log('ok')
@@ -65,6 +73,7 @@
         }
         function envoi_rep(){
             console.log("envoi rep")
+            if(qcm){
             li_Brep_indices=[]
             for(i=0;i<num;i++){
                 checkbox = document.getElementById(i);
@@ -76,7 +85,10 @@
             document.getElementById("outon").hidden = true
             document.getElementById("env").hidden = false
             console.log("envoi de : ", li_Brep_indices)
-            socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);
+            socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);}
+            else{
+                socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},getElementById("c_rep").value);
+            }
         }
         function quitter(){
             socket.emit('eleve_quitte',"{{id_seq| safe}}");
