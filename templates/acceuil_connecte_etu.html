@@ -7,10 +7,6 @@
   <script></script>
   <title>QuizTio</title>
   <script>
-    function redirect_Seq(){
-        sequence=document.getElementById("idquest").value
-        location.replace("/afficheSequence/"+sequence)
-    }
 
   </script>
 </head>
@@ -31,14 +27,14 @@
 <div class="log_reg"><br>
     <form action = "" method = "post">
         <h1>Questionnaire</h1>
+        {% if pas_bon == True: %}
+        <div class="erreurLog">L'identifiant de Séquence est incorrect</div>
+        {%endif%}
         <div class="entree">
-            <label for="idquest">Entrez un identifiant de qu'un professeur a partagé : </label><br>
-            {%if pas_bon == True %}
-                <span style="color: red;">Il semblerez que la sequence n'existe pas, veuillez verifier le code ou reessayer</span>
-            {%endif%}
+            <label for="idquest">Entrez un identifiant qu'un professeur a partagé : </label><br>
             <input type="text" id="idquest" name="idquest" minlength="8" maxlength="8" placeholder="Identifiant" required><br>
             
-            <input type="button" value="ok" onclick="redirect_Seq()"/>
+            <input type="submit" value="ok"/>
         </div>
     </form>
 </div>

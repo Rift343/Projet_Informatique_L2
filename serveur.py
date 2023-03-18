@@ -44,7 +44,8 @@ def index1():
             return render_template("acceuil_connecte.html", Username=Username)
         else:
             Username = session['Username']
-            return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
+            redirect
+            return redirect(url_for('index2', Username=Username, pas_bon=False))
     else:
         return render_template("acceuil.html")
 
@@ -68,6 +69,19 @@ def index2():
         return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=False)
     else:
         return render_template("acceuil.html")
+
+@app.route("/acceuil_connecte_etu", methods =['POST']) #Page principale du site
+def accueiletu():
+    if 'Username' in session:
+        Username = session['Username']
+        idSeq = request.form['idquest'] #id de sequence rentre
+        if(idSeq not in li_ques_ouverte):
+            return render_template("acceuil_connecte_etu.html", Username=Username, pas_bon=True)#On renvoie la personne sur la page d'accueil de l'etu mais avec une erreur 
+        else:
+            return redirect(url_for('afficheSequence',id = idSeq, Username=Username)) #On renvoie la personne sur la vue de la sequence demandee (si elle existe)
+    else:
+        return render_template("acceuil.html")
+        
 
 @app.route("/register") #Page de création d'un compte
 def reg():
@@ -390,19 +404,13 @@ def modif_mdp_etu_2():
 @app.route("/afficheSequence/<id>") #page pour debuter une sequence
 def afficheSequence(id):
     if 'Username' in session and session['type']=="pro":
-        
         if(estDansCSV(id)):#Sequence
             #print(lireSequence(session['UserId'], id))
             #print(getQuestion(lireSequence(session['UserId'], id)[0],session["UserId"]))
             return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], lireSequence(session['UserId'], id)[0]))
         else:
             return render_template("sequence_prof.html", id_seq=id, Username=session['Username']) #, dictionnaire=traductionUneQuestionToHTML(getQuestion(session["UserId"], id))
-    elif(session['type']!="pro"):
-        if(id not in li_ques_ouverte):
-            #pas fini mais id_seq incorrecte
-            return redirect(url_for('index3', pas_bon = True, Username=session["Username"]))
-            #return render_template("../acceuil_connecte_etu.html", pas_bon = True, Username=session["Username"])
-        else:
+    elif('Username' in session and session['type']!="pro"):
             return render_template("sequence_eleve.html", id_seq=id, Username=session["Username"])
     else:
         render_template("acceuil.html")
