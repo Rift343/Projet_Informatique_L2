@@ -79,7 +79,7 @@
             socket.emit('eleve_reponse_q', {'id_seq':"{{id_seq| safe}}"},li_Brep_indices);
         }
         function quitter(){
-            socket.emit('quitter');
+            socket.emit('eleve_quitte',"{{id_seq| safe}}");
             window.location.replace("../")
         }
         function acceder(){

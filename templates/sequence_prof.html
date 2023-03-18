@@ -98,7 +98,10 @@
             document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)+1;
             
         });
-        
+        socket.on('eleve_a_quitter', (question) =>{
+            document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)-1;
+            
+        });
         /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
         for (element in li_bonne_rep){
