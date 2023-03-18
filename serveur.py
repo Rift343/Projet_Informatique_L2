@@ -452,6 +452,7 @@ def fermer_seq(data):
         li_prof_socket_id.pop(data)
         dico_eleve_par_prof.pop(session['UserId'])
         li_ques_ouverte.pop(data)
+        dico_seq_id_to_eleve_ayant_rep.pop(data)
         print("fin fermer seq serv")
     
 
