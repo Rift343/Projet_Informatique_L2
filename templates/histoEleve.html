@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
+		<title>QuizTio</title>
+		
+	</head>
+	<body >
+		<div class="nom">QuizTio</div>
+		<ul class="menu">
+			<li>
+				{{Username}}
+				<ul class="sousMenu">
+					<li><a href="/">Accueil</a></li>
+					<li><a href="profil">Profil</a></li>
+					<li><a href="BDD">Liste de vos questions</a></li>
+					<li><a href="creationQuestion">Créer une question</a></li>
+					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+					<li><a href="creationSequence">Créer une séquence</a></li>
+					<li><a href="deco">Se déconnecter</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div id="mid">
+			<div id="boutons_de_filtrage"></div>
+			<table class="tableau_css">
+				<thead>
+					<tr>
+						<th>Identifiant de la Question </th>
+                        <th>Identifiant de la séquence</th>
+						<th>Réussite</th>
+						<th>Date</th>
+                        <th>Graphique</th>
+					</tr>
+				</thead>
+				{% for dico in li_dictionnaire: %}
+				<tr>
+					<td class="id_tableau">{{dico["ID"]}}</td>
+					
+					<td class="eti">
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
+					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
+					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
+					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
+					</tr>
+				{% endfor %}
+			</table>
+            <table class="tableau_css">
+                <thead>
+					<tr>
+						<th>Identifiant de la Question </th>
+						<th>Réussite</th>
+						<th>Date</th>
+                        <th>Graphique</th>
+					</tr>
+				</thead>
+				{% for dico in li_dictionnaire: %}
+				<tr>
+					<td class="id_tableau">{{dico["ID"]}}</td>
+					
+					<td class="eti">
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
+					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
+					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
+					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
+					</tr>
+				{% endfor %}
+
+            </table>
+		</div>
+	</body>
+</html>
