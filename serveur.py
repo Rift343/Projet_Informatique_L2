@@ -520,6 +520,7 @@ def avancer_q(dic):
         if (i+1>=len(li_q)):
             print("sequence terminer")
             socketio.emit("fin_seq", room=session["UserId"])
+            socketio.emit("fin_seq")
         else:
             dico_seq_id_to_eleve_ayant_rep[id_seq]=[]
             q_suiv=li_q[i+1]
@@ -533,8 +534,6 @@ def avancer_q(dic):
             q["REP"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["REP"]
             q["Question"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=session["UserId"])
-            #socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=session["UserId"])
-
             socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=request.sid)
     
 
