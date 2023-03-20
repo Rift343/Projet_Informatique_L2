@@ -363,7 +363,7 @@ def supprimer(idQuestion):
         return render_template("non_connecte.html")
 
 @app.route("/supprimerHisto/<li>/<idQuestion>")
-def supprimer(li,idQuestion):
+def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
         
         supprimerUnHisto(li, session["UserId"], idQuestion)
@@ -372,7 +372,7 @@ def supprimer(li,idQuestion):
         return render_template("non_connecte.html")
 
 @app.route("/supprimerHistoComplet/<idQuestion>")
-def supprimer(idQuestion):
+def supprimerHistoComplet(idQuestion):
     if 'UserId' in session and session['type'] == "pro":
         
         supprimerhistoQuestion(idQuestion)
@@ -382,7 +382,7 @@ def supprimer(idQuestion):
         return render_template("non_connecte.html")
 
 @app.route("/supprimerHisto/<idQuestion>")
-def supprimer(idQuestion):
+def supprimerHistoQuest(idQuestion):
     if 'UserId' in session and session['type'] == "pro":
         
         supprimerhistoQuestion(idQuestion)
@@ -500,6 +500,7 @@ def avancer_q(dic):
         print("demande question seule")
         
         socketio.emit("fin_seq", room=session["UserId"])
+        socketio.emit("fin_seq")
     else:#sequence
         li_q = lireSequence(session['UserId'],id_seq)
         print("demande question suiv seq")
@@ -562,13 +563,12 @@ def eleve_reponse_q(id_seq,reponse):
     li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
     if(session["UserId"] not in li_eleve_deja_rep):
         #enregistrer rep
-        if(estDansCSV(id_seq)):
-
+        if(estDansCSV(id_seq)):#c'est une sequence
             id_q = seq_id_to_seq_progress[id_seq]
             prof = dico_question_ouverte_to_prof[id_seq]
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
-                if(reponse==enonce["BREP"]):
+                if(reponse==enonce["BREP"][0]):
                     ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
                     ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
                 else :
@@ -590,6 +590,33 @@ def eleve_reponse_q(id_seq,reponse):
                 else:
                     ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
                     ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+        else:#c'est une question seule
+            id_q = id_seq
+            prof = dico_question_ouverte_to_prof[id_seq]
+            enonce = getQuestion(prof, id_q)
+            if(enonce["REP"]==[]):
+                if(reponse==enonce["BREP"][0]):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                else :
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
+            else:
+                li_brep = enonce["BREP"]
+                bonnerep = True
+                for element in reponse:
+                    if(enonce["REP"][element] in li_brep):
+                        li_brep.remove(enonce["REP"][element])
+                    else:
+                        bonnerep = False
+                    if(li_brep!=[]):
+                        bonnerep = False
+                if(bonnerep):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                else:
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
 
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
         prof = li_prof_socket_id[id_seq]
@@ -614,7 +641,10 @@ def acceder_q(id_seq):
             
             
             q={}
-            q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
+            if(not(estDansCSV(id_seq["id_seq"]))):
+                q_suiv=id_seq["id_seq"]
+            else:
+                q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
             q["REP"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["REP"]
             q["Question"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=request.sid)

@@ -94,7 +94,7 @@
     }
         socket.on('fin_seq', (question) =>{
             console.log("seq fini")
-            alert("La Sequence est terminer !");
+            quitter()
             
         });
         socket.on('nouveau_eleve', (question) =>{
