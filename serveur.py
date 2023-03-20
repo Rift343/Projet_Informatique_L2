@@ -365,7 +365,9 @@ def supprimer(idQuestion):
 @app.route("/supprimerHisto/<li>/<idQuestion>")
 def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
-        ##suppHisto(liste, idEtu)
+        li = li.replace("delimiteur","/")
+        print(li)
+        suppHisto(li, session["UserId"])
         supprimerUnHisto(li, session["UserId"], idQuestion)
         ###########################################
         return redirect(url_for('Historique'))

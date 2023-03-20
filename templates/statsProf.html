@@ -51,6 +51,7 @@
 						<th>reponse</th>
 						<th>id eleve</th>
 						<th>circonstance</th>
+						<th>supprimer</th>
 
 					</tr>
 				</thead><tr>
@@ -61,6 +62,8 @@
 					<td class="rep">{{element[1]}}</td>
 					<td class="id_eleve">{{element[2]}}</td>
 					<td class="circonstance">{{element[3]}}</td>
+					<script></script>
+					<td class="supprimer"><a href='../supprimerHisto/{{element|replace("/","delimiteur")}}/{{key}}'><button>Supprimer</button></a></td>
 
 					</tr>
 					{%endfor%}</table>
