@@ -367,6 +367,7 @@ def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
         li = li.replace("delimiteur","/")
         print(li)
+        li2=[li[0],li[1],idQuestion,li[3],li[4]]
         suppHisto(li, session["UserId"])
         supprimerUnHisto(li, session["UserId"], idQuestion)
         ###########################################
@@ -652,7 +653,25 @@ def acceder_q(id_seq):
             q["Question"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=request.sid)
             print("requete envoyée")
-
+def formatage_dict_etu(dict_q,dict_seq):
+    dict_final={}
+    for idQ in dict_q :
+        if idQ in dict_final:
+            dict_final[idQ].append(dict_q[idQ])
+        else:
+            dict_final[idQ]=dict_q[idQ]
+    print(dict_final)
+    for idQ_seq in dict_seq :
+        idQ=idQ_seq.split("seq")[0]
+        seq=idQ_seq.split("seq")[1]
+        if idQ in dict_final:
+                
+            dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
+                #.append(dict_seq[idQ_seq])
+        else:
+            print("on reaffecte")
+            dict_final[idQ]=dict_seq[idQ_seq]
+    return dict_final
 
 @app.route("/Historique") #Page de création d'une feuille de questions
 def Historique():
@@ -680,7 +699,7 @@ def Historique():
             else:
                 print("on reaffecte")
                 dict_final[idQ]=dict_seq[idQ_seq]
-        print(dict_final)
+        #print(dict_final)
         for idQ in dict_final:
             dict_histogramme[idQ]=[]
             li_date=[]
@@ -698,7 +717,12 @@ def Historique():
                     li_effectif.append(1)
             
             dict_histogramme[idQ]=[li_date,li_effectif]
-        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme)
+            li_etu = listedesEtudiant()
+            dico_histo_etu={}
+            for element in li_etu:
+                dic_inter=dicoHistoetu(element)
+                dico_histo_etu[element]=dico_histo_etu(dic_inter[0],dic_inter[1])
+        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme, dico_etu=dico_histo_etu)
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
     else:
