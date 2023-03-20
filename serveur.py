@@ -361,7 +361,29 @@ def supprimer(idQuestion):
         return redirect(url_for('BDD'))
     else:
         return render_template("non_connecte.html")
-
+@app.route("/supprimerHistoEt/<li>/<idQuestion>/<idetu>")
+def supprimerHistoDirectEt(li,idQuestion,idetu):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        li = li.replace(" ","")
+        li = li.replace("[","")
+        li = li.replace("]","")
+        li = li.replace("'","")
+        li = li.replace("delimiteur","/")
+        lif = li.split(",")
+        
+        lif[2]=idetu
+        print("lif :",lif)
+        li2=[lif[0],lif[1],idQuestion,lif[3]]
+        if(lif[3]=="Sequence"):
+            li2.append(lif[4])
+        print("li2 :",li2)
+        suppHisto(li2, session["UserId"])
+        supprimerUnHisto(lif, session["UserId"], idQuestion)
+        ###########################################
+        return redirect(url_for('Historique'))
+    else:
+        return render_template("non_connecte.html")
 @app.route("/supprimerHisto/<li>/<idQuestion>")
 def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
@@ -372,6 +394,8 @@ def supprimerHistoDirect(li,idQuestion):
         li = li.replace("'","")
         li = li.replace("delimiteur","/")
         lif = li.split(",")
+        
+        lif[2]=session['UserId']
         print("lif :",lif)
         li2=[lif[0],lif[1],idQuestion,lif[3]]
         if(lif[3]=="Sequence"):
