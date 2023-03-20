@@ -108,24 +108,47 @@ connexion d'un étudiant à son compte. Ensuite Conrath Matthieu à réaliser
 l'écriture et la lecture des fichiers d'historique pendant que Pavie--Routaboul
 Clément et
 Rebagliato Lucas s'occuperent des séquences et des questions en direct. De son 
-côté Clément Chevalier corriga la manière dont les étiquettes était crée lors
-de la création des questions ainsi que leurs modification.
+côté Chevalier Clément corriga la manière dont les étiquettes était crée lors
+de la création des questions.   
 
 \section{Cahier des charges}
-
+\subsection{Les modifications à apporter à la première partie du projet}
 Avant de commencer l'on doit rappeler ce qui a été fait durant la première étape
 du projet. Nous avons permis la création de compte ainsi que la création et la
 visulisation de questions et de feuilles de question. Cepandent nous avions pas
-permis à l'utilisateur d'utiliser les étiquettes déja existantes. Ainsi la 
+proposé à l'utilisateur d'utiliser les étiquettes déja existantes. Ainsi la 
 première
 étape à faire et des réglers ce petit problème.
+\subsection{La seconde parti du projet}
+Concernant la seconde partie du projet nous avons effectuer de nombreuses tâches.
+Ainsi nous avons commencer par ajouter les comptes étudiants. Cela plûtot simple à effectuer. Cependant il à fallut adapter
+les anciennes routes du serveurs en conséquence afin d'empécher un élève d'utiliser les même fonctionnalités qu'un professeur.
+Il aurra aussi fallut créé une page de profil afin de dissocier élève d'un professeur. Enfin il aurra fallut ajouter l'accès
+à l'étudiant d'une pour modifier son mot de passe. \\Ensuite l'on a ajouter les séquences puis les questions en direct. Afin de
+stocker les séquences, un nouveau fichier csv à du être créé. Ensuite il a fallut créé des web socket afin de permet la 
+communication en direct entre plusieurs utilisateurs. Il a donc fallut récupérer les différents questions et organisé les 
+séquences pour pouvoir répondre à question à la suite. Ensuite la création des questions en direct fut beaucoup plus simple 
+car ayant déja été réaliser durant la création des séquences 
 
 \section{Architecture et choix techniques}
 
-1 à 2 page(s) 
+\subsection{Architecture du projet}
+Le coté serveur de notre projet est soumis à de nombreuse dépendance. En effet, en plus des bibliothèques standards à python 
+comme os,haslib,time,datetime et csv nous avons aussi ajouter d'autre bibliothèques comme Flask, \\flask\_socketio,md\_mermaid 
+et markdownHTML. Cependant nous avons aussi des dépendances venant de fichiers que nous avons créé. Ainsi le fichier 
+serveur.py à besoin des fichiers manipulationQuestion.py qui permet de manipuler les ficher conservant les 
+questions,manipulationSequence.py qui permet de manipuler les fichiers conservant les séquences,manipulation\_Etu.py qui 
+permet de manipuler le fichier conservant les etudiants,manipulation\_User.py qui permet de manipuler le fichier conservant 
+les professeurs,markdownHTML.py qui permet de traduire du markdown,latex et mermaid en HTML  et enfin md\_mermaid qui permet
+aussi de traduire du texte en un code HTML. Ensuite le serveurs orchestre l'utilisation de toutes ces bibliothèques et fichiers
+afin d'obtenir les informations nécéssaire pour pouvoir générer les pages HTML. Ainsi le fichier serveur.py a un rôle centrale
+de notre projet.
+
+
 \begin{itemize}
 \item Architecture du projet
 \item Choix technologiques  avec leurs justifications (pourquoi ce choix, 
+
 comment il a été fait, par qui...),
 \end{itemize}
 
@@ -164,8 +187,8 @@ ne peut pas être lue via les indices. Ici le seul moyen de lire convenablement
 notre fichier est d'utilisé une boucle for du type "for i in liste:". \\
 Ensuite il nous reste plus qu'a formaté les listes. Pour rappel dans les 
 fichiers contenant les questions ainsi que leur réponse est de la forme:\\
-Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...
-(ET=étiquette REP=réponse BREP=Bonne réponse)
+Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...\\
+(ET=étiquette REP=réponse BREP=Bonne réponse).
 Enfin il suffit de parcourir les questions est de comparés leurs identifiants 
 avec celui passé en paramètre. 
 
