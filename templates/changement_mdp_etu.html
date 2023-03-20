@@ -6,7 +6,6 @@
   <link rel="stylesheet" href="static/log-reg.css">
   <script></script>
   <title>QuizTio</title>
-  <script></script>
 </head>
 <body>
     
@@ -25,9 +24,19 @@
         <form action = "" method = "post">
             <h1>changement de mot de passe</h1>
             <div class="entree">
-                <label for="idquest">entre ton nouveau mot de passe: </label><br>
-                <input type="password" name="newMdp" minlength="8" maxlength="8" placeholder="mot de passe" required><br>
-                <input type="submit" value="ok"/>
+                <label>entre ton ancien mot de passe: </label><br>
+                <input type="password" name="ancienMdp" minlength="1" placeholder="ancien mot de passe" required><br>
+                {% if erreur1 == True: %}
+                    <div class="erreurLog">Mot de passe incorrect</div>
+                {%endif%}
+                <label>entre ton nouveau mot de passe: </label><br>
+                <input type="password" name="newMdp1" id="MDP" minlength="1" placeholder="mot de passe" required><br>
+                <input type="password" name="newMdp2" id="MDP2" minlength="1" placeholder="une deuxième fois" required><br>
+                {% if erreur2 == True: %}
+                <div class="erreurLog">Les deux mots de passe ne correspondent pas</div>
+                {%endif%}
+                <input type="submit" value="ok" />
             </div>
         </form>
+    </div>
 </body>

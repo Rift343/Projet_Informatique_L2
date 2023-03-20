@@ -124,11 +124,11 @@ def connexion():
         for sous_liste in listeetu:
             if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
                 #print("connexion")
-                session['Username'] = nom_utilisateur
-                IdUser = sous_liste[0]
+                session['Username'] = sous_liste[0]
+                IdUser = sous_liste[2]
                 session['UserId'] = IdUser
                 session['type'] = "etu"
-                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur, pas_bon=False)
+                return redirect(url_for('index2', Username=sous_liste[0], pas_bon=False))
     else:
         listeUser = lireCSV()
         for sous_liste in listeUser:
@@ -362,6 +362,30 @@ def supprimer(idQuestion):
     else:
         return render_template("non_connecte.html")
 
+@app.route("/supprimerHisto/<li>/<idQuestion>")
+def supprimerHistoDirect(li,idQuestion):
+    if 'UserId' in session and session['type'] == "pro":
+        li = li.replace("delimiteur","/")
+        print(li)
+        suppHisto(li, session["UserId"])
+        supprimerUnHisto(li, session["UserId"], idQuestion)
+        ###########################################
+        return redirect(url_for('Historique'))
+    else:
+        return render_template("non_connecte.html")
+
+@app.route("/supprimerHistoComplet/<idQuestion>")
+def supprimerHistoComplet(idQuestion):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        supprimerhistoQuestion(idQuestion)
+        supprimerligne(session["UserId"], idQuestion)
+        return redirect(url_for('Historique'))
+    else:
+        return render_template("non_connecte.html")
+
+
+
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
@@ -392,13 +416,22 @@ def modif_mdp_etu():
     
 @app.route("/changement_mdp_etu",methods = ['POST'])
 def modif_mdp_etu_2():
-    if 'Username' in session:
-        Username = session['Username']
-        nouveauMdp = request.form['newMdp']
-        modificationEtu(Username, nouveauMdp)
-        return render_template("changement_mdp_etu.html", Username=Username)
-    else:
-        return render_template("changement_mdp_etu")
+    listeetu = etuCSV()
+    UserId = session["UserId"]
+    Username = session['Username']
+    print(request.form['ancienMdp'], request.form['newMdp1'], request.form['newMdp2'])
+    for sous_liste in listeetu: 
+        if 'UserId' in session and sous_liste[2] == UserId:
+            ancienMdp = request.form['ancienMdp']
+            print(sous_liste[3], hashlib.sha256(ancienMdp.encode()).hexdigest())
+            if sous_liste[3] != hashlib.sha256(ancienMdp.encode()).hexdigest():
+                return render_template("changement_mdp_etu.html",erreur1=True) 
+            elif request.form['newMdp1'] != request.form['newMdp2']:
+                return render_template("changement_mdp_etu.html",erreur2=True)
+            else:
+                nouveauMdp = request.form['newMdp1']
+                modificationEtu(UserId, nouveauMdp)
+                return render_template("acceuil_connecte_etu.html",Username=Username)
             
                 
                 
@@ -471,6 +504,7 @@ def avancer_q(dic):
         print("demande question seule")
         
         socketio.emit("fin_seq", room=session["UserId"])
+        socketio.emit("fin_seq")
     else:#sequence
         li_q = lireSequence(session['UserId'],id_seq)
         print("demande question suiv seq")
@@ -484,6 +518,7 @@ def avancer_q(dic):
         if (i+1>=len(li_q)):
             print("sequence terminer")
             socketio.emit("fin_seq", room=session["UserId"])
+            socketio.emit("fin_seq")
         else:
             dico_seq_id_to_eleve_ayant_rep[id_seq]=[]
             q_suiv=li_q[i+1]
@@ -497,8 +532,6 @@ def avancer_q(dic):
             q["REP"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["REP"]
             q["Question"]=traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=session["UserId"])
-            #socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=session["UserId"])
-
             socketio.emit("nouvelle_q", {'question':traductionUneQuestionToHTML(getQuestion(session["UserId"], q_suiv))}, to=request.sid)
     
 
@@ -529,12 +562,68 @@ def bloquer_rep_q():
 @socketio.on('eleve_reponse_q')#eleve reponds
 def eleve_reponse_q(id_seq,reponse):
     print(reponse)
-    li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq["id_seq"]]
+    id_seq = id_seq["id_seq"]
+    li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
     if(session["UserId"] not in li_eleve_deja_rep):
-    #enregistrer rep
+        #enregistrer rep
+        if(estDansCSV(id_seq)):#c'est une sequence
+            id_q = seq_id_to_seq_progress[id_seq]
+            prof = dico_question_ouverte_to_prof[id_seq]
+            enonce = getQuestion(prof, id_q)
+            if(enonce["REP"]==[]):
+                if(reponse==enonce["BREP"][0]):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                else :
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+            else:
+                li_brep = enonce["BREP"]
+                bonnerep = True
+                for element in reponse:
+                    if(enonce["REP"][element] in li_brep):
+                        li_brep.remove(enonce["REP"][element])
+                    else:
+                        bonnerep = False
+                    if(li_brep!=[]):
+                        bonnerep = False
+                if(bonnerep):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                else:
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+        else:#c'est une question seule
+            id_q = id_seq
+            prof = dico_question_ouverte_to_prof[id_seq]
+            enonce = getQuestion(prof, id_q)
+            if(enonce["REP"]==[]):
+                if(reponse==enonce["BREP"][0]):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                else :
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
+            else:
+                li_brep = enonce["BREP"]
+                bonnerep = True
+                for element in reponse:
+                    if(enonce["REP"][element] in li_brep):
+                        li_brep.remove(enonce["REP"][element])
+                    else:
+                        bonnerep = False
+                    if(li_brep!=[]):
+                        bonnerep = False
+                if(bonnerep):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                else:
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
+
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
-        prof = li_prof_socket_id[id_seq["id_seq"]]
-        dico_seq_id_to_eleve_ayant_rep[id_seq["id_seq"]].append(session["UserId"])
+        prof = li_prof_socket_id[id_seq]
+        dico_seq_id_to_eleve_ayant_rep[id_seq].append(session["UserId"])
         socketio.emit("rep", {'reponse':reponse}, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence
@@ -555,12 +644,65 @@ def acceder_q(id_seq):
             
             
             q={}
-            q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
+            if(not(estDansCSV(id_seq["id_seq"]))):
+                q_suiv=id_seq["id_seq"]
+            else:
+                q_suiv=seq_id_to_seq_progress[id_seq["id_seq"]]
             q["REP"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["REP"]
             q["Question"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=request.sid)
             print("requete envoyée")
 
+
+@app.route("/Historique") #Page de création d'une feuille de questions
+def Historique():
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
+        #print(dicoPourFaciliteLesStat(session['UserId']))
+        #print(lireHisto(session['UserId']))
+        #print(nbPositive(dicoPourFaciliteLesStat(session['UserId'])[0]))
+        dict_q=dicoPourFaciliteLesStat(session['UserId'])[0]
+        dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1]
+        dict_final={}
+        dict_histogramme={}
+        for idQ in dict_q :
+            if idQ in dict_final:
+                dict_final[idQ].append(dict_q[idQ])
+            else:
+                dict_final[idQ]=dict_q[idQ]
+        print(dict_final)
+        for idQ_seq in dict_seq :
+            idQ=idQ_seq.split("seq")[0]
+            seq=idQ_seq.split("seq")[1]
+            if idQ in dict_final:
+                
+                dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
+                #.append(dict_seq[idQ_seq])
+            else:
+                print("on reaffecte")
+                dict_final[idQ]=dict_seq[idQ_seq]
+        print(dict_final)
+        for idQ in dict_final:
+            dict_histogramme[idQ]=[]
+            li_date=[]
+            li_effectif=[]
+            for rep in dict_final[idQ]:
+                trouve=False
+                date ="/".join(rep[0].split("/")[:3])
+                for k in range(len(li_date)):
+                    
+                    if(date == li_date[k]):
+                        li_effectif[k]=li_effectif[k]+1
+                        trouve=True
+                if trouve==False:
+                    li_date.append(date)
+                    li_effectif.append(1)
+            
+            dict_histogramme[idQ]=[li_date,li_effectif]
+        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme)
+    elif 'UserId' or 'Username' in session:
+        return render_template("acceuil_connecte_etu.html")
+    else:
+        return render_template("acceuil.html")
 
 
 #@app.route("/feuille")

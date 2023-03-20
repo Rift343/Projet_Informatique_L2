@@ -35,7 +35,7 @@
             if(qcm){
             for (element of question.question["REP"]){
                 document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<span class='REP' style='display: inline-block;'> <input type='checkbox' id='"+num +"' name='"+num +"'>"+element+"</span><br>" //
+                    "<span class='REP' style='display: inline-block;'> <input type='checkbox' id='"+num +"' name='"+num +"'>"+element+"</span><br>" 
                 num=num+1
             }}
             else{
@@ -46,6 +46,12 @@
             document.getElementById("outon").hidden = false
             document.getElementById("env").hidden = true
             document.getElementById("desac").hidden = true
+
+            MathJax.typeset()
+            for (element of document.getElementsByClassName('mermaid')){
+            element.removeAttribute('data-processed');}
+            mermaid.init();
+            
         });
 
         socket.on('fin_seq', ()=>{

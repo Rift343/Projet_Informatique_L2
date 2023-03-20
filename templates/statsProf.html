@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
+		<title>QuizTio</title>
+		
+	</head>
+	<body >
+		<div class="nom">QuizTio</div>
+		<ul class="menu">
+			<li>
+				{{Username}}
+				<ul class="sousMenu">
+					<li><a href="/">Accueil</a></li>
+					<li><a href="profil">Profil</a></li>
+					<li><a href="BDD">Liste de vos questions</a></li>
+					<li><a href="creationQuestion">Créer une question</a></li>
+					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+					<li><a href="creationSequence">Créer une séquence</a></li>
+					<li><a href="deco">Se déconnecter</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div id="mid">
+			<div id="boutons_de_filtrage"></div>
+			
+
+				{% for key, value in dico.items(): %}
+					<h1>Question : {{key}}</h1>
+					<a href="../supprimerHistoComplet/{{key}}"><button>Suprimer historique question</button></a>
+					<table class="tableau_css">
+				<thead>
+					<tr>
+
+                        <th>date de reponse</th>
+						<th>reponse</th>
+						<th>id eleve</th>
+						<th>circonstance</th>
+						<th>supprimer</th>
+
+					</tr>
+				</thead><tr>
+
+					{%for element in value%}
+
+					<td class="date">{{element[0]}}</td>
+					<td class="rep">{{element[1]}}</td>
+					<td class="id_eleve">{{element[2]}}</td>
+					<td class="circonstance">{{element[3]}}</td>
+					<script></script>
+					<td class="supprimer"><a href='../supprimerHisto/{{element|replace("/","delimiteur")}}/{{key}}'><button>Supprimer</button></a></td>
+
+					</tr>
+					{%endfor%}</table>
+				{% endfor %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				{% for key, value in histo.items(): %}
+				{{key}}
+				
+				
+				<div style="height: 600px; width: 600px;">
+						<canvas id="datagramme{{key|safe}}"></canvas>
+					</div>
+				  
+				  
+				  
+				  <script>
+					const ctx{{key|safe}} = document.getElementById('datagramme{{key|safe}}');
+				  
+					new Chart(ctx{{key|safe}}, {
+					  type: 'bar',
+					  data: {
+						labels: {{value[0]|safe}},
+						datasets: [{
+						  label: 'nombre de reponse par question par jours',
+						  data: {{value[1]|safe}},
+						  borderWidth: 1
+						}]
+					  },
+					  options: {
+						
+						scales: {
+						  y: {
+							beginAtZero: true
+						  }
+						}
+					  }
+					});
+				  </script>
+			
+				  {% endfor %}
+
+	</body>
+</html>
