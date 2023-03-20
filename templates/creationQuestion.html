@@ -98,7 +98,7 @@ function changerCouleurEti(ele){
 
 
 function afficheEtiquette(){
-    var eti = "{{listeEtiquettes|safe}}";
+    var eti = {{listeEtiquettes|safe}};
     for(etiquettes of eti){
         document.getElementById('listeEti').innerHTML = document.getElementById("listeEti").innerHTML +
             '<br><span id = "etiquettte" style="border-radius: 25px; background: #FFFFFF; padding: 6px; min-width: 10%; min-height: 25px; margin: 6px;display: inline-block;"> <input type="checkbox" id="check" name="notCheckEti" value="'+etiquettes.replace(/ /g,'')+'"onclick=changerCouleurEti(this)><span id="contenuEti">'+etiquettes+'</span></span>';
