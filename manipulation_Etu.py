@@ -25,6 +25,15 @@ def etuCSV():
         
     return listeEtu
 
+def listedesEtudiant():
+    retour=[]
+    for i in etuCSV():
+        if i[2] not in retour:
+            retour.append(i[2])
+    return retour
+
+
+
 def listeEtu():
     """
     permet de mettre à jour une liste global qui contient l'intégralité des numéros étudiant
