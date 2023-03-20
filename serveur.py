@@ -365,9 +365,10 @@ def supprimer(idQuestion):
 @app.route("/supprimerHisto/<li>/<idQuestion>")
 def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
-        
+        ##suppHisto(liste, idEtu)
         supprimerUnHisto(li, session["UserId"], idQuestion)
-        return redirect(url_for('BDD'))
+        ###########################################
+        return redirect(url_for('Historique'))
     else:
         return render_template("non_connecte.html")
 
@@ -377,19 +378,11 @@ def supprimerHistoComplet(idQuestion):
         
         supprimerhistoQuestion(idQuestion)
         supprimerligne(session["UserId"], idQuestion)
-        return redirect(url_for('BDD'))
+        return redirect(url_for('Historique'))
     else:
         return render_template("non_connecte.html")
 
-@app.route("/supprimerHisto/<idQuestion>")
-def supprimerHistoQuest(idQuestion):
-    if 'UserId' in session and session['type'] == "pro":
-        
-        supprimerhistoQuestion(idQuestion)
-        
-        return redirect(url_for('BDD'))
-    else:
-        return render_template("non_connecte.html")
+
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
@@ -660,7 +653,7 @@ def acceder_q(id_seq):
 
 
 @app.route("/Historique") #Page de création d'une feuille de questions
-def HistoriqueProf():
+def Historique():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
         #print(dicoPourFaciliteLesStat(session['UserId']))
         #print(lireHisto(session['UserId']))

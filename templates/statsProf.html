@@ -42,6 +42,7 @@
 
 				{% for key, value in dico.items(): %}
 					<h1>Question : {{key}}</h1>
+					<a href="../supprimerHistoComplet/{{key}}"><button>Suprimer historique question</button></a>
 					<table class="tableau_css">
 				<thead>
 					<tr>
@@ -67,6 +68,8 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 				{% for key, value in histo.items(): %}
 				{{key}}
+				
+				
 				<div style="height: 600px; width: 600px;">
 						<canvas id="datagramme{{key|safe}}"></canvas>
 					</div>
