@@ -653,6 +653,7 @@ def acceder_q(id_seq):
             q["Question"]=traductionUneQuestionToHTML(getQuestion(prof, q_suiv))["Question"]
             socketio.emit("nouvelle_q", {'question':q}, to=request.sid)
             print("requete envoyée")
+
 def formatage_dict_etu(dict_q,dict_seq):
     dict_final={}
     for idQ in dict_q :
@@ -721,7 +722,9 @@ def Historique():
             dico_histo_etu={}
             for element in li_etu:
                 dic_inter=dicoHistoetu(element)
+                print("dic inter",dic_inter)
                 dico_histo_etu[element]=formatage_dict_etu(dic_inter[0],dic_inter[1])
+            #print(dico_histo_etu)
         return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme, dico_etu=dico_histo_etu)
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
