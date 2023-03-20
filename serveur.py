@@ -365,9 +365,10 @@ def supprimer(idQuestion):
 @app.route("/supprimerHisto/<li>/<idQuestion>")
 def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
-        
+        ##suppHisto(liste, idEtu)
         supprimerUnHisto(li, session["UserId"], idQuestion)
-        return redirect(url_for('BDD'))
+        ###########################################
+        return redirect(url_for('Historique'))
     else:
         return render_template("non_connecte.html")
 
@@ -377,19 +378,11 @@ def supprimerHistoComplet(idQuestion):
         
         supprimerhistoQuestion(idQuestion)
         supprimerligne(session["UserId"], idQuestion)
-        return redirect(url_for('BDD'))
+        return redirect(url_for('Historique'))
     else:
         return render_template("non_connecte.html")
 
-@app.route("/supprimerHisto/<idQuestion>")
-def supprimerHistoQuest(idQuestion):
-    if 'UserId' in session and session['type'] == "pro":
-        
-        supprimerhistoQuestion(idQuestion)
-        
-        return redirect(url_for('BDD'))
-    else:
-        return render_template("non_connecte.html")
+
 
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
@@ -660,16 +653,50 @@ def acceder_q(id_seq):
 
 
 @app.route("/Historique") #Page de création d'une feuille de questions
-def HistoriqueProf():
+def Historique():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
         #print(dicoPourFaciliteLesStat(session['UserId']))
         #print(lireHisto(session['UserId']))
         #print(nbPositive(dicoPourFaciliteLesStat(session['UserId'])[0]))
-        dict_q=dicoPourFaciliteLesStat(session['UserId'])[0], dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1]
+        dict_q=dicoPourFaciliteLesStat(session['UserId'])[0]
+        dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1]
         dict_final={}
+        dict_histogramme={}
         for idQ in dict_q :
-            print("e")
-        return render_template("statsProf.html", Username=session['Username'], )
+            if idQ in dict_final:
+                dict_final[idQ].append(dict_q[idQ])
+            else:
+                dict_final[idQ]=dict_q[idQ]
+        print(dict_final)
+        for idQ_seq in dict_seq :
+            idQ=idQ_seq.split("seq")[0]
+            seq=idQ_seq.split("seq")[1]
+            if idQ in dict_final:
+                
+                dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
+                #.append(dict_seq[idQ_seq])
+            else:
+                print("on reaffecte")
+                dict_final[idQ]=dict_seq[idQ_seq]
+        print(dict_final)
+        for idQ in dict_final:
+            dict_histogramme[idQ]=[]
+            li_date=[]
+            li_effectif=[]
+            for rep in dict_final[idQ]:
+                trouve=False
+                date ="/".join(rep[0].split("/")[:3])
+                for k in range(len(li_date)):
+                    
+                    if(date == li_date[k]):
+                        li_effectif[k]=li_effectif[k]+1
+                        trouve=True
+                if trouve==False:
+                    li_date.append(date)
+                    li_effectif.append(1)
+            
+            dict_histogramme[idQ]=[li_date,li_effectif]
+        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme)
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
     else:
