@@ -124,11 +124,11 @@ def connexion():
         for sous_liste in listeetu:
             if sous_liste[2] == nom_utilisateur and sous_liste[3] == hashlib.sha256(mot_de_passe.encode()).hexdigest():
                 #print("connexion")
-                session['Username'] = nom_utilisateur
-                IdUser = sous_liste[0]
+                session['Username'] = sous_liste[0]
+                IdUser = sous_liste[2]
                 session['UserId'] = IdUser
                 session['type'] = "etu"
-                return render_template("acceuil_connecte_etu.html", Username=nom_utilisateur, pas_bon=False)
+                return redirect(url_for('index2', Username=sous_liste[0], pas_bon=False))
     else:
         listeUser = lireCSV()
         for sous_liste in listeUser:
@@ -529,12 +529,42 @@ def bloquer_rep_q():
 @socketio.on('eleve_reponse_q')#eleve reponds
 def eleve_reponse_q(id_seq,reponse):
     print(reponse)
-    li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq["id_seq"]]
+    id_seq = id_seq["id_seq"]
+    li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
     if(session["UserId"] not in li_eleve_deja_rep):
-    #enregistrer rep
+        #enregistrer rep
+        if(estDansCSV(id_seq)):
+
+            id_q = seq_id_to_seq_progress[id_seq]
+            prof = dico_question_ouverte_to_prof[id_seq]
+            enonce = getQuestion(prof, id_q)
+            if(enonce["REP"]==[]):
+                if(reponse==enonce["BREP"]):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                else :
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+            else:
+                li_brep = enonce["BREP"]
+                bonnerep = True
+                for element in reponse:
+                    if(enonce["REP"][element] in li_brep):
+                        li_brep.remove(enonce["REP"][element])
+                    else:
+                        bonnerep = False
+                    if(li_brep!=[]):
+                        bonnerep = False
+                if(bonnerep):
+                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                else:
+                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+
     #AJOUT ID_SEQ CODE SEQUENCE ELEVE
-        prof = li_prof_socket_id[id_seq["id_seq"]]
-        dico_seq_id_to_eleve_ayant_rep[id_seq["id_seq"]].append(session["UserId"])
+        prof = li_prof_socket_id[id_seq]
+        dico_seq_id_to_eleve_ayant_rep[id_seq].append(session["UserId"])
         socketio.emit("rep", {'reponse':reponse}, room=[prof])
 
 @socketio.on('acceder_q')#eleve accede sequence
