@@ -372,11 +372,13 @@ def supprimerHistoDirect(li,idQuestion):
         li = li.replace("'","")
         li = li.replace("delimiteur","/")
         lif = li.split(",")
-        print(lif)
-        li2=[lif[0],lif[1],idQuestion,lif[3],lif[4]]
-        print(li2)
-        suppHisto(lif, session["UserId"])
-        supprimerUnHisto(li2, session["UserId"], idQuestion)
+        print("lif :",lif)
+        li2=[lif[0],lif[1],idQuestion,lif[3]]
+        if(lif[3]=="Sequence"):
+            li2.append(lif[4])
+        print("li2 :",li2)
+        suppHisto(li2, session["UserId"])
+        supprimerUnHisto(lif, session["UserId"], idQuestion)
         ###########################################
         return redirect(url_for('Historique'))
     else:
@@ -668,7 +670,7 @@ def formatage_dict_etu(dict_q,dict_seq):
             dict_final[idQ].append(dict_q[idQ])
         else:
             dict_final[idQ]=dict_q[idQ]
-    print(dict_final)
+    #print(dict_final)
     for idQ_seq in dict_seq :
         idQ=idQ_seq.split("seq")[0]
         seq=idQ_seq.split("seq")[1]
@@ -677,7 +679,7 @@ def formatage_dict_etu(dict_q,dict_seq):
             dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
                 #.append(dict_seq[idQ_seq])
         else:
-            print("on reaffecte")
+            #print("on reaffecte")
             dict_final[idQ]=dict_seq[idQ_seq]
     return dict_final
 
@@ -696,7 +698,7 @@ def Historique():
                 dict_final[idQ].append(dict_q[idQ])
             else:
                 dict_final[idQ]=dict_q[idQ]
-        print(dict_final)
+        #print(dict_final)
         for idQ_seq in dict_seq :
             idQ=idQ_seq.split("seq")[0]
             seq=idQ_seq.split("seq")[1]
@@ -705,7 +707,7 @@ def Historique():
                 dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
                 #.append(dict_seq[idQ_seq])
             else:
-                print("on reaffecte")
+                #print("on reaffecte")
                 dict_final[idQ]=dict_seq[idQ_seq]
         #print(dict_final)
         for idQ in dict_final:
@@ -729,7 +731,7 @@ def Historique():
             dico_histo_etu={}
             for element in li_etu:
                 dic_inter=dicoHistoetu(element)
-                print("dic inter",dic_inter)
+                #print("dic inter",dic_inter)
                 dico_histo_etu[element]=formatage_dict_etu(dic_inter[0],dic_inter[1])
             #print(dico_histo_etu)
         return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme, dico_etu=dico_histo_etu)
