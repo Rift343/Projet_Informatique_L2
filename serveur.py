@@ -651,6 +651,19 @@ def acceder_q(id_seq):
             print("requete envoyée")
 
 
+@app.route("/Historique") #Page de création d'une feuille de questions
+def HistoriqueProf():
+    if 'UserId' or 'Username' in session and session['type'] == "pro":
+        #print(dicoPourFaciliteLesStat(session['UserId']))
+        #print(lireHisto(session['UserId']))
+        #print(nbPositive(dicoPourFaciliteLesStat(session['UserId'])[0]))
+
+        return render_template("statsProf.html", Username=session['Username']dict_q=dicoPourFaciliteLesStat(session['UserId'])[0], dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1])
+    elif 'UserId' or 'Username' in session:
+        return render_template("acceuil_connecte_etu.html")
+    else:
+        return render_template("acceuil.html")
+
 
 #@app.route("/feuille")
 #def feuille():                 

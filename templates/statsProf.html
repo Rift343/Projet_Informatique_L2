@@ -38,32 +38,58 @@
 		</ul>
 		<div id="mid">
 			<div id="boutons_de_filtrage"></div>
-			<table class="tableau_css">
+			
+				{{dict_q|safe}}
+				{{dict_seq|safe}}
+				{% for key, value in dict_q.items(): %}
+					<h1>Question : {{key}}</h1>
+					<table class="tableau_css">
 				<thead>
 					<tr>
-						<th>ID</th>
-                        <th>Identifiant de la séquence</th>
-						<th>Nombre d'étidiant ayant répondu</th>
-						<th>Nombre de réponse totale</th>
-						<th>Pourcentage de réponse juste</th>
-                        <th>Graphique</th>
+
+                        <th>date de reponse</th>
+						<th>reponse</th>
+						<th>id eleve</th>
+						<th>circonstance</th>
+
 					</tr>
-				</thead>
-				{% for dico in li_dictionnaire: %}
-				<tr>
-					<td class="id_tableau">{{dico["ID"]}}</td>
-					
-					<td class="eti">
-						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
-					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
-					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
-					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
-					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
-					</tr>
+				</thead><tr>
+
+					{%for element in value%}
+					<td class="date">{{element[0]}}</td>
+					<td class="rep">{{element[1]}}</td>
+					<td class="id_eleve">{{element[2]}}</td>
+					<td class="circonstance">{{element[3]}}</td>
+
+					</tr></table>
+					{%endfor%}
 				{% endfor %}
-			</table>
+				{% for key, value in dict_seq.items(): %}
+					<h1>Question : {{key.split("seq")[0]}}</h1>
+					<table class="tableau_css">
+				<thead>
+					<tr>
+
+                        <th>date de reponse</th>
+						<th>reponse</th>
+						<th>id eleve</th>
+						<th>circonstance</th>
+
+					</tr>
+				</thead><tr>
+
+					{%for element in value%}
+					<td class="date">{{element[0]}}</td>
+					<td class="rep">{{element[1]}}</td>
+					<td class="id_eleve">{{element[2]}}</td>
+					<td class="circonstance">{{element[3]}}</td>
+
+					</tr></table>
+					{%endfor%}
+				{% endfor %}
+				
+
+			
 		</div>
 	</body>
 </html>
