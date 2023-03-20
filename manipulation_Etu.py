@@ -164,7 +164,7 @@ def dicoHistoetu(numEtu):
             if("seq"+question[4] in DicoQuestionSeq ):
                     DicoQuestionSeq[question[2]+"seq"+question[4]].append(question)
             else:
-                    DicoQuestionSeq[question[2]+"seq"+question[2]] = [question]
+                    DicoQuestionSeq[question[2]+"seq"+question[4]] = [question]
         elif question[3]=='Direct':
             #print('OK2')
             if(question[2] in DicoQuestionDirect):
