@@ -5,6 +5,7 @@ from manipulation_User import *
 from md_mermaid import *
 from markdownHTML import *
 from manipulation_Etu import *
+from HistoQuestion import *
 import hashlib
 from flask_socketio import SocketIO 
 from flask_socketio import join_room, leave_room
