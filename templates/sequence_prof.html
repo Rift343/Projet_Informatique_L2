@@ -51,6 +51,11 @@
             rep_direct_var=false;
             console.log(question)
             console.log('ok')
+            
+            MathJax.typeset()
+            for (element of document.getElementsByClassName('mermaid')){
+            element.removeAttribute('data-processed');}
+            mermaid.init();
         });
         socket.on('rep', (data) =>{
             console.log(data)
