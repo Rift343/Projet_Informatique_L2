@@ -721,7 +721,7 @@ def Historique():
             dico_histo_etu={}
             for element in li_etu:
                 dic_inter=dicoHistoetu(element)
-                dico_histo_etu[element]=dico_histo_etu(dic_inter[0],dic_inter[1])
+                dico_histo_etu[element]=formatage_dict_etu(dic_inter[0],dic_inter[1])
         return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme, dico_etu=dico_histo_etu)
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
