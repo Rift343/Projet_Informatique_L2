@@ -39,9 +39,8 @@
 		<div id="mid">
 			<div id="boutons_de_filtrage"></div>
 			
-				{{dict_q|safe}}
-				{{dict_seq|safe}}
-				{% for key, value in dict_q.items(): %}
+
+				{% for key, value in dico.items(): %}
 					<h1>Question : {{key}}</h1>
 					<table class="tableau_css">
 				<thead>
@@ -56,40 +55,49 @@
 				</thead><tr>
 
 					{%for element in value%}
+
 					<td class="date">{{element[0]}}</td>
 					<td class="rep">{{element[1]}}</td>
 					<td class="id_eleve">{{element[2]}}</td>
 					<td class="circonstance">{{element[3]}}</td>
-
-					</tr></table>
-					{%endfor%}
-				{% endfor %}
-				{% for key, value in dict_seq.items(): %}
-					<h1>Question : {{key.split("seq")[0]}}</h1>
-					<table class="tableau_css">
-				<thead>
-					<tr>
-
-                        <th>date de reponse</th>
-						<th>reponse</th>
-						<th>id eleve</th>
-						<th>circonstance</th>
 
 					</tr>
-				</thead><tr>
-
-					{%for element in value%}
-					<td class="date">{{element[0]}}</td>
-					<td class="rep">{{element[1]}}</td>
-					<td class="id_eleve">{{element[2]}}</td>
-					<td class="circonstance">{{element[3]}}</td>
-
-					</tr></table>
-					{%endfor%}
+					{%endfor%}</table>
 				{% endfor %}
-				
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+				{% for key, value in histo.items(): %}
+				{{key}}
+				<div style="height: 600px; width: 600px;">
+						<canvas id="datagramme{{key|safe}}"></canvas>
+					</div>
+				  
+				  
+				  
+				  <script>
+					const ctx{{key|safe}} = document.getElementById('datagramme{{key|safe}}');
+				  
+					new Chart(ctx{{key|safe}}, {
+					  type: 'bar',
+					  data: {
+						labels: {{value[0]|safe}},
+						datasets: [{
+						  label: 'nombre de reponse par question par jours',
+						  data: {{value[1]|safe}},
+						  borderWidth: 1
+						}]
+					  },
+					  options: {
+						
+						scales: {
+						  y: {
+							beginAtZero: true
+						  }
+						}
+					  }
+					});
+				  </script>
 			
-		</div>
+				  {% endfor %}
+
 	</body>
 </html>
