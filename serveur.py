@@ -362,6 +362,35 @@ def supprimer(idQuestion):
     else:
         return render_template("non_connecte.html")
 
+@app.route("/supprimerHisto/<li>/<idQuestion>")
+def supprimer(li,idQuestion):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        supprimerUnHisto(li, session["UserId"], idQuestion)
+        return redirect(url_for('BDD'))
+    else:
+        return render_template("non_connecte.html")
+
+@app.route("/supprimerHistoComplet/<idQuestion>")
+def supprimer(idQuestion):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        supprimerhistoQuestion(idQuestion)
+        supprimerligne(session["UserId"], idQuestion)
+        return redirect(url_for('BDD'))
+    else:
+        return render_template("non_connecte.html")
+
+@app.route("/supprimerHisto/<idQuestion>")
+def supprimer(idQuestion):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        supprimerhistoQuestion(idQuestion)
+        
+        return redirect(url_for('BDD'))
+    else:
+        return render_template("non_connecte.html")
+
 @app.route("/deco") #Page de création d'une feuille de questions
 def deco():
     if 'UserId' or 'Username' in session and session['type'] == "pro":
