@@ -118,14 +118,14 @@
 			</thead>
 				{%for idQ,element in value.items():%}
 				{%for entree in element%}
-				<tr>{{value}}
+				<tr> 
 				<td class="id">{{idQ}}</td>
 				<td class="date">{{entree[0]}}</td>
 				<td class="rep">{{entree[1]}}</td>
 				
 				<td class="circonstance">{{entree[3]}}</td>
 				<script></script>
-				<td class="supprimer"><a href='../supprimerHisto/{{element|replace("/","delimiteur")}}/{{key}}'><button>Supprimer</button></a></td>
+				<td class="supprimer"><a href='../supprimerHisto/{{entree|replace("/","delimiteur")}}/{{idQ}}'><button>Supprimer</button></a></td>
 
 				</tr>
 				{%endfor%}{%endfor%}
