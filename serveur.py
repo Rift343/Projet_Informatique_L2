@@ -422,17 +422,20 @@ def modif_mdp_etu():
 @app.route("/changement_mdp_etu",methods = ['POST'])
 def modif_mdp_etu_2():
     listeetu = etuCSV()
+    UserId = session["UserId"]
     Username = session['Username']
+    print(request.form['ancienMdp'], request.form['newMdp1'], request.form['newMdp2'])
     for sous_liste in listeetu: 
-        if 'Username' in session and sous_liste[2] == Username:
+        if 'UserId' in session and sous_liste[2] == UserId:
             ancienMdp = request.form['ancienMdp']
+            print(sous_liste[3], hashlib.sha256(ancienMdp.encode()).hexdigest())
             if sous_liste[3] != hashlib.sha256(ancienMdp.encode()).hexdigest():
-                return render_template("changement_mdp_etu.html",erreur1=True)
+                return render_template("changement_mdp_etu.html",erreur1=True) 
             elif request.form['newMdp1'] != request.form['newMdp2']:
                 return render_template("changement_mdp_etu.html",erreur2=True)
             else:
                 nouveauMdp = request.form['newMdp1']
-                modificationEtu(Username, nouveauMdp)
+                modificationEtu(UserId, nouveauMdp)
                 return render_template("acceuil_connecte_etu.html",Username=Username)
             
                 

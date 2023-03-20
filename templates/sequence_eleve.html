@@ -46,6 +46,8 @@
             document.getElementById("outon").hidden = false
             document.getElementById("env").hidden = true
             document.getElementById("desac").hidden = true
+
+            MathJax.typeset()
         });
 
         socket.on('fin_seq', ()=>{
