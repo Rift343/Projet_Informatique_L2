@@ -657,8 +657,11 @@ def HistoriqueProf():
         #print(dicoPourFaciliteLesStat(session['UserId']))
         #print(lireHisto(session['UserId']))
         #print(nbPositive(dicoPourFaciliteLesStat(session['UserId'])[0]))
-
-        return render_template("statsProf.html", Username=session['Username']dict_q=dicoPourFaciliteLesStat(session['UserId'])[0], dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1])
+        dict_q=dicoPourFaciliteLesStat(session['UserId'])[0], dict_seq=dicoPourFaciliteLesStat(session['UserId'])[1]
+        dict_final={}
+        for idQ in dict_q :
+            print("e")
+        return render_template("statsProf.html", Username=session['Username'], )
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
     else:
