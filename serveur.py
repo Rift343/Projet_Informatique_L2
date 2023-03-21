@@ -399,7 +399,7 @@ def supprimerHistoDirect(li,idQuestion):
         li = li.replace("delimiteur","/")
         lif = li.split(",")
         
-        lif[2]=session['UserId']
+        lif[2]
         print("lif :",lif)
         li2=[lif[0],lif[1],idQuestion,lif[3]]
         if(lif[3]=="Sequence"):
@@ -602,6 +602,7 @@ def eleve_reponse_q(id_seq,reponse):
     print(reponse)
     id_seq = id_seq["id_seq"]
     li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
+    date_str=str(new_date())
     if(session["UserId"] not in li_eleve_deja_rep):
         #enregistrer rep
         if(estDansCSV(id_seq)):#c'est une sequence
@@ -610,11 +611,11 @@ def eleve_reponse_q(id_seq,reponse):
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
                 if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
                 else :
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
@@ -626,22 +627,22 @@ def eleve_reponse_q(id_seq,reponse):
                     if(li_brep!=[]):
                         bonnerep = False
                 if(bonnerep):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
                 else:
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
         else:#c'est une question seule
             id_q = id_seq
             prof = dico_question_ouverte_to_prof[id_seq]
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
                 if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
                 else :
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Direct"], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
@@ -653,8 +654,8 @@ def eleve_reponse_q(id_seq,reponse):
                     if(li_brep!=[]):
                         bonnerep = False
                 if(bonnerep):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
                 else:
                     ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
                     ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
