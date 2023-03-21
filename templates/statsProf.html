@@ -68,34 +68,7 @@
 					</tr>
 					{%endfor%}</table>
 				{% endfor %}
-								{% for key, value in dico.items(): %}
-					<h1>Question : {{key}}</h1>
-					<a href="../supprimerHistoComplet/{{key}}"><button>Suprimer historique question</button></a>
-					<table class="tableau_css">
-				<thead>
-					<tr>
 
-                        <th>date de reponse</th>
-						<th>reponse</th>
-						<th>id eleve</th>
-						<th>circonstance</th>
-						<th>supprimer</th>
-
-					</tr>
-				</thead><tr>
-
-					{%for element in value%}
-
-					<td class="date">{{element[0]}}</td>
-					<td class="rep">{{element[1]}}</td>
-					<td class="id_eleve">{{element[2]}}</td>
-					<td class="circonstance">{{element[3]}}</td>
-					<script></script>
-					<td class="supprimer"><a href='../supprimerHisto/{{element|replace("/","delimiteur")}}/{{key}}'><button>Supprimer</button></a></td>
-
-					</tr>
-					{%endfor%}</table>
-				{% endfor %}
 
 
 
