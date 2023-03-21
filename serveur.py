@@ -399,13 +399,13 @@ def supprimerHistoDirect(li,idQuestion):
         li = li.replace("delimiteur","/")
         lif = li.split(",")
         
-        lif[2]
+        
         print("lif :",lif)
         li2=[lif[0],lif[1],idQuestion,lif[3]]
         if(lif[3]=="Sequence"):
             li2.append(lif[4])
         print("li2 :",li2)
-        suppHisto(li2, session["UserId"])
+        suppHisto(li2, lif[2])
         supprimerUnHisto(lif, session["UserId"], idQuestion)
         ###########################################
         return redirect(url_for('Historique'))
