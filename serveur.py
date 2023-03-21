@@ -379,7 +379,11 @@ def supprimerHistoDirectEt(li,idQuestion,idetu):
             li2.append(lif[4])
         print("li2 :",li2)
         suppHisto(li2, idetu)
+        #suppréssion dans le fichier étudiant 
+        # ex:suppHisto(["date","FV","idQ","Sequence","idS"],"1258")
         supprimerUnHisto(lif, session["UserId"], idQuestion)
+        #suppréssion dans le fichier étudiant 
+        # ex:supprimerUnHisto(["07/04/2003","Faux","ve","Sequence","76"],1,2)
         ###########################################
         return redirect(url_for('Historique'))
     else:
