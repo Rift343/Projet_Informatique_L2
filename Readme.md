@@ -22,6 +22,7 @@ https://python-markdown.github.io/reference/<br/>
 https://mermaid.js.org/#/<br/>
 https://pypi.org/project/md-mermaid/<br/>
 https://highlightjs.org/download/<br/>
+https://www.chartjs.org/
 
 ## Forum:
 https://stackoverflow.com/<br/>
