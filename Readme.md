@@ -4,12 +4,12 @@ Modification des étiquettes pour mieux correspondre au attendue
 
 # Fonctionnalités de la partie 2
 ## Réalisé
--Ajout des comptes étudiant
--Question en Direct
--Séquence de question
--Page d'historique et de statistique
--Identidiant alphanumériques de minimum 8 caractère
--Question ouverte
+-Ajout des comptes étudiant<br/>
+-Question en Direct<br/>
+-Séquence de question<br/>
+-Page d'historique et de statistique<br/>
+-Identidiant alphanumériques de minimum 8 caractère<br/>
+-Question ouverte<br/>
 ## Non-Réalisé
 -S'il y a plus de 5 réponses possibles/proposées, on n'affichera que les 4 réponses les plus fréquentes et une 5ème categorie "autres réponses"<br/>
 -Il peut être utile de pouvoir masquer/démasquer sur la page enseignant l'énoncé ou les réponses<br/>
