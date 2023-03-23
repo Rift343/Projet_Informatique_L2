@@ -1,16 +1,16 @@
-#Modification de la première partie:
+# Modification de la première partie:
 Modification des étiquettes pour mieux correspondre au attendue
 
 
 # fonctionnalités de la partie 2
-##Réalisé
+## Réalisé
 -Ajout des comptes étudiant
 -Question en Direct
 -Séquence de question
 -Page d'historique et de statistique
 -Identidiant alphanumériques de minimum 8 caractère
 -Question ouverte
-##Non-Réalisé
+## Non-Réalisé
 -S'il y a plus de 5 réponses possibles/proposées, on n'affichera que les 4 réponses les plus fréquentes et une 5ème categorie "autres réponses"
 -Il peut être utile de pouvoir masquer/démasquer sur la page enseignant l'énoncé ou les réponses
 -Le formatage des numériques saisis sera au minimum contrôlé côté client. On se limite à des décimaux avec au plus 2 chiffres après un éventuel "."
