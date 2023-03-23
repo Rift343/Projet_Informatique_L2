@@ -23,6 +23,9 @@ https://mermaid.js.org/#/<br/>
 https://pypi.org/project/md-mermaid/<br/>
 https://highlightjs.org/download/<br/>
 
+##Forum:
+https://stackoverflow.com/<br/>
+
 ## Documentation :
 https://docs.python.org/3/<br/>
 https://docs.python.org/fr/3/library/hashlib.html<br/>
