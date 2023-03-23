@@ -11,9 +11,9 @@ Modification des étiquettes pour mieux correspondre au attendue
 -Identidiant alphanumériques de minimum 8 caractère
 -Question ouverte
 ## Non-Réalisé
--S'il y a plus de 5 réponses possibles/proposées, on n'affichera que les 4 réponses les plus fréquentes et une 5ème categorie "autres réponses"
--Il peut être utile de pouvoir masquer/démasquer sur la page enseignant l'énoncé ou les réponses
--Le formatage des numériques saisis sera au minimum contrôlé côté client. On se limite à des décimaux avec au plus 2 chiffres après un éventuel "."
+-S'il y a plus de 5 réponses possibles/proposées, on n'affichera que les 4 réponses les plus fréquentes et une 5ème categorie "autres réponses"<br/>
+-Il peut être utile de pouvoir masquer/démasquer sur la page enseignant l'énoncé ou les réponses<br/>
+-Le formatage des numériques saisis sera au minimum contrôlé côté client. On se limite à des décimaux avec au plus 2 chiffres après un éventuel "."<br/>
 
 # Webographie
 
