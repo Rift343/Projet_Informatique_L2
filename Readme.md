@@ -2,7 +2,7 @@
 Modification des étiquettes pour mieux correspondre au attendue
 
 
-# fonctionnalités de la partie 2
+# Fonctionnalités de la partie 2
 ## Réalisé
 -Ajout des comptes étudiant
 -Question en Direct
