@@ -1,15 +1,15 @@
 # Modification de la première partie:
-Modification des étiquettes pour mieux correspondre au attendue
+Modification des étiquettes pour mieux correspondre aux attendus
 
 
 # Fonctionnalités de la partie 2
 ## Réalisé
 -Ajout des comptes étudiant<br/>
--Question en Direct<br/>
--Séquence de question<br/>
--Page d'historique et de statistique<br/>
--Identidiant alphanumériques de minimum 8 caractère<br/>
--Question ouverte<br/>
+-Questions en Direct<br/>
+-Séquences de questions<br/>
+-Page d'historique et de statistiques<br/>
+-Identidiants alphanumériques de minimum 8 caractères<br/>
+-Questions ouvertes<br/>
 ## Non-Réalisé
 -S'il y a plus de 5 réponses possibles/proposées, on n'affichera que les 4 réponses les plus fréquentes et une 5ème categorie "autres réponses"<br/>
 -Il peut être utile de pouvoir masquer/démasquer sur la page enseignant l'énoncé ou les réponses<br/>
