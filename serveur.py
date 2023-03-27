@@ -185,20 +185,25 @@ def ajoutQuestion():
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
-        if(nb_reponses!='1' and nb_reponses!='0'):
+        if nb_reponses=='1':
+            li_rep=[]
+            li_bonnes_reponses.append(reponses)
+            li_etiquettes = etiquettes
+            li_etiquettes.append("QuestionOuverte")
+
+        elif nb_reponses=='':
+            li_rep=[]
+            li_etiquettes = etiquettes
+            li_etiquettes.append("QuestionSuperOuverte")
+
+        else:
             for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
                 if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                     li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
             li_rep = reponses.split(';')
             li_etiquettes = etiquettes
             li_etiquettes.append("QCM")
-                    
-        else:
-            li_rep=[]
-            li_bonnes_reponses.append(reponses)
-            li_etiquettes = etiquettes
-            li_etiquettes.append("QuestionOuverte")
-        
+            
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
          
         
@@ -651,12 +656,13 @@ def eleve_reponse_q(id_seq,reponse):
             prof = dico_question_ouverte_to_prof[id_seq]
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
-                if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
-                else :
-                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
+                if(enonce["BREP"]!=[]):
+                    if(reponse==enonce["BREP"][0]):
+                        ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
+                        ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                    else :
+                        ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
+                        ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
@@ -678,12 +684,13 @@ def eleve_reponse_q(id_seq,reponse):
             prof = dico_question_ouverte_to_prof[id_seq]
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
-                if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
-                    ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
-                else :
-                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Direct"])
-                    ajouterHistoEtu([date_str, "Faux", id_q, "Direct"], session["UserId"])
+                if(enonce["BREP"]!=[]):
+                    if(reponse==enonce["BREP"][0]):
+                        ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
+                        ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
+                    else :
+                        ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Direct"])
+                        ajouterHistoEtu([date_str, "Faux", id_q, "Direct"], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
