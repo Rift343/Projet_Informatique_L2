@@ -25,6 +25,15 @@ def etuCSV():
         
     return listeEtu
 
+def listedesEtudiant():
+    retour=[]
+    for i in etuCSV():
+        if i[2] not in retour:
+            retour.append(i[2])
+    return retour
+
+
+
 def listeEtu():
     """
     permet de mettre à jour une liste global qui contient l'intégralité des numéros étudiant
@@ -151,10 +160,11 @@ def dicoHistoetu(numEtu):
     for question in lst:
         if question[3]=='Sequence':
             #print ("OK")
+            print(question)
             if("seq"+question[4] in DicoQuestionSeq ):
-                    DicoQuestionSeq["seq"+question[4]].append(question)
+                    DicoQuestionSeq[question[2]+"seq"+question[4]].append(question)
             else:
-                    DicoQuestionSeq["seq"+question[4]] = [question]
+                    DicoQuestionSeq[question[2]+"seq"+question[4]] = [question]
         elif question[3]=='Direct':
             #print('OK2')
             if(question[2] in DicoQuestionDirect):
@@ -223,7 +233,7 @@ ajouterHistoEtu(["date4","FV","idQ","Direct"],65741)
 ajouterHistoEtu(["date4","FV","idQ2","Direct"],65741)
 print(GetHistoEtu(1258))
 print(GetHistoEtu(666))
-print(dicoHistoetu(666))
+print(dicoHistoetu(1258))
 DicoD,DicoS = dicoHistoetu(1258)
 print(DicoD)
 print(DicoS)

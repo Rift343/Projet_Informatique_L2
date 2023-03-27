@@ -29,7 +29,7 @@
  \title{         % Les paramètres du titre : titre, auteur, date
   Projet de programmation}          
 \author{Groupe \emph{XXX}\\
-  \emph{François, Paul et les autres}\\
+  \emph{}\\
     L2 informatique\\
   Faculté des Sciences\\
 Université de Montpellier}
@@ -40,10 +40,10 @@ Université de Montpellier}
 \centerline{\Huge\bf HAI405I}
 \vspace*{1.5cm}
 \begin{center}               % pour centrer 
-	
-	
+ 
+ 
   \includegraphics[width=5cm]{logo-fds.png}   % insertion d'une image
-	
+ 
 
 \end{center}
 \vspace*{1.5cm}
@@ -55,7 +55,7 @@ Université de Montpellier}
 \noindent{\Large\bf Groupe 20 :}\\ \\
 
 \begin{itemize}\large
-\item Chevalier Clement\large
+\item Chevalier Clément\large
 \item Conrath Matthieu\large
 \item Pavie--Routaboul Clément\large
 \item Rebagliato Lucas\large
@@ -74,130 +74,204 @@ Université de Montpellier.
 \section{Organisation}
 
 \subsection{Outils}
-Pour notre projet on a utiliser différent outils. Tout d'abord pour on a 
-utiliser un espace de dépot pour notre code. Etant donné que tout les membres 
-du groupe
-connaissaient et s'avait utilisé Github avant même le début du projet, 
-Github à donc été choisit intuitivement.Ensuite vient le moment des logiciels 
-sur lequelle nous
-allions travailler. Etant donné que l'on était habitué à travailler avec 
-Visual Studio Code et VScodium alors ce choix à aussi été naturelle. 
-En plus Visual Studio
-Code et VScodium possède tout deux une intégration de github et de python ce 
-qui facilite l'écriture ainsi que la mise en commun des travaux.
 
-ajout de figure pours vscode et github
+Pour notre projet, nous avons utilisé différents outils. 
+Tout d'abord nous avons utilisé un espace de dépôt pour notre code. 
+Étant donné que tous les membres du groupe connaissaient et savaient utiliser Github avant même le début du projet, Github a été choisi intuitivement. 
+Pour le choix des logiciels sur lesquels nous allions travailler, et étant donné que nous étions habitués à travailler avec Visual Studio Code et VScodium alors ce choix a aussi été naturel. 
+En plus de cela, Visual Studio Code et VScodium possèdent tous deux une intégration de github et de python,  ce qui facilite l'écriture ainsi que la mise en commun des travaux.
+
 \subsection{Organisation du travail}
-Nous nous somme au départ du second projet répartit la travail de la facon 
-suivante: Clément Chevalier s'occuperait dans un premier temps de la gestion
-des étiquette,
-Rebagliato Lucas et Pavie--Routaboul Clément s'occuperai des séquences des 
-questions et des comptes étudiants, ils seront rejoint par Clément Chevalier
-lorsque qu'il
-aurra terminé ca partie. Et Conrath Matthieu s'occupera de l'écriture et de la
-récupération des donneés dans les csv(historique et enregistrement des 
-étudiants).
+
+Au début du second projet, nous nous étions réparti le travail de la façon suivante: 
+
+\newline
+Chevalier Clément s'occuperait dans un premier temps de la gestion des étiquettes, Rebagliato Lucas et Pavie--Routaboul Clément s'occuperaient des séquences, des questions et des comptes étudiants.
+Ils seront rejoints par Clément Chevalier lorsqu'il aura terminé sa partie. 
+Conrath Matthieu s'occupera quant à lui de l'écriture et de la récupération des données dans les csv (historique et enregistrement des étudiants).
+
 \subsection{Déroulement du projet dans le temps}
-Ainsi l'on commenca rapidement par réaliser la création des comptes étudiants.
-Conrath Matthieu s'occupa de l'enregistrement, la récupération et la 
-modification des
-comptes étudiants. Dans le même temps Pavie--Routaboul Clément et Rebagliato
-Lucas s'occuperent de mettre en place la récupération d'un fichier csv ainsi
-que de la
-connexion d'un étudiant à son compte. Ensuite Conrath Matthieu à réaliser 
-l'écriture et la lecture des fichiers d'historique pendant que Pavie--Routaboul
-Clément et
-Rebagliato Lucas s'occuperent des séquences et des questions en direct. De son 
-côté Chevalier Clément corriga la manière dont les étiquettes était crée lors
-de la création des questions.   
+
+Avec cette organisation, nous avons rapidement commencé par réaliser la création des comptes étudiants pour pouvoir tester nos programmes.
+Conrath Matthieu s'est occupé de l'enregistrement, la récupération et la modification des comptes étudiants.
+Dans le même temps, Pavie--Routaboul Clément et Rebagliato Lucas se sont occupés de mettre en place la récupération d'un fichier csv ainsi que de la connexion d'un étudiant à son compte. 
+Ensuite Conrath Matthieu a réalisé l'écriture et la lecture des fichiers d'historique pendant que Pavie--Routaboul Clément et Rebagliato Lucas se sont occupés des séquences et des questions en direct. 
+De son côté, Chevalier Clément a corrigé la manière dont les étiquettes étaient créées lors de la création des questions.   
 
 \section{Cahier des charges}
 \subsection{Les modifications à apporter à la première partie du projet}
-Avant de commencer l'on doit rappeler ce qui a été fait durant la première étape
-du projet. Nous avons permis la création de compte ainsi que la création et la
-visulisation de questions et de feuilles de question. Cepandent nous avions pas
-proposé à l'utilisateur d'utiliser les étiquettes déja existantes. Ainsi la 
-première
-étape à faire et des réglers ce petit problème.
-\subsection{La seconde parti du projet}
-Concernant la seconde partie du projet nous avons effectuer de nombreuses tâches.
-Ainsi nous avons commencer par ajouter les comptes étudiants. Cela plûtot simple à effectuer. Cependant il à fallut adapter
-les anciennes routes du serveurs en conséquence afin d'empécher un élève d'utiliser les même fonctionnalités qu'un professeur.
-Il aurra aussi fallut créé une page de profil afin de dissocier élève d'un professeur. Enfin il aurra fallut ajouter l'accès
-à l'étudiant d'une pour modifier son mot de passe. \\Ensuite l'on a ajouter les séquences puis les questions en direct. Afin de
-stocker les séquences, un nouveau fichier csv à du être créé. Ensuite il a fallut créé des web socket afin de permet la 
-communication en direct entre plusieurs utilisateurs. Il a donc fallut récupérer les différents questions et organisé les 
-séquences pour pouvoir répondre à question à la suite. Ensuite la création des questions en direct fut beaucoup plus simple 
-car ayant déja été réaliser durant la création des séquences 
 
+Avant de commencer, nous devons rappeler ce qui a été fait durant la première étape du projet. 
+Nous avons permis la création de comptes ainsi que la création et la visualisation de questions et de feuilles de question. Cependant, nous n’avions pas proposé à l'utilisateur d'utiliser les étiquettes qu'il avait déjà utilisées afin de classer ses questions plus facilement. Ce petit ajout a donc été le premier de cette seconde partie du projet.
+
+\subsection{La seconde partie du projet}
+
+Concernant la seconde partie du projet, nous avons effectué de nombreuses tâches.
+Nous avons commencé par ajouter les comptes étudiants. Ceci était plutôt simple à effectuer puisque nous avions déjà pensé à la question lors de la première partie et que nous n'avions plus qu'à enregistrer les informations des étudiants dans nos fichiers. 
+Cependant il a fallu adapter les anciennes routes du serveur en conséquence afin d'empêcher un élève d'utiliser les mêmes fonctionnalités qu'un professeur et inversement.
+Nous avons aussi dû créer une page de profil afin de dissocier un élève d'un professeur. 
+Enfin il nous a également fallu ajouter l'accès à l'étudiant d'une page pour modifier son mot de passe (puisqu'à la création d'un compte étudiant, son identifiant est également son mot de passe). 
+\\Ensuite, nous avons ajouté les séquences puis les questions en direct. 
+Afin de stocker les séquences, un nouveau fichier csv a dû être créé. Pour permettre la communication en direct entre plusieurs utilisateurs, nous avons fait le choix des web sockets SocketIO. 
+Il a donc fallu récupérer les différentes questions et organiser les séquences pour pouvoir répondre à plusieurs questions à la suite. 
+Ensuite, la création des questions en direct fut beaucoup plus simple, ayant déjà été réalisée durant la création des séquences (répondre à une question est donc la même chose que de répondre à une séquence qui n'a qu'une seule question). 
+\\L'historique fut aussi ajouté, ainsi un professeur peut voir l'intégralité de l'historique de ses questions.
+De plus, il peut supprimer à sa guise des éléments de l'historique, comme une réponse d'un étudiant ou l'historique complet d'une question.
+
+\subsection{Les ajouts par rapport au cahier des charges initial}
+Durant cette seconde partie du projet, nous n'avons fait qu'un seul ajout notable par rapport au cahier des charges initial.
+En effet, pour le changement du mot de passe, nous nous sommes inspirés des différentes procédures présentes sur d'autres sites ou logiciels. 
+Ces procédures consistent à rentrer le mot de passe actuel et deux fois le nouveau mot de passe afin de s'assurer qu'il n'y a pas de changements involontaires.
+
+\subsection{Les manques par rapport au cahier des charges initial}
+Nous n'avons pas pu réaliser l'intégralité du cahier des charges. Nous nous sommes concentrés sur les tâches les plus techniques à produire. Nous n'avons donc pas pu réaliser les formatages des questions numériques qui nous demandaient seulement 2 chiffres après la virgule. De plus, s'il y a plus de cinq réponses, nous nous contentons de toutes les afficher au lieu d'afficher les 4 réponses les plus fréquentes. Enfin il est impossible de masquer l'énoncé ou la question durant une séquence en direct.
+
+\newpage
 \section{Architecture et choix techniques}
 
 \subsection{Architecture du projet}
-Le coté serveur de notre projet est soumis à de nombreuse dépendance. En effet, en plus des bibliothèques standards à python 
-comme os,haslib,time,datetime et csv nous avons aussi ajouter d'autre bibliothèques comme Flask, \\flask\_socketio,md\_mermaid 
-et markdownHTML. Cependant nous avons aussi des dépendances venant de fichiers que nous avons créé. Ainsi le fichier 
-serveur.py à besoin des fichiers manipulationQuestion.py qui permet de manipuler les ficher conservant les 
-questions,manipulationSequence.py qui permet de manipuler les fichiers conservant les séquences,manipulation\_Etu.py qui 
-permet de manipuler le fichier conservant les etudiants,manipulation\_User.py qui permet de manipuler le fichier conservant 
-les professeurs,markdownHTML.py qui permet de traduire du markdown,latex et mermaid en HTML  et enfin md\_mermaid qui permet
-aussi de traduire du texte en un code HTML. Ensuite le serveurs orchestre l'utilisation de toutes ces bibliothèques et fichiers
-afin d'obtenir les informations nécéssaire pour pouvoir générer les pages HTML. Ainsi le fichier serveur.py a un rôle centrale
-de notre projet.
 
-
+Le côté serveur de notre projet est soumis à de nombreuses dépendances.
+En effet, en plus des bibliothèques standards à python comme os, haslib, time, datetime et csv, nous avons aussi ajouté d'autres bibliothèques comme Flask, flask\_socketio, md\_mermaid et markdownHTML. 
+Cependant nous avons aussi des dépendances venant de fichiers que nous avons créés.
+\newline
+Ainsi le fichier serveur.py a besoin des fichiers :
 \begin{itemize}
-\item Architecture du projet
-\item Choix technologiques  avec leurs justifications (pourquoi ce choix, 
-
-comment il a été fait, par qui...),
+    \item manipulationQuestion.py afin de manipuler les fichiers conservant les questions;
+    \item manipulationSequence.py pour manipuler les fichiers conservant les séquences;
+    \item manipulation\_Etu.py qui permet de manipuler le fichier conservant les étudiants;
+    \item manipulation\_User.py pour manipuler le fichier conservant les professeurs;
+    \item markdownHTML.py afin de traduire du markdown, latex et mermaid en HTML;
+    \item md\_mermaid qui permet aussi de traduire du texte en un code HTML.
 \end{itemize}
 
+Ensuite le serveur orchestre l'utilisation de tous ces fichiers et bibliothèques afin d'obtenir les informations nécessaires pour pouvoir générer les pages HTML. 
+Ainsi, le fichier serveur.py a un rôle central dans notre projet car toutes les informations y transitent.\\
+Nous avons ensuite toute une architecture au niveau des fichiers CSV. Tout d'abord nous avons les
+fichiers de questions qui sont nommés "question\_"+identifiant de l'utilisateur+".csv". Ces fichiers
+sauvegardent ainsi toutes les questions d'un professeur selon son identifiant. Puis nous avons "User.csv" qui permet de sauvegarder les informations inhérentes à un professeur (identifiant, nom, adresse mail, mot de passe). Ensuite il y a "ID\_Question.csv" qui permet de connaître facilement quelles questions ont été créées par quel professeur selon son identifiant. Ensuite il y a "Sequence\_"+identifiant de l'utilisateur+".csv" qui permet de sauvegarder les séquences créées par un utilisateur. "historique\_"+identifiant de l'utilisateur+".csv" permet lui de conserver les historiques de chaque question d'un professeur. Et enfin, "Etu.csv", qui conserve les informations pour chaque étudiant ainsi que leur historique associé.
+
+\subsection{Choix technologiques}
+
+Afin de réaliser notre projet nous avons dû réaliser de nombreux compromis et choix parmi les choix technologiques et opérationnels.
+
+ \subsubsection{Utilisation de Flask\_socketIO}
+
+ Etant donné que nous avions déjà commencé à utiliser Flask sur notre serveur python, il a été logique pour nous de décider d'utiliser le module SocketIO de Flask, qui nous permet d'utiliser des sockets. 
+ Ceci nous a permis d'implémenter les transmissions en direct d'informations entre le client et le serveur.
+
+ \newpage
+
+ \subsubsection{Utilisation de fichier CSV}
+ 
+ 
+Pour réaliser la sauvegarde des différentes questions, utilisateurs et historiques au cours du temps, il a fallu réaliser un choix dès le début du projet. 
+ Ainsi lors de la première partie du projet, l'utilisation de fichiers CSV semblait logique.
+ De plus le fait que Conrath Matthieu savait déjà utiliser les CSV avec python a orienté ce choix technologique. 
+ Les fichiers CSV ont ainsi permis de stocker et accéder aux différentes informations simplement.
+ Cependant, l'utilisation de CSV s'est compliquée durant la seconde partie du projet à cause des historiques.
+ L'ensemble des fichiers CSV n'ayant pas été prévu au départ pour contenir les historiques, une solution peu élégante a été utilisée. 
+Les historiques sont stockés dans deux fichiers différents afin de minimiser le temps d'accès pour, d'une part, la récupération de tous les historiques de questions pour un professeur, et de l'autre, l'accès à tout l'historique de réponses pour un élève donné. 
+ Cependant, avec du recul, nous avons trouvé deux possibilités d'amélioration.
+ La première piste d'amélioration demande de totalement revoir l'ensemble des contenus des fichiers CSV afin de minimiser le nombre d'accès et la redondance d'informations (plutôt que d'accéder deux fois au même fichier, nous pourrions y accéder une seule fois et enregistrer les informations pour éviter les ouvertures à outrance). 
+ La seconde piste d'amélioration consiste à abandonner l'utilisation de fichiers CSV pour passer sur une base de données SQL. Cependant, quelle que soit la solution choisie, elle nécessite de refaire une partie considérable du projet, ce qui n'est plus possible actuellement.
+ 
+ \subsubsection{Traduire le markdown, latex et mermaid}
+Afin de traduire les différents langages de balisage, on utilise différentes bibliothèques python et JavaScript. Ainsi, nous avons dû installer la bibliothèque python markdown(disponible avec pip), la bibliothèque JavaScript mathjax (que l'on a directement téléchargée dans le code du projet) et la bibliothèque JavaScript mermaid. Ainsi, lorsque nous récupérons les énoncés et réponses dans le fichier CSV, nous traduisons directement les énoncés en ajoutant les balises HTML et en retirant les balises permettant de faire la différence entre les différents langages utilisés. Enfin les codes HTML sont interprétés au sein des pages HTML avec les bibliothèques JavaScript.
+
+
+
+\newpage
     
 \section{Détail}
 
-Explication technique de deux ou trois points (1 à 3 pages max)
-\begin{description}
-\item[Obligatoire] Comment se fait la récupération des réponses et l'affichage
-en direct sur le poste enseignant,
-
 \subsection{Récupération et affichage des questions en direct}
 
-Tout d'abord commencont par la récupération des questions depuis le fichier 
-csv. Etant donné que l'on possède l'identifiant du professeur ainsi que 
-l'identifiant de la question; On peut alors utilisé la fonction getQuestion qui
-prend un paramètre
-les deux identifiants précisé si-dessus. Afin de récupérer la question, il faut
-ouvir le fichier csv avec open en passant en paramètre le chemin absolue du
-fichier voulu (que l'on abregera en PATH) et r pour préciser un mode d'ouverture
-en écriture: 
+Tout d'abord, commençons par la récupération des questions depuis le fichier csv. 
+Étant donné que l'on possède l'identifiant du professeur ainsi que l'identifiant de la question, on peut alors utiliser la fonction getQuestion() qui prend ces deux paramètres pour renvoyer la question de ce professeur. 
+Afin de récupérer la question, il faut ouvrir le fichier csv avec open() en passant en paramètre le chemin absolu du fichier voulu (que l'on abrégera en PATH), et w (write) pour préciser un mode d'ouverture en écriture : 
+
 \begin{lstlisting}
  with open(PATH,'r') as FILE:
 \end{lstlisting}
-Ensuite afin de lire un csv il nous faut utiliser un fonction de la bibliothèque
-csv nommé reader qui nous donne un objet que l'on peut lire comme un liste de 
-liste de chaine de charactère
+
+Ensuite, pour lire un csv il nous faut utiliser une fonction de la bibliothèque
+csv nommé reader() qui nous donne un objet que l'on peut lire comme une liste de 
+liste de chaînes de caractères
+
 \begin{lstlisting}
  lecture=csv.reader(FILE,delimiter=';')
  ListeQuestion=[]
  for ligne in lecture:
     ListeQuestion.append(ligne)
 \end{lstlisting}
-Ici l'on stocke le contenue de lecture dans une véritable liste car lecture
-ne peut pas être lue via les indices. Ici le seul moyen de lire convenablement
-notre fichier est d'utilisé une boucle for du type "for i in liste:". \\
-Ensuite il nous reste plus qu'a formaté les listes. Pour rappel dans les 
-fichiers contenant les questions ainsi que leur réponse est de la forme:\\
+
+Ici, on stocke le contenu de lecture dans une liste car le descripteur de fichier "lecture"
+ne peut pas être lu via les indices. 
+Ici le seul moyen de lire convenablement notre fichier est d'utiliser une boucle for du type "for i in liste:". \\
+Ensuite il ne nous reste plus qu'à formater les listes. 
+Pour rappel, les fichiers contenant les questions ainsi que leurs réponses sont de la forme: \\
 Id;ET1;ET2;ET3;...;FINET;Question;REP1;REP2;...;FINREP;BREP1;BREP2;...\\
-(ET=étiquette REP=réponse BREP=Bonne réponse).
-Enfin il suffit de parcourir les questions est de comparés leurs identifiants 
-avec celui passé en paramètre. 
+(ET=étiquette, REP=réponse, BREP=Bonne réponse).\\
+Enfin, il suffit de parcourir les questions et de comparer leurs identifiants avec celui passé en paramètre. 
+On retourne ensuite le dictionnaire correspondant à la question. 
+Pour que l'énoncé et les réponses soient traduits en un code HTML pouvant être interprété par les différentes bibliothèques permettant l'affichage des graphes, du LaTeX ou de markdown, on utilise la fonction traductionUneQuestionToHTML, qui traduit les énoncés et les réponses en HTML grâce à la fonction markdownToHtml qui traduit, par exemple, le code mermaid suivant: 
+\begin{lstlisting}
+```mermaid mon graphe ```
+\end{lstlisting}
+En un code HTML :
+\begin{lstlisting}
+<br><pre class='mermaid'>mon graphe</pre><br>
+\end{lstlisting}
 
-\item[Au choix] Un ou deux  points techniques supplémentaires.  
-\end{description}
+Les intéractions entre serveur et clients lors des questions en direct sont réalisées en Socket, ce qui nous permet de facilement transmettre les informations entre le serveur, le professeur et les étudiants. Lorsqu'un professeur démarre une question en direct, le serveur enregistre : la question ou séquence qui est affichée, l'identifiant du professeur, et la liste des élèves connectés. Lorsqu'un élève se connecte à une question en direct, il envoie une requête Socket au serveur. Cela nous permet d'enregistrer l'élève afin de lui transmettre l'énoncé de la question en cours mais également toutes les informations nécessaires à la poursuite de la série de questions.
+Les énoncés des questions et les réponses proposées sont transmis au professeur et aux élèves par des sockets. 
 
+
+L'utilisation de Sockets a également amené de nouvelles difficultés. La méthode dont nous faisions l'appel aux bibliothèques Mermaid et MathJax ne réalisait le rendu de l'affichage graphique que lors du chargement initial de la page, et donc pas à la réception des informations de la question.
+
+\subsection{Historique}
+L'organisation des fichiers CSV n'ayant pas été pensée dès le départ pour l'intégration d'historiques, il nous a fallu faire un choix parmis plusieurs pour l'implémentation de celui-ci. \\
+Le premier choix possible était d'ajouter un fichier d'historique pour chaque professeur, ce qui aurait permis de récupérer rapidement l'hitorique d'une question, mais aurait ralentit la récupération de l'historique d'un étudiant.
+Le second choix possible était d'écrire les historiques dans le fichier des étudiants, ce qui permettait de récupérer rapidement l'historique pour un étudiant au détriment de la récupération de l'historique d'une question.
+L'option choisie a finalement été un mélange des deux. Nous avons fait le choix de stocker les informations en double pour pouvoir récupérer le plus rapidement possible les historiques d'une question et d'un étudiant
+Cependant, il y a aussi un autre problème à cette méthode. Il faut créer toutes les fonctions en double afin d'écrire, de récupérer et de supprimer une question entre les deux fichiers. L'écriture dans les fichiers CSV se déroule alors de la manière suivante :\\
+Tout d'abord il faut récupérer l'historique afin d'ajouter les nouveaux historiques dans les bonnes questions et pour les bons étudiants. Ainsi, on récupère des listes de listes représentant les historiques. Cependant nous formatons les historiques afin d'écrire dans les fichiers CSV. En effet nous avons donc dû trouver un nouveau séparateur pour pouvoir transformer les différentes listes en chaînes de caractères. Pour réaliser cette opération, nous utilisons la ligne suivante :
+\begin{lstlisting}
+listeHistorique[y][x]= 
+"@||||@".join([str(elem)for elem in listeHistorique[y][x]])
+\end{lstlisting}
+ Ensuite il suffit de réécrire dans le fichier CSV l'historique désormais modifié avec :
+ \begin{lstlisting}
+with open(PATH,'w',newline='') as FILE:
+    Ecriture = csv.writer(FILE,delimiter=';')
+    Ecriture.writerows(listeHistorique)
+ \end{lstlisting}
+Pour la récupération d'historique, le principe est similaire. On utilise la fonction dicoPourFaciliteLesStat(ID\_User) qui lira simplement le fichier afin de récupérer l'historique. Cependant des opérations sont à faire afin de récupérer les historiques voulus. Il faut donc réaliser une opération afin de retirer les séparateurs du fichier de cette manière :
+\begin{lstlisting}
+histo[i]=histo[i].split("@||||@")
+\end{lstlisting}
+Ensuite la liste récupérée sera traitée pour réaliser deux dictionnaires, séparant les historiques réalisés en Séquences des historiques réalisés en Direct. 
+
+\newpage
 \section{Bilan}
 
-Bilan et analyse rétrospective et difficultés rencontrées (environ une page). 
-Ce bilan peut aborder à la fois les aspects organisationnels et techniques.
+Certains points du cahier des charges n'ont pas été remplis tels que : le formatage des questions ouvertes numériques, l'affichage des 4 réponses les plus répondues et le masquage des énoncés et des questions. Cependant la majorité des exigences ont été atteintes, et aucune erreur n'a été trouvée à la suite de nos tests.\\
+Lors de ce projet nous avons rencontré des problèmes très divers. Une difficulté importante a été l'utilisation de Github. Tous les membres de notre groupe ont passé lors des séances de projet beaucoup de temps à mettre en place l'intégration Github dans notre environnement de développement. Nous avons tous dû, à plusieurs reprises, recréer entièrement notre environnement de programmation car l'authentification Github ne fonctionnait plus. 
+Lors du début du projet, nous avons choisi d'utiliser des fichiers CSV afin de stocker les données du serveur. Lors de la seconde partie du projet, nous avons rencontré des difficultés car cette méthode de stockage n'était pas adaptée à ce qui était demandé. L'utilisation d'une base de données SQL aurait été bien plus adaptée.
+L'organisation a également été un problème, nous aurions dû mieux répartir le travail lors du temps que nous avions afin de réaliser ce projet. 
+Prendre en main l'utilisation de Flask\_SocketIO a également été une difficulté, nous avions déjà travaillé sur des sockets lors du dernier semestre, cependant nous n'avions utilisé que ceux sur un serveur Node.js. 
+
+
+ Ce projet nous a permis de voir certaines des difficultés pour réaliser un service web en groupe. Comme par exemple le développement en simultané sur un même fichier, l'utilisation d'un code écrit par une autre personne, mais aussi la communication afin d'expliquer comment chacun voit le fonctionnement d'un service. Par exemple, il y a eu de multiples quiproquos entre nous sur le fonctionnement des interactions via sockets entre serveur et client.
+
+
+Malgré toutes les difficultés, la majorité des tâches à réaliser ont été faites. L'outil Github nous a permis de gérer facilement les différentes versions de notre logiciel. Les différentes bibliothèques que nous avons utilisées nous ont permis d'économiser énormément de temps sur l'affichage plus particulièrement sur la transcription de Markdown, \LaTeX  et Mermaid.
+
+
+
+
+
 
     \end{document}
+

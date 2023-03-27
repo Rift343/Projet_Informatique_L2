@@ -51,6 +51,7 @@
 						<th>reponse</th>
 						<th>id eleve</th>
 						<th>circonstance</th>
+						<th>supprimer</th>
 
 					</tr>
 				</thead><tr>
@@ -61,10 +62,50 @@
 					<td class="rep">{{element[1]}}</td>
 					<td class="id_eleve">{{element[2]}}</td>
 					<td class="circonstance">{{element[3]}}</td>
+					<script></script>
+					<td class="supprimer"><a href='../supprimerHisto/{{element|replace("/","delimiteur")}}/{{key}}'><button>Supprimer</button></a></td>
 
 					</tr>
 					{%endfor%}</table>
 				{% endfor %}
+
+
+
+
+				{% for key, value in dico_etu.items(): %}
+				<h1>etu : {{key}}</h1>
+				<!--<a href="../supprimerHistoComplet/{{key}}"><button>Suprimer historique eleve</button></a>-->
+
+				<table class="tableau_css">
+					
+			<thead>
+				<tr>
+					<th>idQ</th>
+					<th>date de reponse</th>
+					<th>reponse</th>
+					
+					<th>circonstance</th>
+					<th>supprimer</th>
+
+				</tr>
+			</thead>
+				{%for idQ,element in value.items():%}
+				{%for entree in element%}
+				<tr> 
+				<td class="id">{{idQ}}</td>
+				<td class="date">{{entree[0]}}</td>
+				<td class="rep">{{entree[1]}}</td>
+				
+				<td class="circonstance">{{entree[3]}}</td>
+				<script></script>
+				<td class="supprimer"><a href='../supprimerHistoEt/{{entree|replace("/","delimiteur")}}/{{idQ}}/{{key}}'><button>Supprimer</button></a></td>
+
+				</tr>
+				{%endfor%}{%endfor%}
+				</table>
+			{% endfor %}
+
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 				{% for key, value in histo.items(): %}
 				{{key}}

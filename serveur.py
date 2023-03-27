@@ -361,12 +361,52 @@ def supprimer(idQuestion):
         return redirect(url_for('BDD'))
     else:
         return render_template("non_connecte.html")
-
+@app.route("/supprimerHistoEt/<li>/<idQuestion>/<idetu>")
+def supprimerHistoDirectEt(li,idQuestion,idetu):
+    if 'UserId' in session and session['type'] == "pro":
+        
+        li = li.replace(" ","")
+        li = li.replace("[","")
+        li = li.replace("]","")
+        li = li.replace("'","")
+        li = li.replace("delimiteur","/")
+        lif = li.split(",")
+        
+        lif[2]=idetu
+        print("lif :",lif)
+        li2=[lif[0],lif[1],idQuestion,lif[3]]
+        if(lif[3]=="Sequence"):
+            li2.append(lif[4])
+        print("li2 :",li2)
+        suppHisto(li2, idetu)
+        #suppréssion dans le fichier étudiant 
+        # ex:suppHisto(["date","FV","idQ","Sequence","idS"],"1258")
+        supprimerUnHisto(lif, session["UserId"], idQuestion)
+        #suppréssion dans le fichier étudiant 
+        # ex:supprimerUnHisto(["07/04/2003","Faux","ve","Sequence","76"],1,2)
+        ###########################################
+        return redirect(url_for('Historique'))
+    else:
+        return render_template("non_connecte.html")
 @app.route("/supprimerHisto/<li>/<idQuestion>")
 def supprimerHistoDirect(li,idQuestion):
     if 'UserId' in session and session['type'] == "pro":
-        ##suppHisto(liste, idEtu)
-        supprimerUnHisto(li, session["UserId"], idQuestion)
+        
+        li = li.replace(" ","")
+        li = li.replace("[","")
+        li = li.replace("]","")
+        li = li.replace("'","")
+        li = li.replace("delimiteur","/")
+        lif = li.split(",")
+        
+        
+        print("lif :",lif)
+        li2=[lif[0],lif[1],idQuestion,lif[3]]
+        if(lif[3]=="Sequence"):
+            li2.append(lif[4])
+        print("li2 :",li2)
+        suppHisto(li2, lif[2])
+        supprimerUnHisto(lif, session["UserId"], idQuestion)
         ###########################################
         return redirect(url_for('Historique'))
     else:
@@ -562,6 +602,7 @@ def eleve_reponse_q(id_seq,reponse):
     print(reponse)
     id_seq = id_seq["id_seq"]
     li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
+    date_str=str(new_date())
     if(session["UserId"] not in li_eleve_deja_rep):
         #enregistrer rep
         if(estDansCSV(id_seq)):#c'est une sequence
@@ -570,11 +611,11 @@ def eleve_reponse_q(id_seq,reponse):
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
                 if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
                 else :
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
@@ -586,22 +627,22 @@ def eleve_reponse_q(id_seq,reponse):
                     if(li_brep!=[]):
                         bonnerep = False
                 if(bonnerep):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Sequence", id_seq], session["UserId"])
                 else:
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Sequence", id_seq])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Sequence", id_seq], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Sequence", id_seq])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Sequence", id_seq], session["UserId"])
         else:#c'est une question seule
             id_q = id_seq
             prof = dico_question_ouverte_to_prof[id_seq]
             enonce = getQuestion(prof, id_q)
             if(enonce["REP"]==[]):
                 if(reponse==enonce["BREP"][0]):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
                 else :
-                    ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Faux", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Faux", id_q, "Direct"], session["UserId"])
             else:
                 li_brep = enonce["BREP"]
                 bonnerep = True
@@ -613,8 +654,8 @@ def eleve_reponse_q(id_seq,reponse):
                     if(li_brep!=[]):
                         bonnerep = False
                 if(bonnerep):
-                    ajouterHisto(prof, id_q, [str(new_date()), "Vrai", session["UserId"], "Direct"])
-                    ajouterHistoEtu([str(new_date()), "Vrai", id_q, "Direct"], session["UserId"])
+                    ajouterHisto(prof, id_q, [date_str, "Vrai", session["UserId"], "Direct"])
+                    ajouterHistoEtu([date_str, "Vrai", id_q, "Direct"], session["UserId"])
                 else:
                     ajouterHisto(prof, id_q, [str(new_date()), "Faux", session["UserId"], "Direct"])
                     ajouterHistoEtu([str(new_date()), "Faux", id_q, "Direct"], session["UserId"])
@@ -651,6 +692,25 @@ def acceder_q(id_seq):
             socketio.emit("nouvelle_q", {'question':q}, to=request.sid)
             print("requete envoyée")
 
+def formatage_dict_etu(dict_q,dict_seq):
+    dict_final={}
+    for idQ in dict_q :
+        if idQ in dict_final:
+            dict_final[idQ].append(dict_q[idQ])
+        else:
+            dict_final[idQ]=dict_q[idQ]
+    #print(dict_final)
+    for idQ_seq in dict_seq :
+        idQ=idQ_seq.split("seq")[0]
+        seq=idQ_seq.split("seq")[1]
+        if idQ in dict_final:
+                
+            dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
+                #.append(dict_seq[idQ_seq])
+        else:
+            #print("on reaffecte")
+            dict_final[idQ]=dict_seq[idQ_seq]
+    return dict_final
 
 @app.route("/Historique") #Page de création d'une feuille de questions
 def Historique():
@@ -667,7 +727,7 @@ def Historique():
                 dict_final[idQ].append(dict_q[idQ])
             else:
                 dict_final[idQ]=dict_q[idQ]
-        print(dict_final)
+        #print(dict_final)
         for idQ_seq in dict_seq :
             idQ=idQ_seq.split("seq")[0]
             seq=idQ_seq.split("seq")[1]
@@ -676,9 +736,9 @@ def Historique():
                 dict_final[idQ]=dict_final[idQ]+dict_seq[idQ_seq]
                 #.append(dict_seq[idQ_seq])
             else:
-                print("on reaffecte")
+                #print("on reaffecte")
                 dict_final[idQ]=dict_seq[idQ_seq]
-        print(dict_final)
+        #print(dict_final)
         for idQ in dict_final:
             dict_histogramme[idQ]=[]
             li_date=[]
@@ -696,7 +756,15 @@ def Historique():
                     li_effectif.append(1)
             
             dict_histogramme[idQ]=[li_date,li_effectif]
-        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme)
+        li_etu = listedesEtudiant()
+        dico_histo_etu={}
+        for element in li_etu:
+            dic_inter=dicoHistoetu(element)
+                #print("dic inter",dic_inter)
+            dico_histo_etu[element]=formatage_dict_etu(dic_inter[0],dic_inter[1])
+            #print(dico_histo_etu)
+        print(dict_final)
+        return render_template("statsProf.html", Username=session['Username'], dico=dict_final, histo=dict_histogramme, dico_etu=dico_histo_etu)
     elif 'UserId' or 'Username' in session:
         return render_template("acceuil_connecte_etu.html")
     else:
