@@ -512,8 +512,7 @@ def creationControle():
         li_max=request.form.getlist('li_max')
         nb_q = int(request.form['nb_q'])
         nb_sujet = int(request.form['nb_sujet'])
-        #anonyme =
-        anonyme=False
+        anonyme = request.form.get("ano")
         li_min_max=[]
         for mi,ma in li_min,li_max:
             li_min_max.append([mi,ma])
