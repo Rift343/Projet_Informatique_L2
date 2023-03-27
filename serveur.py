@@ -491,15 +491,15 @@ def afficheSequence(id):
         
         
         
-@app.route("/generationControle") #Page dde création d'une feuille de questionse création d'une feuille de questions
+@app.route("/generationControles") #Page dde création d'une feuille de questionse création d'une feuille de questions
 def genControle():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         li_dico = depuis_csv(session['UserId'])
-        li_etiq
+        li_etiq = []
         for dico in li_dico:
             li_etiq = li_etiq + dico["ET"]
         li_etiq.sort()
-        return render_template("generationControles.html",username=session["Username"],li_eti=li_etiq)
+        return render_template("generationControles.html",Username=session["Username"],li_eti=li_etiq)
     else:
         return render_template("non_connecte.html")
 
@@ -516,13 +516,14 @@ def creationControle():
         li_min_max=[]
         for mi,ma in li_min,li_max:
             li_min_max.append([mi,ma])
-        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
+        #li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
         li_final =[]
-        for enonce in li_li_id:
+        """for enonce in li_li_id:
             sujet=[]
             for e in enonce:
                 sujet.append(getQuestion(session["UserId"], e))
-            li_final.append(sujet)
+            li_final.append(sujet)"""
+        print(li_eti,li_min,li_max)
             
         
         return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)

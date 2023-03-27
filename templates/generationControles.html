@@ -19,30 +19,81 @@
 		 </script>
 		<title>QuizTio</title>
 		<script>
-			function load_eti(){
-				var li_etiquettes = [];
-				var li_nb = []
 
-				var elements = document.getElementsByClassName("eti");
-				for (var i = 0; i < elements.length; i++) {
-					if(li_etiquettes.includes(elements[i])){
-						index = li_etiquettes.indexOf(elements[i])
+			var li_etiquettes = [];
+			var li_nb = [];
+			elements="{% for eti in li_eti: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}"
+
+			function load_eti(){
+				li_eti = elements.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
+
+				for (var i = 0; i < li_eti.length; i++) {
+					if(li_etiquettes.includes(li_eti[i])){
+						index = li_etiquettes.indexOf(li_eti[i]);
 						li_nb[index]+=1;
 					}
 					else{
-						li_etiquettes.push(elements[i]);
+						li_nb.push(1);
+						li_etiquettes.push(li_eti[i]);
 					}
 				}
-				console.log(li_etiquettes);
-				console.log(li_nb);
+				console.log("liste etiquettes : ", li_etiquettes);
+				console.log("liste des occurences : ", li_nb);
 
 				for (var i = 0; i < li_etiquettes.length; i++) {
-				console.log(li_etiquettes[i]);
-					document.getElementById("etiquettes").innerHTML =
-						document.getElementById("etiquettes").innerHTML +
-						'<number id="' +li_etiquettes[i] +'-min" placeholder="min" min="0" max="'+ li_nb[i] +'" style="background-color : white" >'+
-						'<number id="' +li_etiquettes[i] +'-max" placeholder="max" min="0" max="'+ li_nb[i] +'" style="background-color : white" >' +li_etiquettes[i] +"(" +li_nb[i] +" questions max)</number>";
+					document.getElementById("etiquettes").innerHTML = document.getElementById("etiquettes").innerHTML +
+						'<input type="number" class="li_min" name="li_min" placeholder="min" min="0" max="'+ li_nb[i] +'" value="0" style="background-color : white" ></input>'+
+						'<input type="number" class="li_max" name="li_max" placeholder="max" min="0" max="'+ li_nb[i] +'" style="background-color : white" >' +li_etiquettes[i] +"(" +li_nb[i] +" questions max)</input><br>";
 				}
+			}
+
+			function binomial(n, k) { 
+   				var coeff = 1;
+    			for (var x = n-k+1; x <= n; x++) {coeff *= x;}
+    			for (x = 1; x <= k; x++){
+					coeff /= x;
+				}
+    		return coeff;
+			}
+
+			function send(){
+				erreur=false;
+				var li_min = [];
+				var li_max = [];
+				var min = 0;
+				var max = 0;
+				var valeur = 1;
+				li_mini = document.getElementsByClassName("li_min");
+				li_maxi = document.getElementsByClassName("li_max");
+				for (elements of li_mini){
+					li_min.push(elements.value);
+					min = min + parseInt(elements.value);
+				}
+				for (elements of li_maxi){
+					li_max.push(elements.value);
+					max = max + parseInt(elements.value);
+				}
+				for(var i=0; i<li_max.length; i++){
+					if (li_max[i]<li_min[i]){
+						erreur=true;
+						console.log("un min > max");
+					}
+				}
+				for(var i=0; i<li_min.length;i++){
+					valeur*=binomial(li_nb[i], li_min[i]);
+				}
+				if(valeur<document.getElementById("nb_sujet").value){
+					erreur=true
+					console.log("binomial");
+				}
+				if(document.getElementById("nb_q").value< min || document.getElementById("nb_q").value>max){
+					console.log("nb_q : ", document.getElementById("nb_q").value, "min : ", min, "max : ", max);
+					erreur=true
+					console.log("nb_q pas atteignable avec min et max");
+				}
+
+				console.log(erreur);
+
 			}
 		</script>
 	</head>
@@ -64,21 +115,13 @@
 		</ul>
 		<div id="mid">
 			<div id="etiquettes"></div>
-			<td class="eti">
+			<div id="eti"></div><br>
 				<!--form -> getelementbyid form.submit (faux bouton pour traitement avant post)-->
-				{% for eti in li_eti: %}
-					{%if not loop.last%}
-						{{eti+"; "}}
-					{%else%}
-						{{eti}}
-					{%endif%}
-				{%endfor%}</td>
-
-				<input type="number" id="nb_q" min="0">Nombre de questions par sujet</input>
+				<input type="number" id="nb_q" min="0">Nombre de questions par sujet</input><br>
 				<!--nb de questions par sujet (entre addition de min et max pour chaque eti)-->
-				<input type="number" id="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input>
-				<input type="checkbox" id="ano">Contrôle anonyme ?</input>
-				<button onclick="send()">Valider</button>
+				<input type="number" id="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input><br>
+				<input type="checkbox" id="ano">Contrôle anonyme ?</input><br>
+				<button onclick="send()">Valider</button><br>
 		</div>
 	</body>
 </html>
