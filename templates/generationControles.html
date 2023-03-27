@@ -19,163 +19,34 @@
 		 </script>
 		<title>QuizTio</title>
 		<script>
-			function filtrage_par_eti(etiquette_filtre) {
-				//changer onclick button
-				document.getElementById(etiquette_filtre + "-bouton").style =
-					"background-color : blue";
-				document.getElementById(etiquette_filtre + "-bouton").activer =
-					"oui";
-				document
-					.getElementById(etiquette_filtre + "-bouton")
-					.setAttribute(
-						"onclick",
-						'javascript: deactiver_filtrage("' +
-							etiquette_filtre +
-							'");'
-					);
-				var elements = document.getElementsByClassName("eti");
-				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
-					if (!li_eti.includes(etiquette_filtre)) {
-						elements[i].parentElement.setAttribute("hidden", true);
-						<body onload="bouton_filtrage()">
-		<div class="nom">QuizTio</div>
-		<ul class="menu">
-			<li>
-				{{Username}}
-				<ul class="sousMenu">
-					<li><a href="/">Accueil</a></li>
-					<li><a href="profil">Profil</a></li>
-					<li><a href="BDD">Liste de vos questions</a></li>
-					<li><a href="creationQuestion">Créer une question</a></li>
-					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
-					<li><a href="creationSequence">Créer une séquence</a></li>
-					<li><a href="deco">Se déconnecter</a></li>
-				</ul>
-			</li>
-		</ul>
-		<div id="mid">
-			<div id="boutons_de_filtrage"></div><form action="" method="POST"><input type="submit" value="valider" style="    position: fixed;
-				bottom: 50px;
-				right: 30px;
-				width: 6%; height: 5%; "><br>
-			<table class="tableau_css">
-				<thead>
-					<tr><th>Selection</th>
-						<th>ID</th><th>Etiquettes</th>
-						<th>Enoncé</th>
-						<th>Reponses Possibles</th>
-						<th>Bonnes reponses</th><th>Visualiser</th><th>Modifier</th><th>Supprimer</th>
-					</tr>
-				</thead>
-				{% for dico in li_dictionnaire: %}
-				<tr><td class="id_tableau"><input type="checkbox" name="idQuestion" id = "idQuestion" value = "{{dico["ID"]}}" ></td>
-					<td class="id_tableau">{{dico["ID"]}}</td>
-					
-					<td class="eti">
-						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
-					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
-					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
-					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
-					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
-					</tr>
-				{% endfor %}
-			</table></form>
-		</div>
-	</body>
-</html>				}
-				}
-			}
-			function deactiver_filtrage(etiquette_filtre) {
-				document.getElementById(etiquette_filtre + "-bouton").style =
-					"background-color : white";
-				document.getElementById(etiquette_filtre + "-bouton").activer =
-					"non";
-				document
-					.getElementById(etiquette_filtre + "-bouton")
-					.setAttribute(
-						"onclick",
-						'javascript: filtrage_par_eti("' +
-							etiquette_filtre +
-							'");'
-					);
-				var eti_exercices = document.getElementsByClassName("eti");
-				for (var j = 0; j < eti_exercices.length; j++) {
-					eti_exercices[j].parentElement.removeAttribute("hidden");
-				}
-				var elements = document.getElementsByClassName("bouton");
-				for (var i = 0; i < elements.length; i++) {
-					//console.log(elements[i].activer)
-					if (elements[i].activer == "oui") {
-						eti = elements[i].id.split("-")[0]; //si bouton activer
-						//console.log("etiquette a filtre :"+eti);
-						var eti_exercices =
-							document.getElementsByClassName("eti");
-						for (var j = 0; j < eti_exercices.length; j++) {
-							li_eti = eti_exercices[j].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
-							//console.log(li_eti);
-							if (!li_eti.includes(eti)) {
-								eti_exercices[j].parentElement.setAttribute(
-									"hidden",
-									true
-								);
-							}
-						}
-					}
-				}
-			}
-
-			function bouton_filtrage() {
-				//on fait la liste de toutes les etiquettes existantes et on fait les boutons de filtrage
-				li_eti_total = [];
-				var dict = {}; //on creer un objet qui sert de dictionnaire
+			function load_eti(){
+				var li_etiquettes = [];
+				var li_nb = []
 
 				var elements = document.getElementsByClassName("eti");
-				console.log(elements);
 				for (var i = 0; i < elements.length; i++) {
-					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
-					console.log(li_eti);
-					for (var j = 0; j < li_eti.length; j++) {
-						console.log(!li_eti_total.includes(li_eti[j]));
-						if (
-							!li_eti_total.includes(li_eti[j]) &&
-							li_eti[j] != ""
-						) {
-							i;
-
-							li_eti_total.push(li_eti[j]);
-							dict[li_eti[j]] = 1;
-						} else {
-							dict[li_eti[j]] = dict[li_eti[j]] + 1;
-						}
+					if(li_etiquettes.includes(elements[i])){
+						index = li_etiquettes.indexOf(elements[i])
+						li_nb[index]+=1;
+					}
+					else{
+						li_etiquettes.push(elements[i]);
 					}
 				}
-				console.log(li_eti_total);
-				for (var i = 0; i < li_eti_total.length; i++) {
-				console.log(li_eti_total[i]);
-					document.getElementById("boutons_de_filtrage").innerHTML =
-						document.getElementById("boutons_de_filtrage")
-							.innerHTML +
-						'<button class="bouton" id="' +
-						li_eti_total[i] +
-						'-bouton" activer="non" onclick=filtrage_par_eti("' +
-						li_eti_total[i] +
-						'") value=' +
-						li_eti_total[i] +
-						"(" +
-						dict[li_eti_total[i]] +
-						') style="background-color : white" activer="non" >' +
-						li_eti_total[i] +
-						"(" +
-						dict[li_eti_total[i]] +
-						")</button>";
+				console.log(li_etiquettes);
+				console.log(li_nb);
+
+				for (var i = 0; i < li_etiquettes.length; i++) {
+				console.log(li_etiquettes[i]);
+					document.getElementById("etiquettes").innerHTML =
+						document.getElementById("etiquettes").innerHTML +
+						'<number id="' +li_etiquettes[i] +'-min" placeholder="min" min="0" max="'+ li_nb[i] +'" style="background-color : white" >'+
+						'<number id="' +li_etiquettes[i] +'-max" placeholder="max" min="0" max="'+ li_nb[i] +'" style="background-color : white" >' +li_etiquettes[i] +"(" +li_nb[i] +" questions max)</number>";
 				}
 			}
 		</script>
 	</head>
-	<body onload="bouton_filtrage()">
+	<body onload="load_eti()">
 		<div class="nom">QuizTio</div>
 		<ul class="menu">
 			<li>
@@ -192,34 +63,22 @@
 			</li>
 		</ul>
 		<div id="mid">
-			<div id="boutons_de_filtrage"></div><form action="" method="POST"><input type="submit" value="valider" style="    position: fixed;
-				bottom: 50px;
-				right: 30px;
-				width: 6%; height: 5%; "><br>
-			<table class="tableau_css">
-				<thead>
-					<tr><th>Selection</th>
-						<th>ID</th><th>Etiquettes</th>
-						<th>Enoncé</th>
-						<th>Reponses Possibles</th>
-						<th>Bonnes reponses</th><th>Visualiser</th><th>Modifier</th><th>Supprimer</th>
-					</tr>
-				</thead>
-				{% for dico in li_dictionnaire: %}
-				<tr><td class="id_tableau"><input type="checkbox" name="idQuestion" id = "idQuestion" value = "{{dico["ID"]}}" ></td>
-					<td class="id_tableau">{{dico["ID"]}}</td>
-					
-					<td class="eti">
-						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
-					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
-					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
-					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
-					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
-					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
-					</tr>
-				{% endfor %}
-			</table></form>
+			<div id="etiquettes"></div>
+			<td class="eti">
+				<!--form -> getelementbyid form.submit (faux bouton pour traitement avant post)-->
+				{% for eti in li_eti: %}
+					{%if not loop.last%}
+						{{eti+"; "}}
+					{%else%}
+						{{eti}}
+					{%endif%}
+				{%endfor%}</td>
+
+				<input type="number" id="nb_q" min="0">Nombre de questions par sujet</input>
+				<!--nb de questions par sujet (entre addition de min et max pour chaque eti)-->
+				<input type="number" id="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input>
+				<input type="checkbox" id="ano">Contrôle anonyme ?</input>
+				<button onclick="send()">Valider</button>
 		</div>
 	</body>
 </html>
