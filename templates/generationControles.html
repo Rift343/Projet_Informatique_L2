@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
+		<title>QuizTio</title>
+		<script>
+			function load_eti(){
+				var li_etiquettes = [];
+				var li_nb = []
+
+				var elements = document.getElementsByClassName("eti");
+				for (var i = 0; i < elements.length; i++) {
+					if(li_etiquettes.includes(elements[i])){
+						index = li_etiquettes.indexOf(elements[i])
+						li_nb[index]+=1;
+					}
+					else{
+						li_etiquettes.push(elements[i]);
+					}
+				}
+				console.log(li_etiquettes);
+				console.log(li_nb);
+
+				for (var i = 0; i < li_etiquettes.length; i++) {
+				console.log(li_etiquettes[i]);
+					document.getElementById("etiquettes").innerHTML =
+						document.getElementById("etiquettes").innerHTML +
+						'<number id="' +li_etiquettes[i] +'-min" placeholder="min" min="0" max="'+ li_nb[i] +'" style="background-color : white" >'+
+						'<number id="' +li_etiquettes[i] +'-max" placeholder="max" min="0" max="'+ li_nb[i] +'" style="background-color : white" >' +li_etiquettes[i] +"(" +li_nb[i] +" questions max)</number>";
+				}
+			}
+		</script>
+	</head>
+	<body onload="load_eti()">
+		<div class="nom">QuizTio</div>
+		<ul class="menu">
+			<li>
+				{{Username}}
+				<ul class="sousMenu">
+					<li><a href="/">Accueil</a></li>
+					<li><a href="profil">Profil</a></li>
+					<li><a href="BDD">Liste de vos questions</a></li>
+					<li><a href="creationQuestion">Créer une question</a></li>
+					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+					<li><a href="creationSequence">Créer une séquence</a></li>
+					<li><a href="deco">Se déconnecter</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div id="mid">
+			<div id="etiquettes"></div>
+			<td class="eti">
+				<!--form -> getelementbyid form.submit (faux bouton pour traitement avant post)-->
+				{% for eti in li_eti: %}
+					{%if not loop.last%}
+						{{eti+"; "}}
+					{%else%}
+						{{eti}}
+					{%endif%}
+				{%endfor%}</td>
+
+				<input type="number" id="nb_q" min="0">Nombre de questions par sujet</input>
+				<!--nb de questions par sujet (entre addition de min et max pour chaque eti)-->
+				<input type="number" id="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input>
+				<input type="checkbox" id="ano">Contrôle anonyme ?</input>
+				<button onclick="send()">Valider</button>
+		</div>
+	</body>
+</html>

@@ -38,7 +38,54 @@
 					li_eti = elements[i].innerHTML.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
 					if (!li_eti.includes(etiquette_filtre)) {
 						elements[i].parentElement.setAttribute("hidden", true);
-					}
+						<body onload="bouton_filtrage()">
+		<div class="nom">QuizTio</div>
+		<ul class="menu">
+			<li>
+				{{Username}}
+				<ul class="sousMenu">
+					<li><a href="/">Accueil</a></li>
+					<li><a href="profil">Profil</a></li>
+					<li><a href="BDD">Liste de vos questions</a></li>
+					<li><a href="creationQuestion">Créer une question</a></li>
+					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+					<li><a href="creationSequence">Créer une séquence</a></li>
+					<li><a href="deco">Se déconnecter</a></li>
+				</ul>
+			</li>
+		</ul>
+		<div id="mid">
+			<div id="boutons_de_filtrage"></div><form action="" method="POST"><input type="submit" value="valider" style="    position: fixed;
+				bottom: 50px;
+				right: 30px;
+				width: 6%; height: 5%; "><br>
+			<table class="tableau_css">
+				<thead>
+					<tr><th>Selection</th>
+						<th>ID</th><th>Etiquettes</th>
+						<th>Enoncé</th>
+						<th>Reponses Possibles</th>
+						<th>Bonnes reponses</th><th>Visualiser</th><th>Modifier</th><th>Supprimer</th>
+					</tr>
+				</thead>
+				{% for dico in li_dictionnaire: %}
+				<tr><td class="id_tableau"><input type="checkbox" name="idQuestion" id = "idQuestion" value = "{{dico["ID"]}}" ></td>
+					<td class="id_tableau">{{dico["ID"]}}</td>
+					
+					<td class="eti">
+						{% for eti in dico["ET"]: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}
+					</td><td class="enonce_tableau">{{dico["Question"]| safe}}</td>
+					<td class="rep_tableau">{% for rep in dico["REP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="brep_tableau">{% for rep in dico["BREP"]: %}{{rep| safe}}{%endfor%}</td>
+					<td class="visu_tableau"><a href="question/{{dico["ID"]}}"><img src="/static/visu.png"></a></td>
+					<td class="modif_tableau"><a href="modificationQuestion/{{dico["ID"]}}"><img src="/static/modif.png"></td>
+					<td class="supp_tableau"><a href="supprimer/{{dico["ID"]}}"><img src="/static/supp.png"></td>
+					</tr>
+				{% endfor %}
+			</table></form>
+		</div>
+	</body>
+</html>				}
 				}
 			}
 			function deactiver_filtrage(etiquette_filtre) {
@@ -173,14 +220,6 @@
 					</tr>
 				{% endfor %}
 			</table></form>
-		</div><!--
-		<div id="bot">
-			<a href="./">Acceuil</a>
-			<a href="register">S'enregistrer</a>
-			<a href="login">Se connecter</a>
-			<a href="creationQuestion">Creer une question</a>
-			<a href="BDD">Liste de vos questions</a>
-			<a href="creationFeuille">Creer une feuille d'exercice</a>
-		</div>-->
+		</div>
 	</body>
 </html>

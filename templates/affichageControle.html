@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="static/main.css" />
+		<link rel="stylesheet" href="static/tableaux.css" />
+		<script src="../static/mermaid.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
+		<script src="../static/load-mathjax.js" async></script>
+		<script>hljs.initHighlightingOnLoad()
+		  window.addEventListener('load',() =>{
+			let codeBlock=document.getElementsByTagName('code');
+			for(let i in codeBlock)
+			{
+			  hljs.highlightBlock(codeBlock[i]);
+			}
+		   });
+		 </script>
+		<title>QuizTio</title>
+		<script>
+			
+			
+		</script>
+	</head>
+	<body onload="print()">
+		<div class="nom">QuizTio</div>
+    <ul class="menu">
+        <li>
+            {{Username}}
+            <ul class="sli_finalref="creationQuestion">Créer une question</a></li>
+                <li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
+				<li><a href="creationSequence">Créer une séquence</a></li>
+				<li><a href="deco">Se déconnecter</a></li>
+            </ul>
+        </li>
+    </ul>
+		<div id="mid">
+            {% for li_dictionnaire in liste_controle: %}
+            {%if anon%}
+            {% for i in range(6) %}
+            {% for i in range(10) %}
+                  <input type="checkbox">{{i}}<BR>
+            {% endfor %}
+            {% endfor %}
+            
+            
+            
+            {%else%}
+            Nom : <input type="texte">
+            Prenom : <input type="texte">
+            Numero Etudiant : <input type="texte">
+            
+            
+            
+            {%endif%}
+			<table class="tableau_css">
+				<thead>
+					<tr>
+						<th>Enoncé</th>
+						<th>Reponses Possibles</th>
+					</tr>
+				</thead>
+				{% for dico in li_dictionnaire: %}
+				<tr>					
+					<td class="enonce_tableau">{{dico["Question"]| safe}}</td>
+					<td class="rep_tableau" style="text-align : left">
+						{% for rep in dico["REP"]: %}
+							<br><input type="checkbox" id="{{rep|safe}}" name="{{rep|safe}}"><label for="{{rep|safe}}">{{"  "+rep|safe}}<br></label>
+							{%if loop.last%}<br>{%endif%}
+						{%endfor%}</td>
+					</tr>
+					
+				{% endfor %}
+			</table><div style="page-break-before:always">&nbsp;</div> 
+				{% endfor %}
+				
+				
+		</div>
+	</body>
+</html>
