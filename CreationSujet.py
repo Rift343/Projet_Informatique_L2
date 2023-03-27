@@ -1,5 +1,6 @@
 import manipulationQuestion
 import random
+import copy
 
 def recupererListeQuestionParEtiquette(ID_User,Eti):
     """
@@ -22,10 +23,10 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion)
     sauveguardeListeIntervalle = []
     for i in listeIntervalle:
         sauveguardeListeIntervalle.append(i)
-    print(sauveguardeListeIntervalle)
+    #print(sauveguardeListeIntervalle)
     while len(liste_sujet)<nbSujet:
-        liste_sujet.append(1)
-        newSujet=[]
+        #liste_sujet.append(1)
+        
         traitementIntervalle=[]
         for i in range(len(listeIntervalle)):
             traitementIntervalle.append(0)
@@ -64,10 +65,33 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion)
 
         
         #print("sauve =",listeIntervalle) 
+        newSujet=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
+        #print(newSujet)
+        #print(newSujet)
+        newSujetSort=copy.deepcopy(newSujet)
+        #print(newSujetSort)
+        newSujetSort.sort()
+        #print(newSujetSort)
+        #print(newSujet)
+        #print(listeIntervalle)
+        liste_sujet_sort =copy.deepcopy(liste_sujet)
+        for i in range (len(liste_sujet_sort)):   
+            liste_sujet_sort[i].sort()
 
+        compteur=0
+        while (newSujetSort in liste_sujet_sort):
+            newSujet=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
+            compteur=compteur+1
+            if (compteur==1000):
+                return liste_sujet
+        liste_sujet.append(newSujet)
+    return liste_sujet
+        
+            
 
-
-        for i in range (len(ListeEtiquette)):
+def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
+    newSujet=[]
+    for i in range (len(ListeEtiquette)):
             nombreElement=traitementIntervalle[i]
             sujetDispo = recupererListeQuestionParEtiquette(ID_User,ListeEtiquette[i])
             for y in range(nombreElement):
@@ -76,18 +100,13 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion)
                     question =random.choice(sujetDispo)
                 sujetDispo.remove(question)
                 newSujet.append(question)
-            
-        #print(listeIntervalle)
-        print (newSujet)
-        listeSort = liste_sujet.sort()
-        newSujetSort = newSujet.sort()
-
-                
+    return newSujet
+    
   
 
         
 
 
 
-creer_sujet(["test","QCM"],[[1,1],[2,3]],100,"ba31fDpm",4)
-#print (recupererListeQuestionParEtiquette("ba31fDpm","test"))
+print(creer_sujet(["test","QCM"],[[1,1],[2,3]],10,"ba31fDpm",4))
+#print((recupererListeQuestionParEtiquette("ba31fDpm","QCM")))
