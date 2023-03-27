@@ -489,6 +489,47 @@ def afficheSequence(id):
         render_template("acceuil.html")
         
         
+        
+        
+@app.route("/controle") #Page dde création d'une feuille de questionse création d'une feuille de questions
+def creationControle():
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
+        li_dico = depuis_csv(session['UserId'])
+        li_etiq
+        for dico in li_dico:
+            li_etiq = li_etiq + dico["ET"]
+        li_etiq.sort()
+        return render_template("generationControles.html",username=session["Username"],li_eti=li_etiq)
+    else:
+        return render_template("non_connecte.html")
+
+
+@app.route("/controle",methods = ['POST']) #Page dde création d'une feuille de questionse création d'une feuille de questions
+def creationControle():
+    if 'UserId' and 'Username' in session and session['type'] == "pro":
+        li_eti=request.form.getlist('li_eti')
+        li_min=request.form.getlist('li_min')
+        li_max=request.form.getlist('li_max')
+        nb_q = int(request.form['nb_q'])
+        nb_sujet = int(request.form['nb_sujet'])
+        #anonyme =
+        anonyme=False
+        li_min_max=[]
+        for mi,ma in li_min,li_max:
+            li_min_max.append([mi,ma])
+        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
+        li_final =[]
+        for enonce in li_li_id:
+            sujet=[]
+            for e in enonce:
+                sujet.append(getQuestion(session["UserId"], e))
+            li_final.append(sujet)
+            
+        
+        return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
+    else:
+        return render_template("non_connecte.html")
+        
 @socketio.on('ouvrir_seq')#prof ouvre sequence
 def ouvrir_q(id_seq):
     if 'UserId' or 'Username' in session and session['type'] == "pro":
