@@ -491,8 +491,8 @@ def afficheSequence(id):
         
         
         
-@app.route("/controle") #Page dde création d'une feuille de questionse création d'une feuille de questions
-def creationControle():
+@app.route("/generationControle") #Page dde création d'une feuille de questionse création d'une feuille de questions
+def genControle():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         li_dico = depuis_csv(session['UserId'])
         li_etiq
