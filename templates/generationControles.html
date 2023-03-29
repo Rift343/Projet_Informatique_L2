@@ -22,7 +22,8 @@
 
 			var li_etiquettes = [];
 			var li_nb = [];
-			elements="{% for eti in li_eti: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}"
+			var nb_q_max = 0;
+			elements='{% for eti in li_eti: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}'
 
 			function load_eti(){
 				li_eti = elements.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
