@@ -18,7 +18,7 @@ def recupererListeQuestionParEtiquette(ID_User,Eti):
             listeDeRetour.append(element['ID'])
     return listeDeRetour
 
-def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion):
+def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,melange):
     liste_sujet=[]
     sauveguardeListeIntervalle = []
     for i in listeIntervalle:
@@ -59,6 +59,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion)
         #print('ok')
         #print("sauva=",sauveguardeListeIntervalle)
         #print(traitementIntervalle) 
+        
         listeIntervalle = []
         for z in sauveguardeListeIntervalle:
             listeIntervalle.append(z)
@@ -85,6 +86,8 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion)
             if (compteur==1000):
                 return liste_sujet
         liste_sujet.append(newSujet)
+    if (melange==True):
+        liste_sujet.shuffle()
     return liste_sujet
         
             
@@ -108,5 +111,6 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
 
 
 
-print(creer_sujet(["test","QCM"],[[1,1],[2,3]],10,"ba31fDpm",4))
+liste1=creer_sujet(["test","QCM"],[[1,1],[2,3]],10,"ba31fDpm",4,True)
+print(liste1)
 #print((recupererListeQuestionParEtiquette("ba31fDpm","QCM")))
