@@ -521,13 +521,13 @@ def creationControle():
         li_min_max=[]
         for mi,ma in li_min,li_max:
             li_min_max.append([mi,ma])
-        #li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
+        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
         li_final =[]
-        """for enonce in li_li_id:
+        for enonce in li_li_id:
             sujet=[]
             for e in enonce:
                 sujet.append(getQuestion(session["UserId"], e))
-            li_final.append(sujet)"""
+            li_final.append(sujet)
         print(li_eti,li_min,li_max)
             
         
