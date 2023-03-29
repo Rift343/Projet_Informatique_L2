@@ -188,24 +188,29 @@ def ajoutQuestion():
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
-        if nb_reponses=='1':
+        #print(nb_reponses)
+        for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
+            if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
+                li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+
+        if len(li_bonnes_reponses)==1:
             li_rep=[]
             li_bonnes_reponses.append(reponses)
             li_etiquettes = etiquettes
             li_etiquettes.append("QuestionOuverte")
 
-        elif nb_reponses=='':
+        elif len(li_bonnes_reponses)==0:
             li_rep=[]
             li_etiquettes = etiquettes
             li_etiquettes.append("QuestionSuperOuverte")
 
         else:
-            for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
-                if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
-                    li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
             li_rep = reponses.split(';')
             li_etiquettes = etiquettes
             li_etiquettes.append("QCM")
+
+    
+            
             
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
          
