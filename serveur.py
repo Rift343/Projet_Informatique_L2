@@ -545,7 +545,7 @@ def creationControle():
         print(li_eti,li_min,li_max)
         
         if(erreur):
-            return render_template("accueil.html",Username=session["Username"])
+            return render_template("acceuil.html",Username=session["Username"])
         else:
             return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
     else:
