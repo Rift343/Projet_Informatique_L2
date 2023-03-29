@@ -19,7 +19,7 @@
         rep_bloquer=false;
         nb_rep_totale=0;
         liste_rep_eleve=[];
-        qcm = false;
+        typeQuest="";
         socket.on('nouvelle_q', (question) =>{
             console.log(question.question["Question"])
             console.log(Object.keys(question))
@@ -30,22 +30,31 @@
             i = 0;
             rep_bloquer=false;
             liste_rep_eleve=[];
-            qcm=false
-            for (element of question.question["REP"]){
-                liste_rep_eleve.push(0);
-                qcm=true;
-                document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
-                    
-                if(question.question["BREP"].includes(element)){
+            console.log(question.question["REP"].length,"if true alors question rep est vide")
+            if(question.question["BREP"].length==0){
+                typeQuest="qso"; //qso pour questionSuperOuverte
+            }
+            else if(question.question["BREP"].length==1){
+                typeQuest="qo"; //qo pour questionOuverte
+            }
+            else{
+                for (element of question.question["REP"]){
+                    liste_rep_eleve.push(0);
+                    console.log("j'en suis bien arrivé là battard")
+                    typeQuest="qcm";
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div id='brep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                        "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
+                        
+                    if(question.question["BREP"].includes(element)){
+                        document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                        "<div id='brep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    }
+                    else{
+                        document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
+                        "<div id='mrep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                    }
+                    i++;
                 }
-                else{
-                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                    "<div id='mrep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
-                }
-                i++;
             }
             
             rep_direct_var=false;
@@ -62,7 +71,7 @@
             if(! rep_bloquer){
             nb_rep_totale = nb_rep_totale+1;
             reponse = data["reponse"];
-            if(qcm){
+            if(typeQuest=="qcm"){
             for (element of reponse){
                 if(element<liste_rep_eleve.length)
                 liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
@@ -79,8 +88,8 @@
         }
         });
     function actualiser_rep(){
-        console.log(qcm)
-        if(qcm){
+        console.log(typeQuest,"C'est le type de question")
+        if(typeQuest=="qcm"){
             for (element in liste_rep_eleve){
                 document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
                 if(document.getElementById("brep_num_"+element)==null){
@@ -89,6 +98,20 @@
                     document.getElementById("brep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
                 }
                 }}
+        else if (typeQuest=="qso"){
+            document.getElementById("champs_reponses").innerHTML="";
+            words={};
+            for (word of liste_rep_eleve){
+            if(Object.keys(words).includes(word))
+                words[word]=words[word]+1;
+            else{
+                words[word]=1;
+            }
+            }
+            for (word of Object.keys(words)){
+            document.getElementById("champs_reponses").innerHTML=document.getElementById("champs_reponses").innerHTML+"<span name='"+word+"' style='font-size:"+words[word]*3+"mm;'>"+word+"</span><br>";
+            }
+        }
         else{
             document.getElementById("champs_reponses").innerHTML=""
             for(element of liste_rep_eleve){
@@ -122,7 +145,7 @@
             socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
         }
         function rep_direct(){
-            if(qcm){
+            if(typeQuest=="qcm"){
             for (element in liste_rep_eleve){
                 console.log("rep_num_"+element);
                 console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
@@ -203,8 +226,6 @@
                 <li><a href="../BDD">Liste de vos questions</a></li>
                 <li><a href="../creationQuestion">Créer une question</a></li>
                 <li><a href="../creationFeuille">Créer une feuille d'exercices</a></li>
-                <li><a href="../creationSequence">Créer une séquence</a></li>
-                <li><a href="../controle">Créer des contrôles</a></li>
                 <li><a href="../deco">Se déconnecter</a></li>
             </ul>
         </li>
