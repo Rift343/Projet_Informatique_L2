@@ -80,8 +80,10 @@
 					}
 				}
 				for(var i=0; i<li_min.length;i++){
-					valeur*=binomial(li_nb[i], li_min[i]);
+					valeur*=binomial(li_nb[i], li_max[i]);
 				}
+				valeur*=binomial(max, document.getElementById("nb_q").value);
+				console.log(valeur);
 				if(valeur<document.getElementById("nb_sujet").value){
 					erreur=true
 					console.log("binomial");
