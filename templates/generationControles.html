@@ -80,8 +80,10 @@
 					}
 				}
 				for(var i=0; i<li_min.length;i++){
-					valeur*=binomial(li_nb[i], li_min[i]);
+					valeur*=binomial(li_nb[i], li_max[i]);
 				}
+				valeur*=binomial(max, document.getElementById("nb_q").value);
+				console.log(valeur);
 				if(valeur<document.getElementById("nb_sujet").value){
 					erreur=true
 					console.log("binomial");
@@ -92,7 +94,21 @@
 					console.log("nb_q pas atteignable avec min et max");
 				}
 
-				console.log(erreur);
+				if(erreur==false){
+					document.getElementById("send").innerHTML = document.getElementById("send").innerHTML +
+					document.getElementById("nb_q").innerHTML +
+					document.getElementById("nb_sujet").innerHTML +
+					document.getElementById("ano").innerHTML +
+					document.getElementById("shuffle").innerHTML +
+					'<input type="text" id="li_min" name="li_min" value="'+ li_min +'"</input>' +
+					'<input type="text" id="li_max" name="li_max" value="'+ li_max +'"</input>' +
+					'<input type="text" id="li_nb" name="li_nb" value="'+ li_nb +'"</input>' +
+					'<input type="text" id="li_eti" name="li_eti" value="'+ li_etiquettes +'"</input>';
+					
+					console.log(document.getElementById("send"))
+					console.log(document.getElementById("send").innerHTML)
+					document.getElementById("send").submit()
+				};
 
 			}
 		</script>
@@ -117,11 +133,12 @@
 			<div id="etiquettes"></div>
 			<div id="eti"></div><br>
 				<!--form -> getelementbyid form.submit (faux bouton pour traitement avant post)-->
-				<input type="number" id="nb_q" min="0">Nombre de questions par sujet</input><br>
-				<!--nb de questions par sujet (entre addition de min et max pour chaque eti)-->
-				<input type="number" id="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input><br>
-				<input type="checkbox" id="ano">Contrôle anonyme ?</input><br>
+				<input type="number" id="nb_q" name="nb_q" min="0">Nombre de questions par sujet</input><br>
+				<input type="number" id="nb_sujet" name="nb_sujet" min="0">Nombre de sujets (1 sujet par élève)</input><br>
+				<input type="checkbox" id="ano" name="ano">Contrôle anonyme ?</input><br>
+				<input type="checkbox" id="shuffle" name="shuffle">Questions dans l'ordre par etiquettes ou mélangées ?</input><br>
 				<button onclick="send()">Valider</button><br>
+			<form id="send"></form><br>
 		</div>
 	</body>
 </html>
