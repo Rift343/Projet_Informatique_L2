@@ -67,6 +67,9 @@
             <span class='MREP'>{{rep| safe}}</span> 
           {%endif%}
         {%endfor%}
+        {%if dictionnaire["REP"] == [] %}
+          <span class='BREP'>{{dictionnaire["BREP"][0]| safe}}</span>
+        {%endif%}
       </div>
 
 </div><!--
