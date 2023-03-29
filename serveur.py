@@ -522,7 +522,8 @@ def creationControle():
         li_min_max=[]
         for mi,ma in li_min,li_max:
             li_min_max.append([mi,ma])
-        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q,sujet_melanger)
+        erreur = False
+        li_li_id,erreur = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q,sujet_melanger)
         li_final =[]
         for enonce in li_li_id:
             sujet=[]
@@ -531,8 +532,10 @@ def creationControle():
             li_final.append(sujet)
         print(li_eti,li_min,li_max)
         
-        
-        return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
+        if(erreur):
+            return render_template("accueil.html",Username=session["Username"])
+        else:
+            return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
     else:
         return render_template("non_connecte.html")
         
