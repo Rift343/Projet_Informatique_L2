@@ -25,6 +25,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         sauveguardeListeIntervalle.append(i)
     #print(sauveguardeListeIntervalle)
     while len(liste_sujet)<nbSujet:
+        print("1")
         #liste_sujet.append(1)
         
         traitementIntervalle=[]
@@ -33,6 +34,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         #print (traitementIntervalle)
         tailleExam = 0
         while tailleExam < nbtotaleQuestion:
+            print("2")
             for y in range (len(listeIntervalle)):
                 #print(listeIntervalle)
                 traitementIntervalle[y]=listeIntervalle[y][0]
@@ -81,6 +83,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
 
         compteur=0
         while (newSujetSort in liste_sujet_sort):
+            print("3")
             newSujet=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
             compteur=compteur+1
             if (compteur==1000):
@@ -98,19 +101,24 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
             nombreElement=traitementIntervalle[i]
             sujetDispo = recupererListeQuestionParEtiquette(ID_User,ListeEtiquette[i])
             for y in range(nombreElement):
+                print(sujetDispo)
                 question =random.choice(sujetDispo)
                 while question in newSujet:
+                    print("4")
+                    print(sujetDispo)
+                    print(newSujet)
+                    print(question)
                     question =random.choice(sujetDispo)
                 sujetDispo.remove(question)
                 newSujet.append(question)
     return newSujet
     
-  
+
 
         
 
 
 
-liste1=creer_sujet(["test","QCM"],[[1,1],[2,3]],10,"ba31fDpm",4,True)
-print(liste1)
+#liste1=creer_sujet(["test","QCM"],[[1,1],[2,3]],10,"ba31fDpm",4,True)
+#print(liste1)
 #print((recupererListeQuestionParEtiquette("ba31fDpm","QCM")))

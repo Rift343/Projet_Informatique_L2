@@ -96,14 +96,9 @@
 
 				if(erreur==false){
 					document.getElementById("send").innerHTML = document.getElementById("send").innerHTML +
-					//document.getElementById("nb_q") +
 					'<input type="number" id="nb_q" name="nb_q" min="0" value="'+document.getElementById("nb_q").value+'"></input>' +
-					//document.getElementById("nb_sujet") +
 					'<input type="number" id="nb_sujet" name="nb_sujet" min="0" value="'+document.getElementById("nb_sujet").value+'"></input>' +
-					//document.getElementById("ano") +
-					
 					'<input type="checkbox" id="ano" name="ano" '+(document.getElementById("ano").checked ? 'checked' : '')+'></input>' +
-					//document.getElementById("shuffle") +
 					'<input type="checkbox" id="shuffle" name="shuffle" '+(document.getElementById("shuffle").checked ? 'checked' : '')+'></input>' +
 					'<input type="text" id="li_min" name="li_min" value="'+ li_min +'"</input>' +
 					'<input type="text" id="li_max" name="li_max" value="'+ li_max +'"</input>' +
@@ -147,7 +142,7 @@
 				<input type="checkbox" id="ano" name="ano">Contrôle anonyme ?</input><br>
 				<input type="checkbox" id="shuffle" name="shuffle">Questions dans l'ordre par etiquettes ou mélangées ?</input><br>
 				<button onclick="send()">Valider</button><br>
-				<form id="send" method="POST" action=""></form><br>
+				<form id="send" method="POST" action="" hidden="true"></form><br>
 		</div>
 	</body>
 </html>
