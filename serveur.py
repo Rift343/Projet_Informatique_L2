@@ -496,7 +496,7 @@ def afficheSequence(id):
         
         
         
-@app.route("/generationControles") #Page dde création d'une feuille de questionse création d'une feuille de questions
+@app.route("/controle") #Page dde création d'une feuille de questionse création d'une feuille de questions
 def genControle():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
         li_dico = depuis_csv(session['UserId'])
@@ -517,11 +517,12 @@ def creationControle():
         li_max=request.form.getlist('li_max')
         nb_q = int(request.form['nb_q'])
         nb_sujet = int(request.form['nb_sujet'])
-        anonyme = request.form.get("ano")
+        anonyme = (request.form.get("ano") == 'on')
+        sujet_melanger = (request.form.get("shuffle") == 'on')
         li_min_max=[]
         for mi,ma in li_min,li_max:
             li_min_max.append([mi,ma])
-        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q)
+        li_li_id = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q,sujet_melanger)
         li_final =[]
         for enonce in li_li_id:
             sujet=[]
@@ -529,7 +530,7 @@ def creationControle():
                 sujet.append(getQuestion(session["UserId"], e))
             li_final.append(sujet)
         print(li_eti,li_min,li_max)
-            
+        
         
         return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
     else:
