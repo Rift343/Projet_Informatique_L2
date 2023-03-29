@@ -6,11 +6,14 @@ from md_mermaid import *
 from markdownHTML import *
 from manipulation_Etu import *
 from HistoQuestion import *
+from CreationSujet import *
 import hashlib
 from flask_socketio import SocketIO 
 from flask_socketio import join_room, leave_room
 import time
 import datetime
+
+
 def new_date():
     """
     renvoie la date exact du jour,
@@ -512,16 +515,25 @@ def genControle():
 @app.route("/controle",methods = ['POST']) #Page dde création d'une feuille de questionse création d'une feuille de questions
 def creationControle():
     if 'UserId' and 'Username' in session and session['type'] == "pro":
-        li_eti=request.form.getlist('li_eti')
-        li_min=request.form.getlist('li_min')
-        li_max=request.form.getlist('li_max')
-        nb_q = int(request.form['nb_q'])
-        nb_sujet = int(request.form['nb_sujet'])
+        print(request.form.get('li_eti').split(","))
+        print(request.form.get('li_min').split(","))
+        print(request.form.get('li_max').split(","))
+        print(request.form.get('nb_q'))
+        print(request.form.get('nb_sujet'))
+        print(request.form.get('ano'))
+        print(request.form.get('shuffle'))
+
+        li_eti=request.form.get('li_eti').split(",")
+        li_min=request.form.get('li_min').split(",")
+        li_max=request.form.get('li_max').split(",")
+
+        nb_q = int(request.form.get('nb_q'))
+        nb_sujet = int(request.form.get('nb_sujet'))
         anonyme = (request.form.get("ano") == 'on')
         sujet_melanger = (request.form.get("shuffle") == 'on')
         li_min_max=[]
-        for mi,ma in li_min,li_max:
-            li_min_max.append([mi,ma])
+        for mi,ma in zip(li_min,li_max):
+            li_min_max.append([int(mi),int(ma)])
         erreur = False
         li_li_id,erreur = creer_sujet(li_eti,li_min_max,nb_sujet,session["UserId"],nb_q,sujet_melanger)
         li_final =[]
