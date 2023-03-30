@@ -4,7 +4,13 @@ AHYpV56e;loupGarou;jeuDeSauce;QCM;FINET;qui est le loup;"le maire
     ";c'est l'histoire d'un mec qui se réincarne;FINREP;"le maire
     ";"le loup
     ";c'est l'histoire d'un mec qui se réincarne
-SARKOZYS;politique;petitHomme;QCM;FINET;Année de l'élection de Nicolas Sarkozy;2002;2007;2012;2017;2022;FINREP;2007
+SARKOZYS;QCM;politique;FINET;Année de l'élection de Nicolas Sarkozy;"2002
+    ";"2007
+    ";"2012
+    ";"2017
+    ";"2022
+    ";FINREP;"2007
+    "
 GJBhEfbV;support;QCM;FINET;hello this is microsoft tech support;"scam
     ";"je donne mon argent
     ";"j'appelle la police
@@ -17,3 +23,43 @@ j6IRfJoY;Faculte;QCM;FINET;qqzqzzq;qzqzdqd;qzqzdqdqdqdq;FINREP;qzqzdqd
 YUMu0r9n;Faculte;QCM;FINET;qqdqdqzdqd;gggg;gggggggg;FINREP;gggg
 dKtLXrD2;support;Faculte;QCM;FINET;qqdqdqdq;dqdqd;dqdqddddd;FINREP;dqdqd
 XL2kb2oV;politique;QCM;FINET;qqqdzdqzdqqzdf;fffff;ffffffgg;FINREP;fffff
+KBP8CVIS;divertissement;QCM;FINET;"```mermaid
+pie title NETFLIX
+         ""Time spent looking for movie"" : 90
+         ""Time spent watching it"" : 10
+
+```
+combien de temps tu passes a chercher un film";90 pourcent du temps;10 pourcent du temps;je cherche encore un film;FINREP;90 pourcent du temps
+T1dzCKTL;Faculte;QCM;FINET;"La fonction f est définie par
+```latex
+\begin{equation}
+   f(x) = x - 1
+\end{equation}
+```
+On a alors
+```latex
+\begin{equation}
+   f(x) = 0 \iff x = ?
+\end{equation}
+```
+A quoi est egal x ?";"```latex
+\begin{equation*}
+x = 1
+\end{equation*}
+```";"```latex
+\begin{equation*}
+x = -1
+\end{equation*}
+```";"```latex
+\begin{equation*}
+x = 0
+\end{equation*}
+```";FINREP;"```latex
+\begin{equation*}
+x = 1
+\end{equation*}
+```"
+3oHvNfAR;CultureG;QCM;FINET;A quel pays appartient Hawai ?;Etats Unis;Royaume Uni;France;Mexique;FINREP;Etats Unis
+g6hotvOm;CultureG;QCM;FINET;En quelle annee a atterri le premier humain sur la lune ?;1965;1968;1969;1972;1973;1975;FINREP;1969
+9vREmz8M;CultureG;QCM;FINET;Quels oceans ou mers bordent la France ?;Mer Baltique;Mer Noire;Mer du Nord;Mer Mediterranee;Mer Rouge;Antartique;Arctique;Ocean Indien;Ocean Pacifique;Ocean Atlantique;La Manche;FINREP;Mer du Nord;Mer Mediterranee;Ocean Atlantique;La Manche
+59D2qPbx;CultureG;QCM;FINET;Annee de fin de la seconde Guerre Mondiale ?;1939;1940;1943;1944;1945;1946;FINREP;1945

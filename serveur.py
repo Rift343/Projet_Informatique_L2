@@ -549,7 +549,7 @@ def creationControle():
         print(li_eti,li_min,li_max)
         print(li_li_id)
         if(erreur):
-            return redirect(url_for('creationControle', Username=Username, li_eti=li_eti_nb, erreurprog=False))
+            return redirect(url_for('creationControle', Username=session["Username"], li_eti=li_eti_nb, erreurprog=False))
         else:
             return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
     else:
