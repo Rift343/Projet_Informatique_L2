@@ -18,6 +18,38 @@ def recupererListeQuestionParEtiquette(ID_User,Eti):
             listeDeRetour.append(element['ID'])
     return listeDeRetour
 
+
+def TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle,tailleExam=0):
+    tailleExam = 0
+    while tailleExam < nbtotaleQuestion:
+         #   print("2")
+        for y in range (len(listeIntervalle)):
+        #print(listeIntervalle)
+            traitementIntervalle[y]=listeIntervalle[y][0]
+            tailleExam = tailleExam + listeIntervalle[y][0]
+            listeIntervalle[y] =listeIntervalle[y][1] - listeIntervalle[y][0] 
+            #print(traitementIntervalle)
+            #print("liste ",listeIntervalle)
+        for z in range(len(listeIntervalle)):
+            value = random.randrange(0,listeIntervalle[z]+1)
+            if (tailleExam+value<=nbtotaleQuestion):
+                #print(value)
+                tailleExam = tailleExam+value
+                traitementIntervalle[z]=traitementIntervalle[z]+value
+                listeIntervalle[z] =listeIntervalle[z] - value
+            #print(traitementIntervalle)
+            #print(listeIntervalle)
+        for z in range(len(listeIntervalle)):
+            if (listeIntervalle[z]!=0):
+                for x in range(listeIntervalle[z]):
+                    if (tailleExam+1<=nbtotaleQuestion):
+                        tailleExam=tailleExam+1
+                        traitementIntervalle[z]=traitementIntervalle[z]+1
+                        listeIntervalle[z] =listeIntervalle[y] - 1
+    return listeIntervalle,traitementIntervalle
+
+
+
 def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,melange):
     liste_sujet=[]
     erreur =False
@@ -33,32 +65,10 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         for i in range(len(listeIntervalle)):
             traitementIntervalle.append(0)
         #print (traitementIntervalle)
-        tailleExam = 0
-        while tailleExam < nbtotaleQuestion:
-         #   print("2")
-            for y in range (len(listeIntervalle)):
-                #print(listeIntervalle)
-                traitementIntervalle[y]=listeIntervalle[y][0]
-                tailleExam = tailleExam + listeIntervalle[y][0]
-                listeIntervalle[y] =listeIntervalle[y][1] - listeIntervalle[y][0] 
-            #print(traitementIntervalle)
-            #print("liste ",listeIntervalle)
-            for z in range(len(listeIntervalle)):
-                value = random.randrange(0,listeIntervalle[z]+1)
-                if (tailleExam+value<=nbtotaleQuestion):
-                    #print(value)
-                    tailleExam = tailleExam+value
-                    traitementIntervalle[z]=traitementIntervalle[z]+value
-                    listeIntervalle[z] =listeIntervalle[z] - value
-            #print(traitementIntervalle)
-            #print(listeIntervalle)
-            for z in range(len(listeIntervalle)):
-                if (listeIntervalle[z]!=0):
-                    for x in range(listeIntervalle[z]):
-                        if (tailleExam+1<=nbtotaleQuestion):
-                            tailleExam=tailleExam+1
-                            traitementIntervalle[z]=traitementIntervalle[z]+1
-                            listeIntervalle[z] =listeIntervalle[y] - 1
+        
+        #####################################
+        listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)
+
         #print('ok')
         #print("sauva=",sauveguardeListeIntervalle)
         #print(traitementIntervalle) 
@@ -87,6 +97,26 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         nouvelle_code_err=False
         #print(liste_sujet_sort)
         while (newSujetSort in liste_sujet_sort):
+
+            traitementIntervalle=[]
+            for i in range(len(listeIntervalle)):
+                traitementIntervalle.append(0)
+            #print (traitementIntervalle)
+        
+            #####################################
+            listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)
+
+            #print('ok')
+            #print("sauva=",sauveguardeListeIntervalle)
+            #print(traitementIntervalle) 
+        
+            listeIntervalle = []
+            for z in sauveguardeListeIntervalle:
+                listeIntervalle.append(z)
+
+
+
+                    
             #print("3")
             newSujet,nouvelle_code_err=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
             #print(liste_sujet_sort)
@@ -112,13 +142,13 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
             for y in range(nombreElement):
                 #print(sujetDispo)
                 question =random.choice(sujetDispo)
-                print("sujetdispo : ",sujetDispo)
-                print("sujet chois : ",question)
+                #print("sujetdispo : ",sujetDispo)
+                #print("sujet chois : ",question)
                 #print((newSujet))
                 #print((set(sujetDispo)-set(newSujet)!=set()))
                 
                 while (question in newSujet) and (set(sujetDispo)-set(newSujet)!=set()):
-                    print("boucle")
+                    #print("boucle")
                     #print(question,newSujet,sujetDispo)
                     #print(set(sujetDispo)-set(newSujet))
                     question =random.choice(sujetDispo)
@@ -131,7 +161,7 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
                 newSujet.append(question)
                 #print("newsujet apres append",newSujet)
                 #print("hit3")
-    print(newSujet)
+    #print(newSujet)
     return newSujet,erreur
     
 
@@ -140,6 +170,6 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
 
 
 
-liste1=creer_sujet(["QCM"],[[1,2]],4,"ba31fDpm",2,True)
-print(liste1)
+#liste1=creer_sujet(["QCM"],[[1,2]],4,"ba31fDpm",2,True)
+#print(liste1)
 #print((recupererListeQuestionParEtiquette("ba31fDpm","QCM")))
