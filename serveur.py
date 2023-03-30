@@ -192,7 +192,7 @@ def ajoutQuestion():
                 if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                     li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
 
-        if len(li_bonnes_reponses)==1 and len(reponses_pour_BREP)==0:
+        if len(li_bonnes_reponses)==1 and nb_reponses=='1':
             li_rep=[]
             li_bonnes_reponses.append(reponses)
             li_etiquettes = etiquettes
@@ -236,7 +236,7 @@ def visuIFrame():
                 if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
                     li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
 
-        if len(li_bonnes_reponses)==1 and len(reponses_pour_BREP)==0:
+        if len(li_bonnes_reponses)==1 and nb_reponses=='1':
             li_rep=[]
             li_bonnes_reponses.append(reponses)
             li_etiquettes = etiquettes
