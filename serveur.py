@@ -548,6 +548,7 @@ def creationControle():
                 sujet.append(traductionUneQuestionToHTML(getQuestion(session["UserId"], e)))
             li_final.append(sujet)
         print(li_eti,li_min,li_max)
+        print(li_li_id)
         if(erreur):
             return render_template("acceuil.html",Username=session["Username"])
         else:

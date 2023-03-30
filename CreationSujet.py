@@ -112,15 +112,26 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
             for y in range(nombreElement):
                 #print(sujetDispo)
                 question =random.choice(sujetDispo)
+                print("sujetdispo : ",sujetDispo)
+                print("sujet chois : ",question)
+                #print((newSujet))
+                #print((set(sujetDispo)-set(newSujet)!=set()))
+                
                 while (question in newSujet) and (set(sujetDispo)-set(newSujet)!=set()):
-                    #print("boucle")
+                    print("boucle")
                     #print(question,newSujet,sujetDispo)
                     #print(set(sujetDispo)-set(newSujet))
                     question =random.choice(sujetDispo)
                 if(set(sujetDispo)-set(newSujet)==set()):
                     erreur = True
+                #print("hit")
                 sujetDispo.remove(question)
+                #print("hit2")
+                #print("newsujet avant append",newSujet)
                 newSujet.append(question)
+                #print("newsujet apres append",newSujet)
+                #print("hit3")
+    print(newSujet)
     return newSujet,erreur
     
 
@@ -129,6 +140,6 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
 
 
 
-liste1=creer_sujet(["QCM"],[[1,1]],4,"ba31fDpm",1,True)
+liste1=creer_sujet(["QCM"],[[1,2]],4,"ba31fDpm",2,True)
 print(liste1)
 #print((recupererListeQuestionParEtiquette("ba31fDpm","QCM")))
