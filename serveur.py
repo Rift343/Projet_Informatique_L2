@@ -187,10 +187,10 @@ def ajoutQuestion():
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
-        #print(nb_reponses)
-        for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
-            if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
-                li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+        if nb_reponses!="":
+            for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
+                if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
+                    li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
 
         if len(li_bonnes_reponses)==1 and len(reponses_pour_BREP)==0:
             li_rep=[]
@@ -231,30 +231,30 @@ def visuIFrame():
         nb_reponses = request.form['nb_rep_possibles'] #Son nombre de bonnes réponses
         li_bonnes_reponses = [] #Initialisation de la liste des bonnes réponse
         #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + nb_reponses)
-        for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
-            if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
-                li_bonnes_reponses.append(reponses_pour_BREP[i].replace("\r","")) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
-        #print(etiquettes + ' / ' + enonce + ' / ' + reponses + ' / ' + str(nb_reponses) + ' / ')
-        li_etiquettes = etiquettes
-        reponses = reponses.replace("\r","")
-        li_rep = reponses.split(';')
+        if nb_reponses!="":
+            for i in range(int(nb_reponses)): #Code de la liste des bonnes réponses
+                if request.form.get(str(i), False) == 'on': #lorsque request.form[str(i)] est null, on a une erreur donc on utilise request.form.get(str(i), False) qui renvoie 'False' lorsque la requête est nulle (pas d'erreur) et 'on' sinon ('on' est renvoyé pour les réponses mises en bonnes réponses par l'utilisateur)
+                    li_bonnes_reponses.append(reponses_pour_BREP[i]) #On ajoute à la liste des bonnes réponses l'indice des bonnes réponses
+
+        if len(li_bonnes_reponses)==1 and len(reponses_pour_BREP)==0:
+            li_rep=[]
+            li_bonnes_reponses.append(reponses)
+            li_etiquettes = etiquettes
+            li_etiquettes.append("QuestionOuverte")
+
+        elif len(li_bonnes_reponses)==0:
+            li_rep=[]
+            li_etiquettes = etiquettes
+            li_etiquettes.append("QuestionSuperOuverte")
+
+        else:
+            li_rep = reponses.split(';')
+            li_etiquettes = etiquettes
+            li_etiquettes.append("QCM")
+
         dict = {"idQ": 0,"Question": enonce.replace("\r",""), "ET": li_etiquettes, "REP": li_rep, "BREP": li_bonnes_reponses} #dictionnaire avec Question -> enoncé ; ET -> liste des étiquettes ; REP -> liste des réponses ; BREP -> liste des bonnes réponses
         #print(dict)
         return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict)) #on renvoie les donnée de la question sur l'IFrame de la page creation question
-
-@app.route("/question/<idQuestion>") #Page de visualisation d'une question
-def question(idQuestion):
-    if 'Username' and 'UserId' in session and session['type'] == "pro":
-        Username = session['Username']
-        UserId = session['UserId']
-        dico = getQuestion(UserId, idQuestion)
-        #print(dico)
-        dico = traductionUneQuestionToHTML(dico)
-
-        return render_template("Question.html", dictionnaire=dico, Username=Username)
-    else:
-        return render_template("non_connecte.html")
-
 
 @app.route("/import_eleve",methods = ['POST'])
 def import_eleve():
