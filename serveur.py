@@ -194,7 +194,6 @@ def ajoutQuestion():
 
         if len(li_bonnes_reponses)==1 and nb_reponses=='1':
             li_rep=[]
-            li_bonnes_reponses.append(reponses)
             li_etiquettes = etiquettes
             li_etiquettes.append("QuestionOuverte")
 
@@ -238,7 +237,6 @@ def visuIFrame():
 
         if len(li_bonnes_reponses)==1 and nb_reponses=='1':
             li_rep=[]
-            li_bonnes_reponses.append(reponses)
             li_etiquettes = etiquettes
             li_etiquettes.append("QuestionOuverte")
 
