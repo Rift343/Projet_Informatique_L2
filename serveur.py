@@ -540,10 +540,9 @@ def creationControle():
         for enonce in li_li_id:
             sujet=[]
             for e in enonce:
-                sujet.append(getQuestion(session["UserId"], e))
+                sujet.append(traductionUneQuestionToHTML(getQuestion(session["UserId"], e)))
             li_final.append(sujet)
         print(li_eti,li_min,li_max)
-        
         if(erreur):
             return render_template("acceuil.html",Username=session["Username"])
         else:
