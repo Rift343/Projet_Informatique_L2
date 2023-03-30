@@ -94,12 +94,12 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
             compteur=compteur+1
             erreur = erreur or nouvelle_code_err
             if (compteur==1000):
-                return liste_sujet
+                return liste_sujet,True
             newSujetSort=copy.deepcopy(newSujet)
         #print(newSujetSort)
             newSujetSort.sort()
         liste_sujet.append(newSujet)
-    return liste_sujet,erreur
+    return liste_sujet,False
         
             
 
