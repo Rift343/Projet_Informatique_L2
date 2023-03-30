@@ -49,7 +49,6 @@ def index1():
             return render_template("acceuil_connecte.html", Username=Username)
         else:
             Username = session['Username']
-            redirect
             return redirect(url_for('index2', Username=Username, pas_bon=False))
     else:
         return render_template("acceuil.html")
@@ -512,7 +511,7 @@ def genControle():
         for dico in li_dico:
             li_etiq = li_etiq + dico["ET"]
         li_etiq.sort()
-        return render_template("generationControles.html",Username=session["Username"],li_eti=li_etiq)
+        return render_template("generationControles.html",Username=session["Username"],li_eti=li_etiq, erreur=False)
     else:
         return render_template("non_connecte.html")
 
@@ -527,7 +526,9 @@ def creationControle():
         print(request.form.get('nb_sujet'))
         print(request.form.get('ano'))
         print(request.form.get('shuffle'))
+        print(request.form.get('li_eti_nb'))
 
+        li_eti_nb=request.form.get('li_eti_nb').split(",")
         li_eti=request.form.get('li_eti').split(",")
         li_min=request.form.get('li_min').split(",")
         li_max=request.form.get('li_max').split(",")
@@ -549,7 +550,7 @@ def creationControle():
             li_final.append(sujet)
         print(li_eti,li_min,li_max)
         if(erreur):
-            return render_template("acceuil.html",Username=session["Username"])
+            return redirect(url_for('creationControle', Username=Username, li_eti=li_eti_nb, erreurprog=False))
         else:
             return render_template("affichageControle.html",anon=anonyme,liste_controle=li_final)
     else:

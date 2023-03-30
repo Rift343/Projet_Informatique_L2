@@ -22,12 +22,15 @@
 
 			var li_etiquettes = [];
 			var li_nb = [];
+			var li_eti_nb = [];
 			var nb_q_max = 0;
 			elements='{% for eti in li_eti: %}{%if not loop.last%}{{eti+"; "}}{%else%}{{eti}}{%endif%}{%endfor%}'
 
 			function load_eti(){
 				li_eti = elements.replace(/[^a-zA-Z0-9; ]/g, '').split("; ");
-
+				console.log(li_eti);
+				li_eti_nb = li_eti;
+				console.log(li_eti_nb);
 				for (var i = 0; i < li_eti.length; i++) {
 					if(li_etiquettes.includes(li_eti[i])){
 						index = li_etiquettes.indexOf(li_eti[i]);
@@ -104,7 +107,8 @@
 					'<input type="text" id="li_min" name="li_min" value="'+ li_min +'"</input>' +
 					'<input type="text" id="li_max" name="li_max" value="'+ li_max +'"</input>' +
 					'<input type="text" id="li_nb" name="li_nb" value="'+ li_nb +'"</input>' +
-					'<input type="text" id="li_eti" name="li_eti" value="'+ li_etiquettes +'"</input>';
+					'<input type="text" id="li_eti" name="li_eti" value="'+ li_etiquettes +'"</input>' +
+					'<input type="text" id="li_eti_nb" name="li_eti_nb" value="'+ li_eti_nb +'"</input>';
 
 					//if(document.getElementById("ano").checked){document.getElementById("send").innerHTML = document.getElementById("send").innerHTML + '<input type="checkbox" id="ano" name="ano" checked'></input>'}else{}
 
@@ -133,11 +137,15 @@
 					<li><a href="creationQuestion">Créer une question</a></li>
 					<li><a href="creationFeuille">Créer une feuille d'exercices</a></li>
 					<li><a href="creationSequence">Créer une séquence</a></li>
+					<li><a href="controle">Créer des contrôles</a></li>
 					<li><a href="deco">Se déconnecter</a></li>
 				</ul>
 			</li>
 		</ul>
 		<div id="mid">
+			{%if erreur:%}
+				<div class="erreur" style="color: #ce1711; padding: 20px;	font-family: 'Poppins', sans-serif;" >impossible de générer le nombre de contrôles voulus avec ces paramètres</div>
+			{%endif%}
 			<div id="etiquettes"></div>
 			<div id="eti"></div><br>
 				<!--form -> getelementbyid form.submit (faux bouton pour traitement avant post)-->
