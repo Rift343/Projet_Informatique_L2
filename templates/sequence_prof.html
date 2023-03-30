@@ -19,6 +19,23 @@
         rep_bloquer=false;
         nb_rep_totale=0;
         liste_rep_eleve=[];
+        var dicoDesMotsExistants={};
+
+        function ajoutMotDansLeDico(mot,dicoDesMotsExistants){
+            listePrefixe =["in","il","ir","dé","dés","dis","mé","més","mal","mau","contra","contre","non","an","a","am","dys","anti","pré","post","inter","trans","tré","para","super","supra","sur","hyper","hypo","co","con","com","ré","re"]
+            Aprefixe = false;
+            indice = 0;
+            var prefixe = listePrefixe[indice]
+            while ((Aprefixe == false) && (indice <=listePrefixe.length) ){
+                if(mot.search(listePrefixe[indice] == 0)){
+                    Aprefixe = true;
+                    prefixe = listePrefixe[indice]
+                indice++;
+                }
+            }
+
+        }
+
         typeQuest="";
         socket.on('nouvelle_q', (question) =>{
             console.log(question.question["Question"])
