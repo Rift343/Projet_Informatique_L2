@@ -20,13 +20,14 @@
         rep_bloquer=false;
         nb_rep_totale=0;
         liste_rep_eleve=[];
-        var dicoDesMotsExistants={};
+        dicoDesMotsExistants={};
 
         function prefixe(mot){
+            mot = mot.toLowerCase()
             listePrefixe =["in","il","ir","dé","dés","dis","mé","més","mal","mau","contra","contre","non","an","a","am","dys","anti","pré","post","inter","trans","tré","para","super","supra","sur","hyper","hypo","co","con","com","ré","re"]
             Aprefixe = false;
             indice = 0;
-            var prefixe = listePrefixe[indice]
+            var prefixe = "";
             while ((Aprefixe == false) && (indice <=listePrefixe.length) ){
                 if(mot.search(listePrefixe[indice] == 0)){
                     Aprefixe = true;
@@ -37,6 +38,55 @@
             return Aprefixe,prefixe;
 
         }
+        
+        function ajoutDico(mot){
+            mot = mot.toLowerCase()// je met le mot en minuscule
+            apref,pref=prefixe(mot);
+            if (apref == true){
+            //Faire l'ajout avec le lien d'édition sur les mots du dictionnaire possèdant le même préfixe
+                dicoPrefixe={};
+                for (key in dicoDesMotsExistants){
+                   apref2,pref2= prefixe(key);
+                   if ((pref2 == pref) && (apref2==true)){
+                        dicoPrefixe[key]=dicoDesMotsExistants[key];
+                   }
+                }
+                for (key in dicoPrefixe){
+                    if (mot == key){//Si on trouve directement les mots dans le dictionnaire
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                        return;
+                    }
+                    if(distanceEdition(mot,key)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                        return;
+                    }
+                    
+                }
+                dicoDesMotsExistants[mot]=1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
+                return;
+                
+                
+                
+            }
+            else{
+            //Faire l'ajout avec le lien d'édition sur tout les mots du dictionnaire
+                for (key in dicoDesMotsExistants){
+                    if (mot == key){//Si on trouve directement les mots dans le dictionnaire
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                        return;
+                    }
+                    if(distanceEdition(mot,dicoDesMotsExistants)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                        return;
+                    }
+                    
+                }
+                dicoDesMotsExistants[mot]=1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
+                return                                
+            }         
+            
+        }
+        
 
         typeQuest="";
         socket.on('nouvelle_q', (question) =>{
