@@ -33,11 +33,14 @@
             indice = 0;
             var prefixe = "";
             while ((Aprefixe == false) && (indice <= listePrefixe.length)) {
-                if (mot.search(listePrefixe[indice] == 0)) {
+                console.log(mot.search(listePrefixe[indice]));
+                console.log(mot.search(listePrefixe[indice])==0);
+                if (mot.search(listePrefixe[indice])== 0) {
                     Aprefixe = true;
                     prefixe = listePrefixe[indice]
-                    indice++;
+                    
                 }
+                indice++;
             }
             return [Aprefixe, prefixe];
 
@@ -54,16 +57,18 @@
                 for (key in dicoDesMotsExistants) {
                     var apref2; var pref2;
                     [apref2, pref2] = prefixe(key);
+                    console.log("pref :",apref, pref);
+                    console.log("pref2 :",apref2, pref2);
                     if ((pref2 == pref) && (apref2 == true)) {
                         dicoPrefixe[key] = dicoDesMotsExistants[key];
                     }
                 }
+                console.log("dico_prefixe",dicoPrefixe);
                 for (key in dicoPrefixe) {
+                    console.log("mot,key:",mot,key);
                     if (mot == key) {//Si on trouve directement les mots dans le dictionnaire
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
                         return;
-                    }else{
-                        dicoDesMotsExistants[mot] =1;//JAI RAJOUTE CA, C EST BON ??????
                     }
                     //console.log("dist"+distanceEdition(mot,key));
                     //console.log("long"+(mot.length)/4);
@@ -73,6 +78,7 @@
                     }
 
                 }
+                console.log("apres le for");
                 dicoDesMotsExistants[mot] = 1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
                 return;
 
@@ -187,11 +193,12 @@
                 document.getElementById("champs_reponses").innerHTML = "";
                 words = {};
                 li_rep_eleve_corrige=[]
-                console.log(dicoDesMotsExistants);
-                for (mot in dicoDesMotsExistants){
-                    while(dicoDesMotsExistants[mot]>0){
+                var copie = {...dicoDesMotsExistants};
+                console.log(copie);
+                for (mot in copie){
+                    while(copie[mot]>0){
                         li_rep_eleve_corrige.push(mot);
-                        dicoDesMotsExistants[mot]=dicoDesMotsExistants[mot]-1;
+                        copie[mot]=copie[mot]-1;
                     }
                 }
 
