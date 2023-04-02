@@ -1,214 +1,219 @@
 <!doctype html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../static/main.css">
     <link rel="stylesheet" href="../static/question.css" />
     <script src="../static/mermaid.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css"/>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/atom-one-dark.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js"></script>
     <script src="../static/load-mathjax.js" async></script>
     <script src="../static/distEdition.js"></script>
     <title>QuizTio</title>
     <script src="../../static/socket.io.min.js"></script>
     <script>
-        dicoDesMotsExistants={"test":0};
+        dicoDesMotsExistants = { "test": 0 };
         //console.log(dicoDesMotsExistants);
-        const socket=io();
+        const socket = io();
         //socket.connect('http://'+document.domain+':'+location.port);
-        id_seq='{{id_seq|safe}}'
-        id_q=""
-        rep_direct_var=false;
-        rep_bloquer=false;
-        nb_rep_totale=0;
-        liste_rep_eleve=[];
-       
+        id_seq = '{{id_seq|safe}}'
+        id_q = ""
+        rep_direct_var = false;
+        rep_bloquer = false;
+        nb_rep_totale = 0;
+        liste_rep_eleve = [];
 
-        function prefixe(mot){
+
+        function prefixe(mot) {
             mot = mot.toLowerCase()
-            listePrefixe =["in","il","ir","dé","dés","dis","mé","més","mal","mau","contra","contre","non","an","a","am","dys","anti","pré","post","inter","trans","tré","para","super","supra","sur","hyper","hypo","co","con","com","ré","re"]
+            listePrefixe = ["in", "il", "ir", "dé", "dés", "dis", "mé", "més", "mal", "mau", "contra", "contre", "non", "an", "a", "am", "dys", "anti", "pré", "post", "inter", "trans", "tré", "para", "super", "supra", "sur", "hyper", "hypo", "co", "con", "com", "ré", "re"]
             Aprefixe = false;
             indice = 0;
             var prefixe = "";
-            while ((Aprefixe == false) && (indice <=listePrefixe.length) ){
-                if(mot.search(listePrefixe[indice] == 0)){
+            while ((Aprefixe == false) && (indice <= listePrefixe.length)) {
+                if (mot.search(listePrefixe[indice] == 0)) {
                     Aprefixe = true;
                     prefixe = listePrefixe[indice]
-                indice++;
+                    indice++;
                 }
             }
-            return [Aprefixe,prefixe];
+            return [Aprefixe, prefixe];
 
         }
-        
-        function ajoutDico(mot){
+
+        function ajoutDico(mot) {
             mot = mot.toLowerCase()// je met le mot en minuscule
-            var apref;var pref;
-            [apref,pref]=prefixe(mot);
-            if (apref == true){
-                
-            //Faire l'ajout avec le lien d'édition sur les mots du dictionnaire possèdant le même préfixe
-                dicoPrefixe={};
-                for (key in dicoDesMotsExistants){
-                    var apref2;var pref2;
-                   [apref2,pref2]= prefixe(key);
-                   if ((pref2 == pref) && (apref2==true)){
-                        dicoPrefixe[key]=dicoDesMotsExistants[key];
-                   }
+            var apref; var pref;
+            [apref, pref] = prefixe(mot);
+            if (apref == true) {
+
+                //Faire l'ajout avec le lien d'édition sur les mots du dictionnaire possèdant le même préfixe
+                dicoPrefixe = {};
+                for (key in dicoDesMotsExistants) {
+                    var apref2; var pref2;
+                    [apref2, pref2] = prefixe(key);
+                    if ((pref2 == pref) && (apref2 == true)) {
+                        dicoPrefixe[key] = dicoDesMotsExistants[key];
+                    }
                 }
-                for (key in dicoPrefixe){
-                    if (mot == key){//Si on trouve directement les mots dans le dictionnaire
-                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                for (key in dicoPrefixe) {
+                    if (mot == key) {//Si on trouve directement les mots dans le dictionnaire
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
                         return;
                     }
                     //console.log("dist"+distanceEdition(mot,key));
                     //console.log("long"+(mot.length)/4);
-                    if(distanceEdition(mot,key)< ((mot.length)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
-                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
+                    if (distanceEdition(mot, key) < ((mot.length) / 4)) {//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
                         return;
                     }
-                    
-                }
-                dicoDesMotsExistants[mot]=1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
-                return;
-                
-                
-                
-            }
-            else{
-            //Faire l'ajout avec le lien d'édition sur tout les mots du dictionnaire
-                for (key in dicoDesMotsExistants){
-                    if (mot == key){//Si on trouve directement les mots dans le dictionnaire
-                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
-                        return;
-                    }
-                    
-                    if(distanceEdition(mot,key)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
-                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
-                        return;
-                    }
-                    
-                }
-                dicoDesMotsExistants[mot]=1;
-                return ;                               
-            }         
-            
-        }
-        
 
-        typeQuest="";
-        socket.on('nouvelle_q', (question) =>{
+                }
+                dicoDesMotsExistants[mot] = 1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
+                return;
+
+
+
+            }
+            else {
+                //Faire l'ajout avec le lien d'édition sur tout les mots du dictionnaire
+                for (key in dicoDesMotsExistants) {
+                    if (mot == key) {//Si on trouve directement les mots dans le dictionnaire
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
+                        return;
+                    }
+
+                    if (distanceEdition(mot, key) < ((mot.lenght) / 4)) {//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                        dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
+                        return;
+                    }
+
+                }
+                dicoDesMotsExistants[mot] = 1;
+                return;
+            }
+
+        }
+
+
+        typeQuest = "";
+        socket.on('nouvelle_q', (question) => {
             console.log(question.question["Question"])
             console.log(Object.keys(question))
-            id_q=question.question["ID"]
-            document.getElementById("enonce").innerHTML=question.question["Question"]
+            id_q = question.question["ID"]
+            document.getElementById("enonce").innerHTML = question.question["Question"]
             document.getElementById("champs_reponses").innerHTML = ""
             nb_rep_totale = 0;
             i = 0;
-            rep_bloquer=false;
-            liste_rep_eleve=[];
-            console.log(question.question["REP"].length,"if true alors question rep est vide")
-            if(question.question["BREP"].length==0){
-                typeQuest="qso"; //qso pour questionSuperOuverte
+            rep_bloquer = false;
+            liste_rep_eleve = [];
+            console.log(question.question["REP"].length, "if true alors question rep est vide")
+            if (question.question["BREP"].length == 0) {
+                typeQuest = "qso"; //qso pour questionSuperOuverte
             }
-            else if(question.question["BREP"].length==1 && question.question["REP"].length==0){
-                typeQuest="qo"; //qo pour questionOuverte
+            else if (question.question["BREP"].length == 1 && question.question["REP"].length == 0) {
+                typeQuest = "qo"; //qo pour questionOuverte
             }
-            else{
-                for (element of question.question["REP"]){
+            else {
+                for (element of question.question["REP"]) {
                     liste_rep_eleve.push(0);
                     console.log("j'en suis bien arrivé là battard")
-                    typeQuest="qcm";
+                    typeQuest = "qcm";
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                        "<span id='rep_num_"+i+"' class='REP' style='display: inline-block;'>"+element+"</span>"
-                        
-                    if(question.question["BREP"].includes(element)){
+                        "<span id='rep_num_" + i + "' class='REP' style='display: inline-block;'>" + element + "</span>"
+
+                    if (question.question["BREP"].includes(element)) {
                         document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                        "<div id='brep_num_"+i+"' class='BREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                            "<div id='brep_num_" + i + "' class='BREP' hidden='true' style='display: none;'>" + element + "</div><br>"
                     }
-                    else{
+                    else {
                         document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
-                        "<div id='mrep_num_"+i+"' class='MREP' hidden='true' style='display: none;'>"+element+"</div><br>"
+                            "<div id='mrep_num_" + i + "' class='MREP' hidden='true' style='display: none;'>" + element + "</div><br>"
                     }
                     i++;
                 }
             }
-            
-            rep_direct_var=false;
+
+            rep_direct_var = false;
             console.log(question)
             console.log('ok')
-            
+
             MathJax.typeset()
-            for (element of document.getElementsByClassName('mermaid')){
-            element.removeAttribute('data-processed');}
+            for (element of document.getElementsByClassName('mermaid')) {
+                element.removeAttribute('data-processed');
+            }
             mermaid.init();
         });
-        socket.on('rep', (data) =>{
+        socket.on('rep', (data) => {
             console.log(data)
-            if(! rep_bloquer){
-            nb_rep_totale = nb_rep_totale+1;
-            reponse = data["reponse"];
-            if(typeQuest=="qcm"){
-            for (element of reponse){
-                if(element<liste_rep_eleve.length)
-                liste_rep_eleve[parseInt(element)]=liste_rep_eleve[parseInt(element)]+1
-            }}
-            else{
-                console.log(reponse)
-                liste_rep_eleve.push(reponse)
+            if (!rep_bloquer) {
+                nb_rep_totale = nb_rep_totale + 1;
+                reponse = data["reponse"];
+                if (typeQuest == "qcm") {
+                    for (element of reponse) {
+                        if (element < liste_rep_eleve.length)
+                            liste_rep_eleve[parseInt(element)] = liste_rep_eleve[parseInt(element)] + 1
+                    }
                 }
-            console.log(liste_rep_eleve)
-            if(rep_direct_var){
-                actualiser_rep();
-                
+                else {
+                    console.log(reponse)
+                    liste_rep_eleve.push(reponse)
+                }
+                console.log(liste_rep_eleve)
+                if (rep_direct_var) {
+                    actualiser_rep();
+
+                }
             }
-        }
         });
-    function actualiser_rep(){
-        console.log(typeQuest,"C'est le type de question")
-        if(typeQuest=="qcm"){
-            for (element in liste_rep_eleve){
-                document.getElementById("rep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
-                if(document.getElementById("brep_num_"+element)==null){
-                    document.getElementById("mrep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
-                }else{
-                    document.getElementById("brep_num_"+element).style.width=liste_rep_eleve[element]/nb_rep_totale*100+"%";
+        function actualiser_rep() {
+            console.log(typeQuest, "C'est le type de question")
+            if (typeQuest == "qcm") {
+                for (element in liste_rep_eleve) {
+                    document.getElementById("rep_num_" + element).style.width = liste_rep_eleve[element] / nb_rep_totale * 100 + "%";
+                    if (document.getElementById("brep_num_" + element) == null) {
+                        document.getElementById("mrep_num_" + element).style.width = liste_rep_eleve[element] / nb_rep_totale * 100 + "%";
+                    } else {
+                        document.getElementById("brep_num_" + element).style.width = liste_rep_eleve[element] / nb_rep_totale * 100 + "%";
+                    }
                 }
-                }}
-        else if (typeQuest=="qso"){
-            document.getElementById("champs_reponses").innerHTML="";
-            words={};
-            for (word of liste_rep_eleve){
-            if(Object.keys(words).includes(word))
-                words[word]=words[word]+1;
-            else{
-                words[word]=1;
             }
+            else if (typeQuest == "qso") {
+                document.getElementById("champs_reponses").innerHTML = "";
+                words = {};
+                for (word of liste_rep_eleve) {
+                    if (Object.keys(words).includes(word))
+                        words[word] = words[word] + 1;
+                    else {
+                        words[word] = 1;
+                    }
+                }
+                for (word of Object.keys(words)) {
+                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML + "<span name='" + word + "' style='font-size:" + words[word] * 2 + "mm;float:left; left:0" + Math.random() * 100 + "px; " + Math.random() * 100 + "px; position:relative;'>" + word + "</span><br>";
+                }
             }
-            for (word of Object.keys(words)){
-                document.getElementById("champs_reponses").innerHTML=document.getElementById("champs_reponses").innerHTML+"<span name='"+word+"' style='font-size:"+words[word]*2+"mm;float:left; left:0"+Math.random()*100+"px; "+Math.random()*100+"px; position:relative;'>"+word+"</span><br>";
+            else {
+                document.getElementById("champs_reponses").innerHTML = ""
+                for (element of liste_rep_eleve) {
+                    document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML + "<span>" + element + "</span><br>";
+                }
             }
+
         }
-        else{
-            document.getElementById("champs_reponses").innerHTML=""
-            for(element of liste_rep_eleve){
-                document.getElementById("champs_reponses").innerHTML=document.getElementById("champs_reponses").innerHTML+"<span>"+element+"</span><br>";
-            }
-        }
-    
-    }
-        socket.on('fin_seq', (question) =>{
+        socket.on('fin_seq', (question) => {
             console.log("seq fini")
             quitter()
-            
+
         });
-        socket.on('nouveau_eleve', (question) =>{
-            document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)+1;
-            
+        socket.on('nouveau_eleve', (question) => {
+            document.getElementById("nb_eleve").innerHTML = parseInt(document.getElementById("nb_eleve").innerHTML) + 1;
+
         });
-        socket.on('eleve_a_quitter', (question) =>{
-            document.getElementById("nb_eleve").innerHTML=parseInt(document.getElementById("nb_eleve").innerHTML)-1;
-            
+        socket.on('eleve_a_quitter', (question) => {
+            document.getElementById("nb_eleve").innerHTML = parseInt(document.getElementById("nb_eleve").innerHTML) - 1;
+
         });
         /*function get_responses(){
         li_bonne_rep = document.getElementById("numero_load").innerHTML.split(",");
@@ -218,85 +223,85 @@
         return li_bonne_rep;
         }*/
 
-        function suivant(){
-            socket.emit('questionSuivante', {'id_seq':id_seq, 'id_q':id_q});
+        function suivant() {
+            socket.emit('questionSuivante', { 'id_seq': id_seq, 'id_q': id_q });
         }
-        function rep_direct(){
-            if(typeQuest=="qcm"){
-            for (element in liste_rep_eleve){
-                console.log("rep_num_"+element);
-                console.log((liste_rep_eleve[element]/nb_rep_totale)*100+"%");
-                console.log(document.getElementById("rep_num_"+element).style.width);
+        function rep_direct() {
+            if (typeQuest == "qcm") {
+                for (element in liste_rep_eleve) {
+                    console.log("rep_num_" + element);
+                    console.log((liste_rep_eleve[element] / nb_rep_totale) * 100 + "%");
+                    console.log(document.getElementById("rep_num_" + element).style.width);
 
                 }
             }
             actualiser_rep()
-            rep_direct_var=true
+            rep_direct_var = true
         }
-        function stop_rep(){
-            rep_bloquer=true;
+        function stop_rep() {
+            rep_bloquer = true;
             console.log("stop_rep");
             socket.emit('stop_rep');
         }
-        function correction(){
+        function correction() {
             //enlever l'attribut hidden de la correction
-            if((document.getElementsByClassName('REP'))[0].style.display === 'inline-block'){
+            if ((document.getElementsByClassName('REP'))[0].style.display === 'inline-block') {
                 let elements1 = document.getElementsByClassName('REP');
-                for (element of elements1){
-                    element.style.display="none";
+                for (element of elements1) {
+                    element.style.display = "none";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
-                for (element of elements2){
-                    element.style.display="inline-block";
+                for (element of elements2) {
+                    element.style.display = "inline-block";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
-                for (element of elements3){
-                    element.style.display="inline-block";
+                for (element of elements3) {
+                    element.style.display = "inline-block";
                     //setAttribute('style', 'display: inline-block;');
                 }
             }
-            else{
+            else {
                 let elements1 = document.getElementsByClassName('REP');
-                for (element of elements1){
-                    element.style.display="inline-block";
+                for (element of elements1) {
+                    element.style.display = "inline-block";
                 }
                 let elements2 = document.getElementsByClassName('BREP');
-                for (element of elements2){
+                for (element of elements2) {
                     //element.setAttribute('style', 'display: none;');
-                    element.style.display="none";
+                    element.style.display = "none";
                 }
                 let elements3 = document.getElementsByClassName('MREP');
-                for (element of elements3){
-                    element.style.display="none";
+                for (element of elements3) {
+                    element.style.display = "none";
                 }
             }
         }
-        function ouvrir_seq(){
+        function ouvrir_seq() {
             socket.emit('ouvrir_seq', '{{id_seq|safe}}');
         }
-        function quitter(){
+        function quitter() {
             socket.emit('fermer_seq', '{{id_seq|safe}}');
             console.log("fermer seq atteint");
             window.location.replace("../");
         }
     </script>
     <script>hljs.initHighlightingOnLoad()
-    window.addEventListener('load',() =>{
-        socket.emit('', "{{id_seq| safe}}")
-        let codeBlock=document.getElementsByTagName('code');
-        for(let i in codeBlock)
-        {
-            hljs.highlightBlock(codeBlock[i]);
-        }
-    });
+        window.addEventListener('load', () => {
+            socket.emit('', "{{id_seq| safe}}")
+            let codeBlock = document.getElementsByTagName('code');
+            for (let i in codeBlock) {
+                hljs.highlightBlock(codeBlock[i]);
+            }
+        });
     </script>
 </head>
+
 <body onload="ouvrir_seq()">
 
     <div class="nom">QuizTio</div>
     <ul class="menu">
         <li>
-        {{Username}}
+            {{Username}}
             <ul class="sousMenu">
                 <li><a href="../">Accueil</a></li>
                 <li><a href="../profil">Profil</a></li>
@@ -316,20 +321,21 @@
             <b>
                 <div id="enonce">
 
-            </div></b><br><br>
+                </div>
+            </b><br><br>
 
             <div class="reponses" id="reponses">
-            <div id="champs_reponses">
-</div>
-            <input type="button" onclick="rep_direct()" value="réponses en direct">
-            <input type="button" onclick="stop_rep()" value="stop réponses">
-            <input type="button" onclick="correction()" value="affichage correction">
-            <input type="button" onclick="quitter()" value="Quitter">
+                <div id="champs_reponses">
+                </div>
+                <input type="button" onclick="rep_direct()" value="réponses en direct">
+                <input type="button" onclick="stop_rep()" value="stop réponses">
+                <input type="button" onclick="correction()" value="affichage correction">
+                <input type="button" onclick="quitter()" value="Quitter">
         </form>
     </div>
-    
 
-</div><!--
+
+    </div><!--
 <div id="bot">
 <a href="../">Acceuil</a>
 <a href="../register">S'enregistrer</a>

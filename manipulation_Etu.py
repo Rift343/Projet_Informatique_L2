@@ -3,7 +3,7 @@ import os
 import markdownHTML
 import hashlib
 
-listeDesNumEtu=[]
+listeDesNumEtu = []
 littlePATH = "/csv"
 
 
@@ -16,22 +16,22 @@ def etuCSV():
     """
     PATH = os.getcwd()
     PATH = PATH+littlePATH+"/Etu.csv"
-    with (open(PATH,'r')) as FILE:
-        lecture = csv.reader(FILE,delimiter=';')
+    with (open(PATH, 'r')) as FILE:
+        lecture = csv.reader(FILE, delimiter=';')
         listeEtu = list()
         for i in lecture:
             listeEtu.append(i)
-        #os.close(FILE)
-        
+        # os.close(FILE)
+
     return listeEtu
 
+
 def listedesEtudiant():
-    retour=[]
+    retour = []
     for i in etuCSV():
         if i[2] not in retour:
             retour.append(i[2])
     return retour
-
 
 
 def listeEtu():
@@ -49,8 +49,7 @@ def listeEtu():
             listeDesNumEtu.append(i[2])
 
 
-
-listeEtu()#A ne pas mettre en commentaire car permet d'initialiser une liste global des utilisateurs
+listeEtu()  # A ne pas mettre en commentaire car permet d'initialiser une liste global des utilisateurs
 
 
 def ajoutEtu(fichierCSV):
@@ -62,26 +61,27 @@ def ajoutEtu(fichierCSV):
     numéro etuduant et mdp. 
     """
     PATH = os.getcwd()
-    fichierCSV = PATH +'/'+fichierCSV
+    fichierCSV = PATH + '/'+fichierCSV
     print(fichierCSV)
-    with open(fichierCSV,'r') as FILE:
-        lecture=csv.reader(FILE,delimiter=';')
-        PATH=os.getcwd()
+    with open(fichierCSV, 'r') as FILE:
+        lecture = csv.reader(FILE, delimiter=';')
+        PATH = os.getcwd()
         PATH = PATH+littlePATH+"/Etu.csv"
-        with (open(PATH,'a',newline='')) as FILE2:
-            Ecriture = csv.writer(FILE2,delimiter=';')
+        with (open(PATH, 'a', newline='')) as FILE2:
+            Ecriture = csv.writer(FILE2, delimiter=';')
             for i in lecture:
                 if i[2] not in listeDesNumEtu:
                     mdp = i[-1]
                     i.append(hashlib.sha256(mdp.encode()).hexdigest())
                     Ecriture.writerow(i)
-            #os.close(FILE2)
-        #os.close(FILE)
+            # os.close(FILE2)
+        # os.close(FILE)
     os.remove(fichierCSV)
     listeEtu()
     return True
-                
-def modificationEtu(numeroEtu,password):
+
+
+def modificationEtu(numeroEtu, password):
     """
     Entré: numeroEtu-> le numéro de l'étudiant où l'on veut modifier le mot de passe
             password-> le nouveau password sans le hash
@@ -90,19 +90,20 @@ def modificationEtu(numeroEtu,password):
               Puis l'on réécrit tout le ficher csv avec les modification
     """
     listeEtudiant = etuCSV()
-    #print(listeEtudiant)
-    for i in range (len(listeEtudiant)):
-        if (listeEtudiant[i][2]==numeroEtu):
+    # print(listeEtudiant)
+    for i in range(len(listeEtudiant)):
+        if (listeEtudiant[i][2] == numeroEtu):
             password = hashlib.sha256(password.encode()).hexdigest()
             listeEtudiant[i][3] = password
     PATH = os.getcwd()
-    PATH=PATH+littlePATH+"/Etu.csv"
-    with open(PATH,'w') as FILE:
-        Ecriture = csv.writer(FILE,delimiter=';')
+    PATH = PATH+littlePATH+"/Etu.csv"
+    with open(PATH, 'w') as FILE:
+        Ecriture = csv.writer(FILE, delimiter=';')
         Ecriture.writerows(listeEtudiant)
-        #os.close(FILE)
+        # os.close(FILE)
 
-def ajouterHistoEtu(listeDeLaRep,numEtu):
+
+def ajouterHistoEtu(listeDeLaRep, numEtu):
     """
     Entré: listeDeLaRep=>Liste correspondant au élement de la réponse format à définir
             numEtu=> Numéro de l'étudiant dans lequel on veut ajouter un historique
@@ -111,26 +112,25 @@ def ajouterHistoEtu(listeDeLaRep,numEtu):
     n'existent pas déja dans l'historique. Puis on fait la modification dans Etu.csv
     """
     RepStr = "@||||@".join([str(elem)for elem in listeDeLaRep])
-    PATH=os.getcwd()
-    PATH=PATH+littlePATH+"/Etu.csv"
+    PATH = os.getcwd()
+    PATH = PATH+littlePATH+"/Etu.csv"
     listeEtu = etuCSV()
     monBoolean = True
     for i in range(len(listeEtu)):
-        if (listeEtu[i][2]==str(numEtu)):
-            for x in range(4,len(listeEtu[i])):
-                #print(listeEtu[i][x])
-                if(listeEtu[i][x]==RepStr):
-                    monBoolean=False
+        if (listeEtu[i][2] == str(numEtu)):
+            for x in range(4, len(listeEtu[i])):
+                # print(listeEtu[i][x])
+                if (listeEtu[i][x] == RepStr):
+                    monBoolean = False
             if monBoolean:
                 listeEtu[i].append(RepStr)
-    with open(PATH,'w',newline='') as FILE:
-        Ecriture = csv.writer(FILE,delimiter=';')
+    with open(PATH, 'w', newline='') as FILE:
+        Ecriture = csv.writer(FILE, delimiter=';')
         for etu in listeEtu:
             Ecriture.writerow(etu)
 
 
-
-#print(etuCSV())
+# print(etuCSV())
 
 def GetHistoEtu(numEtu):
     """
@@ -141,13 +141,14 @@ def GetHistoEtu(numEtu):
     en supprimant les delimiter que l'on avait ajouter afin d'avoir une liste de liste de string
     qui correspond au réponse
     """
-    listeEtu=etuCSV()
-    listeRetour=[]
+    listeEtu = etuCSV()
+    listeRetour = []
     for i in listeEtu:
-        if (i[2]==str(numEtu)):
-            for y in range(4,len(i)):
+        if (i[2] == str(numEtu)):
+            for y in range(4, len(i)):
                 listeRetour.append(i[y].split("@||||@"))
     return listeRetour
+
 
 def dicoHistoetu(numEtu):
     """
@@ -155,68 +156,71 @@ def dicoHistoetu(numEtu):
     Sorti: DicoQuestionDirect,DicoQuestionSeq
     """
     lst = GetHistoEtu(numEtu)
-    DicoQuestionDirect={}
-    DicoQuestionSeq={}
+    DicoQuestionDirect = {}
+    DicoQuestionSeq = {}
     for question in lst:
-        if question[3]=='Sequence':
+        if question[3] == 'Sequence':
             #print ("OK")
             print(question)
-            if("seq"+question[4] in DicoQuestionSeq ):
-                    DicoQuestionSeq[question[2]+"seq"+question[4]].append(question)
+            if ("seq"+question[4] in DicoQuestionSeq):
+                DicoQuestionSeq[question[2]+"seq"+question[4]].append(question)
             else:
-                    DicoQuestionSeq[question[2]+"seq"+question[4]] = [question]
-        elif question[3]=='Direct':
-            #print('OK2')
-            if(question[2] in DicoQuestionDirect):
-                    DicoQuestionDirect[question[2]].append(question)
+                DicoQuestionSeq[question[2]+"seq"+question[4]] = [question]
+        elif question[3] == 'Direct':
+            # print('OK2')
+            if (question[2] in DicoQuestionDirect):
+                DicoQuestionDirect[question[2]].append(question)
             else:
-                    DicoQuestionDirect[question[2]] = [question]
+                DicoQuestionDirect[question[2]] = [question]
     """
     print(DicoQuestionSeq)
     print(DicoQuestionDirect)
     """
-    return DicoQuestionDirect,DicoQuestionSeq
-    
-def  supprimerhistoQuestion(IDQuestion):
-    listeetu =etuCSV()
-    for i in range (len(listeetu)):
-         z =len(listeetu[i])
-         for y in range(4,z):
+    return DicoQuestionDirect, DicoQuestionSeq
+
+
+def supprimerhistoQuestion(IDQuestion):
+    listeetu = etuCSV()
+    for i in range(len(listeetu)):
+        z = len(listeetu[i])
+        for y in range(4, z):
             tamp = listeetu[i][y].split("@||||@")
-            if tamp[2]==IDQuestion:
-                listeetu[i][y]="delete"
+            if tamp[2] == IDQuestion:
+                listeetu[i][y] = "delete"
                 #print (tamp)
-                z=z-1
-    #print(listeetu)
-    listsupp=[]
+                z = z-1
+    # print(listeetu)
+    listsupp = []
     for i in range(len(listeetu)):
         listsupp.append([])
         for y in listeetu[i]:
             if y != 'delete':
                 listsupp[i].append(y)
-    #print(listsupp)
+    # print(listsupp)
     PATH = os.getcwd()
     PATH = PATH+littlePATH+"/Etu.csv"
-    with open(PATH,'w',newline='') as FILE:
-        Ecriture = csv.writer(FILE,delimiter=';')
+    with open(PATH, 'w', newline='') as FILE:
+        Ecriture = csv.writer(FILE, delimiter=';')
         Ecriture.writerows(listsupp)
 
-def suppHisto(liste,idEtu):
-    #print(etuCSV())
-    listeEtu=etuCSV()
-    for i in range (len(listeEtu)):
+
+def suppHisto(liste, idEtu):
+    # print(etuCSV())
+    listeEtu = etuCSV()
+    for i in range(len(listeEtu)):
         if listeEtu[i][2] == idEtu:
             for y in range(len(listeEtu[i])):
-                #print(listeEtu[i][y])
+                # print(listeEtu[i][y])
                 if listeEtu[i][y].split("@||||@") == liste:
                     listeEtu[i].pop(y)
                     PATH = os.getcwd()
                     PATH = PATH+littlePATH+"/Etu.csv"
-                    with open(PATH,'w',newline='') as FILE:
-                        Ecriture = csv.writer(FILE,delimiter=';')
+                    with open(PATH, 'w', newline='') as FILE:
+                        Ecriture = csv.writer(FILE, delimiter=';')
                         Ecriture.writerows(listeEtu)
                     return
-    
+
+
 """
 ajouterHistoEtu(["date","FV","idQ","Sequence","idS"],1258)
 ajouterHistoEtu(["date2","FV","idQ","Sequence","idS"],1258)
@@ -240,4 +244,3 @@ print(DicoS)
 #supprimerhistoQuestion("idQ")
 #supprimerhistoQuestion("vbeu")
 suppHisto(["date","FV","idQ","Sequence","idS"],"1258")"""
-
