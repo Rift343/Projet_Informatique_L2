@@ -655,8 +655,9 @@ def ouvrir_q(id_seq):
 
 @socketio.on('fermer_seq')  # prof ferme sequence
 def fermer_seq(data):
+    print("1fermer seq serv", data)
     if 'UserId' in session and session['type'] == "pro":
-        print("fermer seq serv")
+        print("fermer seq serv", data)
         socketio.emit("fin_seq", to=session['UserId'])
         dico_question_ouverte_to_prof.pop(data)
         li_prof_socket_id.pop(data)
@@ -716,9 +717,7 @@ def avancer_q(dic):
 @socketio.on('eleve_quitte')
 def bloquer_rep_q(id_seq):
     for eleme in dico_question_ouverte_to_prof:  # .keys()
-        print("avant le if")
         if id_seq == eleme:
-            print("après le if")
 
             prof = dico_question_ouverte_to_prof.get(eleme)
             sess_id_prof = li_prof_socket_id[id_seq]
@@ -829,9 +828,7 @@ def acceder_q(id_seq):
     print(id_seq)
     print("session ouverte : ", dico_question_ouverte_to_prof)
     for eleme in dico_question_ouverte_to_prof:  # .keys()
-        print("avant le if")
         if id_seq["id_seq"] == eleme:
-            print("après le if")
 
             prof = dico_question_ouverte_to_prof.get(eleme)
             sess_id_prof = li_prof_socket_id[id_seq["id_seq"]]
