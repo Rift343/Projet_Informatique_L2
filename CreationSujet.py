@@ -10,6 +10,7 @@ def recupererListeQuestionParEtiquette(ID_User,Eti):
     Principe: On récupére les dictionnaires de toute les questions d'un professuer
     puis on le parcours, chaque questions possedant l'étiquette eti sera ensuite
     ajouter à la liste de retour
+    O(n)+O(n²) donc O(n²) car depuis_csv est en O(n²)
     """
     listeDeRetour=[]
     listeDesQuestion=manipulationQuestion.depuis_csv(ID_User)
@@ -20,6 +21,9 @@ def recupererListeQuestionParEtiquette(ID_User,Eti):
 
 
 def TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle,tailleExam=0):
+    """
+    O(n) * 3(m) donc O(n*m) cependant cela revient à faire O(n²)
+    """
     tailleExam = 0
     while tailleExam < nbtotaleQuestion:
          #   print("2")
@@ -57,7 +61,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
     for i in listeIntervalle:
         sauveguardeListeIntervalle.append(i)
     #print(sauveguardeListeIntervalle)
-    while len(liste_sujet)<nbSujet:
+    while len(liste_sujet)<nbSujet:#n
         #print("1")
         #liste_sujet.append(1)
         
@@ -67,19 +71,19 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         #print (traitementIntervalle)
         
         #####################################
-        listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)
+        listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)#n² donc n^3 avec le while
 
         #print('ok')
         #print("sauva=",sauveguardeListeIntervalle)
         #print(traitementIntervalle) 
         
         listeIntervalle = []
-        for z in sauveguardeListeIntervalle:
+        for z in sauveguardeListeIntervalle:#n donc n² avec le while
             listeIntervalle.append(z)
 
         
         #print("sauve =",listeIntervalle) 
-        newSujet,erreur =creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
+        newSujet,erreur =creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)#n^3 donc n^4 avec la boucle while
         #print(newSujet)
         #print(newSujet)
         #print("2.5")
@@ -99,12 +103,12 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
         while (newSujetSort in liste_sujet_sort):
 
             traitementIntervalle=[]
-            for i in range(len(listeIntervalle)):
+            for i in range(len(listeIntervalle)):#n^3
                 traitementIntervalle.append(0)
             #print (traitementIntervalle)
         
             #####################################
-            listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)
+            listeIntervalle,traitementIntervalle =TraitementIntervalle(nbtotaleQuestion,traitementIntervalle,listeIntervalle)#O(n^4) avec les deux while
 
             #print('ok')
             #print("sauva=",sauveguardeListeIntervalle)
@@ -118,7 +122,7 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
 
                     
             #print("3")
-            newSujet,nouvelle_code_err=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)
+            newSujet,nouvelle_code_err=creation1sujet(ListeEtiquette,ID_User,traitementIntervalle)#n^3 donc n^5 avec les boucle while
             #print(liste_sujet_sort)
             #print(newSujet)
             compteur=compteur+1
@@ -130,16 +134,20 @@ def creer_sujet(ListeEtiquette,listeIntervalle,nbSujet,ID_User,nbtotaleQuestion,
             newSujetSort.sort()
         liste_sujet.append(newSujet)
     return liste_sujet,False
+    #Au finale cette algorithme est en O(n^5) il ne fait oublié qui il y a beaucoup de O(n²),O(n^3) et O(n^4)
         
             
 
 def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
+    """
+    O(n^3) car on fait n fois recupererListeQuestionParEtiquette qui et en n²
+    """
     newSujet=[]
     erreur=False
-    for i in range (len(ListeEtiquette)):
+    for i in range (len(ListeEtiquette)):#n
             nombreElement=traitementIntervalle[i]
-            sujetDispo = recupererListeQuestionParEtiquette(ID_User,ListeEtiquette[i])
-            for y in range(nombreElement):
+            sujetDispo = recupererListeQuestionParEtiquette(ID_User,ListeEtiquette[i])#n²
+            for y in range(nombreElement):#n
                 #print(sujetDispo)
                 question =random.choice(sujetDispo)
                 #print("sujetdispo : ",sujetDispo)
@@ -147,7 +155,7 @@ def creation1sujet(ListeEtiquette, ID_User,traitementIntervalle):
                 #print((newSujet))
                 #print((set(sujetDispo)-set(newSujet)!=set()))
                 
-                while (question in newSujet) and (set(sujetDispo)-set(newSujet)!=set()):
+                while (question in newSujet) and (set(sujetDispo)-set(newSujet)!=set()):#n
                     #print("boucle")
                     #print(question,newSujet,sujetDispo)
                     #print(set(sujetDispo)-set(newSujet))
