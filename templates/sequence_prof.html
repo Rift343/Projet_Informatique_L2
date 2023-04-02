@@ -12,6 +12,8 @@
     <title>QuizTio</title>
     <script src="../../static/socket.io.min.js"></script>
     <script>
+        dicoDesMotsExistants={"test":0};
+        //console.log(dicoDesMotsExistants);
         const socket=io();
         //socket.connect('http://'+document.domain+':'+location.port);
         id_seq='{{id_seq|safe}}'
@@ -20,7 +22,7 @@
         rep_bloquer=false;
         nb_rep_totale=0;
         liste_rep_eleve=[];
-        dicoDesMotsExistants={};
+       
 
         function prefixe(mot){
             mot = mot.toLowerCase()
@@ -35,18 +37,21 @@
                 indice++;
                 }
             }
-            return Aprefixe,prefixe;
+            return [Aprefixe,prefixe];
 
         }
         
         function ajoutDico(mot){
             mot = mot.toLowerCase()// je met le mot en minuscule
-            apref,pref=prefixe(mot);
+            var apref;var pref;
+            [apref,pref]=prefixe(mot);
             if (apref == true){
+                
             //Faire l'ajout avec le lien d'édition sur les mots du dictionnaire possèdant le même préfixe
                 dicoPrefixe={};
                 for (key in dicoDesMotsExistants){
-                   apref2,pref2= prefixe(key);
+                    var apref2;var pref2;
+                   [apref2,pref2]= prefixe(key);
                    if ((pref2 == pref) && (apref2==true)){
                         dicoPrefixe[key]=dicoDesMotsExistants[key];
                    }
@@ -56,7 +61,9 @@
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
                         return;
                     }
-                    if(distanceEdition(mot,key)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                    //console.log("dist"+distanceEdition(mot,key));
+                    //console.log("long"+(mot.length)/4);
+                    if(distanceEdition(mot,key)< ((mot.length)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
                         return;
                     }
@@ -75,13 +82,14 @@
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
                         return;
                     }
-                    if(distanceEdition(mot,dicoDesMotsExistants)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
+                    
+                    if(distanceEdition(mot,key)< ((mot.lenght)/4)){//Pour l'instant je pense que l'on peut avoir au pire un quart des lettres d'un mot de faux
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key]+1;
                         return;
                     }
                     
                 }
-                dicoDesMotsExistants[mot]=1;//Si l'on n'a pas trouver le mot dans le dictionnaire alors on le créé dans le dico
+                dicoDesMotsExistants[mot]=1;
                 return ;                               
             }         
             
