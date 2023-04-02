@@ -222,8 +222,8 @@
 
         }
         socket.on('fin_seq', (question) => {
-            console.log("seq fini")
-            quitter()
+            console.log("seq fini");
+            quitter();
 
         });
         socket.on('nouveau_eleve', (question) => {
@@ -306,7 +306,7 @@
     </script>
     <script>hljs.initHighlightingOnLoad()
         window.addEventListener('load', () => {
-            socket.emit('', "{{id_seq| safe}}")
+            socket.emit('', "{{id_seq| safe}}");
             let codeBlock = document.getElementsByTagName('code');
             for (let i in codeBlock) {
                 hljs.highlightBlock(codeBlock[i]);
