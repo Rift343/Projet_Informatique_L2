@@ -1,0 +1,36 @@
+Afin de générer un certain nombre de sujet l'on effectue l'algorithme suivant:
+  Entrée: 
+    ListeEtiquette:liste des étiquette
+    listeIntervalle: liste des intervalles pour chaque étiquette
+    nbSujet: int correspond au nombre de sujet que l'on veut
+    ID_User: string correspond à l'identifiant de l'utilisateur
+    nbtotaleQuestion : int correspond au nombre de question par sujet
+    melange : Boolean True si l'on veut toute les questions mélangés False si on veut uniquement les questions par étiquette mélangé
+   
+   Début
+    liste_sujet=[]
+    On copie listeIntervalle
+    Tant que l'on a pas réaliser le nombre de sujet voulu alors
+    |    On traite listeIntervalle de façon à obtenir une liste de int correspondant au nombre de question par étiquette
+    |    On créer un sujet de la manière suivante:
+    |    |                                       pour chaque étiquette dans Listetiquette
+    |    |                                       |  récupérer le nombre de question à ajouter pour l'étiquette
+    |    |                                       |  récupérer les questions du professeur ayant cette étiquette
+    |    |                                       |  Tant que je n'ai pas ajouter assez de question pour l'étiquette
+    |    |                                       |    |   J'en choisis une au hazard dans la liste des questions dispo
+    |    |                                       |    |   je supprime celle que je viens de choisir dans la liste des questions dispo
+    |    |                                       retourner mon nouveau sujet
+    |    |
+    |   Je crée une copie de mon nouveau sujet et de liste_sujet et les tries(pour liste_sujet cela revient à trié chaque sujet)
+    |   tant que le sujet crée et dans la liste des sujet alors
+    |    |    On traite à nouveau la liste des intervalles et on recrait un nouveau sujet que l'on copie puis on le trie
+    |   Ajouter le nouveau sujet (celui non-trié) dans la liste des sujets non-trié
+    |   On réinitialiser listeIntervalle   
+    retourner liste_sujet
+    
+  Pour la compléxité l'on arrive du coté de la programmation à une compléxité en O(n^5) cepandant il est à noter qu'il y a aussi
+  beaucoup de O(n^4),O(n^3) et O(n²)
+  
+  Pour les jeux de tests, l'on a principalement utilisé des jeux des tests demandant le maximum des sujets possibles selon la combinatoire afin de vérifier
+  si tout les sujets possibles étaient créés
+     
