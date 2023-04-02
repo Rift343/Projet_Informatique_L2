@@ -62,6 +62,8 @@
                     if (mot == key) {//Si on trouve directement les mots dans le dictionnaire
                         dicoDesMotsExistants[key] = dicoDesMotsExistants[key] + 1;
                         return;
+                    }else{
+                        dicoDesMotsExistants[mot] =1;//JAI RAJOUTE CA, C EST BON ??????
                     }
                     //console.log("dist"+distanceEdition(mot,key));
                     //console.log("long"+(mot.length)/4);
@@ -119,7 +121,7 @@
             else {
                 for (element of question.question["REP"]) {
                     liste_rep_eleve.push(0);
-                    console.log("j'en suis bien arrivé là battard")
+                    console.log("j'en suis bien arrivé la")
                     typeQuest = "qcm";
                     document.getElementById("champs_reponses").innerHTML = document.getElementById("champs_reponses").innerHTML +
                         "<span id='rep_num_" + i + "' class='REP' style='display: inline-block;'>" + element + "</span>"
@@ -185,6 +187,7 @@
                 document.getElementById("champs_reponses").innerHTML = "";
                 words = {};
                 li_rep_eleve_corrige=[]
+                console.log(dicoDesMotsExistants);
                 for (mot in dicoDesMotsExistants){
                     while(dicoDesMotsExistants[mot]>0){
                         li_rep_eleve_corrige.push(mot);
