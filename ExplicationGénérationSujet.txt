@@ -1,36 +1,36 @@
-Afin de générer un certain nombre de sujet l'on effectue l'algorithme suivant:
-  Entrée: 
-    ListeEtiquette:liste des étiquette
-    listeIntervalle: liste des intervalles pour chaque étiquette
-    nbSujet: int correspond au nombre de sujet que l'on veut
-    ID_User: string correspond à l'identifiant de l'utilisateur
-    nbtotaleQuestion : int correspond au nombre de question par sujet
-    melange : Boolean True si l'on veut toute les questions mélangés False si on veut uniquement les questions par étiquette mélangé
+Afin de générer un certain nombre de sujets, on effectue l'algorithme suivant:
+  Entrées: 
+    ListeEtiquette : liste des étiquettes
+    listeIntervalle : liste des intervalles pour chaque étiquette
+    nbSujet : entier correspondant au nombre de sujets que l'on veut
+    ID_User : chaîne de caractères correspondant à l'identifiant de l'utilisateur
+    nbtotaleQuestion : entier correspondant au nombre de questions par sujet
+    melange : booléen True si l'on veut mélanger toutes les questions, False si l'on veut mélanger les questions uniquement par étiquette
    
    Début
     liste_sujet=[]
     On copie listeIntervalle
-    Tant que l'on a pas réaliser le nombre de sujet voulu alors
-    |    On traite listeIntervalle de façon à obtenir une liste de int correspondant au nombre de question par étiquette
-    |    On créer un sujet de la manière suivante:
-    |    |                                       pour chaque étiquette dans Listetiquette
-    |    |                                       |  récupérer le nombre de question à ajouter pour l'étiquette
+    Tant que l'on n'a pas réalisé le nombre de sujets voulu alors :
+    |    On traite listeIntervalle de façon à obtenir une liste d'entiers correspondants au nombre de questions par étiquette
+    |    On crée un sujet de la manière suivante :
+    |    |                                       pour chaque étiquette dans Listetiquette :
+    |    |                                       |  récupérer le nombre de questions à ajouter pour l'étiquette
     |    |                                       |  récupérer les questions du professeur ayant cette étiquette
-    |    |                                       |  Tant que je n'ai pas ajouter assez de question pour l'étiquette
-    |    |                                       |    |   J'en choisis une au hazard dans la liste des questions dispo
-    |    |                                       |    |   je supprime celle que je viens de choisir dans la liste des questions dispo
+    |    |                                       |  Tant que l'on n'a pas ajouté assez de questions pour l'étiquette :
+    |    |                                       |    |   J'en choisis une au hasard dans la liste des questions disponibles
+    |    |                                       |    |   je supprime celle que je viens de choisir de la liste des questions disponibles
     |    |                                       retourner mon nouveau sujet
     |    |
-    |   Je crée une copie de mon nouveau sujet et de liste_sujet et les tries(pour liste_sujet cela revient à trié chaque sujet)
-    |   tant que le sujet crée et dans la liste des sujet alors
-    |    |    On traite à nouveau la liste des intervalles et on recrait un nouveau sujet que l'on copie puis on le trie
-    |   Ajouter le nouveau sujet (celui non-trié) dans la liste des sujets non-trié
-    |   On réinitialiser listeIntervalle   
+    |   On crée une copie de notre nouveau sujet et de liste_sujet et les trie (pour liste_sujet cela revient à trier chaque sujet)
+    |   tant que le sujet créé est dans la liste des sujets alors
+    |    |    On traite à nouveau la liste des intervalles et on recrée un nouveau sujet que l'on copie puis on le trie
+    |   On Ajoute le nouveau sujet (celui non trié) dans la liste des sujets non triés
+    |   On réinitialise listeIntervalle   
     retourner liste_sujet
     
-  Pour la compléxité l'on arrive du coté de la programmation à une compléxité en O(n^5) cepandant il est à noter qu'il y a aussi
-  beaucoup de O(n^4),O(n^3) et O(n²)
+  Pour la complexité, on arrive du côté de la programmation à une complexité en O(n^5). Cependant il est à noter qu'il y a aussi
+  beaucoup de O(n^4),O(n^3) et O(n²).
   
-  Pour les jeux de tests, l'on a principalement utilisé des jeux des tests demandant le maximum des sujets possibles selon la combinatoire afin de vérifier
-  si tout les sujets possibles étaient créés
+  Pour les jeux de tests, on a principalement utilisé des jeux des tests demandant le maximum des sujets possibles selon la combinatoire afin de vérifier
+  si tous les sujets possibles étaient créés.
      
