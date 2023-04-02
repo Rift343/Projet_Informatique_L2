@@ -286,6 +286,19 @@ def visuIFrame():
     # on renvoie les donnée de la question sur l'IFrame de la page creation question
     return render_template("visuIFrame.html", dictionnaire=traductionUneQuestionToHTML(dict))
 
+@app.route("/question/<idQuestion>") #Page de visualisation d'une question
+def question(idQuestion):
+    if 'Username' and 'UserId' in session and session['type'] == "pro":
+        Username = session['Username']
+        UserId = session['UserId']
+        dico = getQuestion(UserId, idQuestion)
+        #print(dico)
+        dico = traductionUneQuestionToHTML(dico)
+
+        return render_template("Question.html", dictionnaire=dico, Username=Username)
+    else:
+        return render_template("non_connecte.html")
+
 
 @app.route("/import_eleve", methods=['POST'])
 def import_eleve():

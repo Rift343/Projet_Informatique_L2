@@ -159,6 +159,7 @@
                 }
                 else {
                     console.log(reponse)
+                    ajoutDico(reponse)
                     liste_rep_eleve.push(reponse)
                 }
                 console.log(liste_rep_eleve)
@@ -183,7 +184,15 @@
             else if (typeQuest == "qso") {
                 document.getElementById("champs_reponses").innerHTML = "";
                 words = {};
-                for (word of liste_rep_eleve) {
+                li_rep_eleve_corrige=[]
+                for (mot in dicoDesMotsExistants){
+                    while(dicoDesMotsExistants[mot]>0){
+                        li_rep_eleve_corrige.push(mot);
+                        dicoDesMotsExistants[mot]=dicoDesMotsExistants[mot]-1;
+                    }
+                }
+
+                for (word of li_rep_eleve_corrige) {
                     if (Object.keys(words).includes(word))
                         words[word] = words[word] + 1;
                     else {
