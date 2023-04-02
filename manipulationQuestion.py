@@ -6,6 +6,7 @@ import manipulation_Etu
 littlePATH = "/csv"
 import HistoQuestion
 def depuis_csv(ID_User):
+    #O(n²)
     """
     Ouvre un fichier au format csv
     Renvoie une liste de dictionnaire avec clé disponible:
