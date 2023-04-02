@@ -1,0 +1,6 @@
+Afin de détecter les erreurs d'orthographe, on différencie deux situations. 
+Soit le mot n'a pas de préfixe, dans ce cas la, on utilise un algorithme afin de calculer la distance d'édition entre ce mot et tous les mots 
+déjà donner en réponse, si la distance d'édition est inférieur au quart de la longueur du mot, on considère qu'il y a une erreur d'orthographe
+et l'on remplace la nouvelle réponse par l'ancienne.
+Si le mot a un préfixe, on détecte la prescience du préfixe grâce à une liste des préfixes commun en français, quand le préfixe est détecté, ce mot
+sera alors considéré diffèrent que les autres mots afin d'éviter la suppression du préfixe.
