@@ -738,7 +738,8 @@ def bloquer_rep_q():
 
 @socketio.on('eleve_reponse_q')  # eleve reponds
 def eleve_reponse_q(id_seq, reponse):
-    print(reponse)
+    #print(reponse)
+    reponse=reponse.replace("<","")
     id_seq = id_seq["id_seq"]
     li_eleve_deja_rep = dico_seq_id_to_eleve_ayant_rep[id_seq]
     date_str = str(new_date())
